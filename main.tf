@@ -3,18 +3,18 @@
 ###
 
 resource "azurerm_availability_set" "this" {
-  count = var.enabled && var.availability_set_enabled && var.availability_set_name != "" ? 1 : 0
+  count = var.enabled && var.availability_set_enabled && "" == var.availability_set_id && "" != var.availability_set_name ? 1 : 0
 
   name                = var.availability_set_name
   location            = var.azurerm_resource_group_location
   resource_group_name = var.azurerm_resource_group_name
 
   tags = merge(
+    var.tags,
+    var.availability_set_tags,
     {
       Terraform = "true"
     },
-    var.tags,
-    var.availability_set_tags,
   )
 }
 
