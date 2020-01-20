@@ -9,12 +9,12 @@ variable "enabled" {
 
 variable "azurerm_resource_group_location" {
   description = "pecifies the supported Azure location where the resources exist. Changing this forces a new resource to be created."
-  type        = "string"
+  default     = ""
 }
 
 variable "azurerm_resource_group_name" {
   description = "The name of the resource group in which to create the resources in this module. Changing this forces a new resource to be created."
-  type        = "string"
+  default     = ""
 }
 
 variable "tags" {
