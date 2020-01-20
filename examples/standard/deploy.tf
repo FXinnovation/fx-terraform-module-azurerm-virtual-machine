@@ -16,7 +16,7 @@ module "example" {
   azurerm_resource_group_location = azurerm_resource_group.example.location
   azurerm_resource_group_name     = azurerm_resource_group.example.name
   tags = {
-    env = test
+    env = "test"
   }
 
   availability_set_name = "tftest${random_string.this.result}"
