@@ -1,9 +1,14 @@
+locals {
+  should_create_availability_set  = var.enabled && var.availability_set_enabled && (var.availability_set_id == "") && (var.availability_set_name != "")
+  should_create_network_interface = var.enabled && (var.network_interface_id == "") && (var.network_interface_name != "")
+}
+
 ###
 # Availability set
 ###
 
 resource "azurerm_availability_set" "this" {
-  count = var.enabled && var.availability_set_enabled && "" == var.availability_set_id && "" != var.availability_set_name ? 1 : 0
+  count = local.should_create_availability_set ? 1 : 0
 
   name                = var.availability_set_name
   location            = var.azurerm_resource_group_location
@@ -23,7 +28,7 @@ resource "azurerm_availability_set" "this" {
 ###
 
 resource "azurerm_network_interface" "this" {
-  count = var.enabled && "" == var.network_interface_id && "" != var.network_interface_name ? 1 : 0
+  count = local.should_create_network_interface ? 1 : 0
 
   name                = var.network_interface_name
   location            = var.azurerm_resource_group_location
