@@ -14,4 +14,10 @@ See `examples` folders for usage of this module.
 | enabled | Enable or disable module | string | `"true"` | no |
 | tags | Tags shared by all ressources of this module. Will be merged with any other specific tags by resource | map | `{}` | no |
 
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| availability\_set\_id |  |
+
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

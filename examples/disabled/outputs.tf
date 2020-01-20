@@ -1,3 +1,3 @@
 output "availibility_set_id" {
-  value = module.example.azurerm_availability_set.id
+  value = module.example.availability_set_id
 }
