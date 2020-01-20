@@ -26,7 +26,17 @@ variable "tags" {
 # Availability set
 ###
 
-variable "availibility_set_name" {
+variable "availability_set_enabled" {
+  description = "Whether or not to create an availability set."
+  default     = true
+}
+
+variable "availability_set_name" {
   description = "Specifies the name of the availability set. Changing this forces a new resource to be created."
   default     = ""
+}
+
+variable "availability_set_tags" {
+  description = "Tags specific to the availability set."
+  default     = {}
 }
