@@ -1,6 +1,6 @@
 locals {
-  should_create_availability_set  = var.enabled && var.availability_set_enabled && (var.availability_set_id == "") && (var.availability_set_name != "")
-  should_create_network_interface = var.enabled && (var.network_interface_id == "") && (var.network_interface_name != "")
+  should_create_availability_set  = var.enabled && var.availability_set_enabled && (var.availability_set_id == "")
+  should_create_network_interface = var.enabled && var.network_interface_enabled && (var.network_interface_id == "")
 }
 
 ###
