@@ -45,14 +45,13 @@ resource "azurerm_network_interface" "example" {
 module "example" {
   source = "../.."
 
-  azurerm_resource_group_location = azurerm_resource_group.example.location
-  azurerm_resource_group_name     = azurerm_resource_group.example.name
+  resource_group_location = azurerm_resource_group.example.location
+  resource_group_name     = azurerm_resource_group.example.name
   tags = {
     env = "test"
   }
 
-  availability_set_id       = azurerm_availability_set.example.id
-  availability_set_enabled  = false
-  network_interface_ids     = [azurerm_network_interface.example.id]
-  network_interface_enabled = false
+  availability_set_name   = azurerm_availability_set.example.name
+  availability_set_exists = true
+  network_interface_name  = [azurerm_network_interface.example.name]
 }

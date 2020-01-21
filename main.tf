@@ -1,6 +1,6 @@
 locals {
-  should_create_availability_set  = var.enabled && var.availability_set_enabled && coalesce(var.availability_set_id)
-  should_create_network_interface = var.enabled && var.network_interface_enabled && coalesce(concat(var.network_interface_ids, [""])[0])
+  should_create_availability_set  = var.enabled && var.availability_set_enabled
+  should_create_network_interface = var.enabled && var.network_interface_enabled && var.vm_count > 0
 }
 
 ###
@@ -11,8 +11,8 @@ resource "azurerm_availability_set" "this" {
   count = local.should_create_availability_set ? 1 : 0
 
   name                = var.availability_set_name
-  location            = var.azurerm_resource_group_location
-  resource_group_name = var.azurerm_resource_group_name
+  location            = var.resource_group_location
+  resource_group_name = var.resource_group_name
 
   tags = merge(
     var.tags,
@@ -28,11 +28,11 @@ resource "azurerm_availability_set" "this" {
 ###
 
 resource "azurerm_network_interface" "this" {
-  count = local.should_create_network_interface ? 1 : 0
+  count = local.should_create_network_interface ? var.vm_count : 0
 
-  name                = var.network_interface_name
-  location            = var.azurerm_resource_group_location
-  resource_group_name = var.azurerm_resource_group_name
+  name                = var.vm_count > 0 ? format("%s-%${var.num_suffix_digits}d", var.network_interface_name, count.index + 1) : var.network_interface_name
+  location            = var.resource_group_location
+  resource_group_name = var.resource_group_name
 
   network_security_group_id     = var.network_interface_network_security_group_id
   internal_dns_name_label       = var.network_interface_internal_dns_name_label
@@ -41,7 +41,7 @@ resource "azurerm_network_interface" "this" {
   dns_servers                   = var.network_interface_dns_servers
 
   ip_configuration {
-    name                          = var.network_interface_ip_configuration_name
+    name                          = var.vm_count > 0 ? format("%s-%${var.num_suffix_digits}d", var.network_interface_ip_configuration_name, count.index + 1) : var.network_interface_ip_configuration_name
     subnet_id                     = var.network_interface_ip_configuration_subnet_id
     private_ip_address            = var.network_interface_ip_configuration_private_ip_address
     private_ip_address_allocation = var.network_interface_ip_configuration_private_ip_address_allocation

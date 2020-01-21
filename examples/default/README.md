@@ -20,10 +20,4 @@ terraform destroy
 | subscription\_id |  | string | n/a | yes |
 | tenant\_id |  | string | n/a | yes |
 
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| availibility\_set\_id |  |
-
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

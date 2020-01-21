@@ -7,12 +7,12 @@ variable "enabled" {
   default     = true
 }
 
-variable "azurerm_resource_group_location" {
+variable "resource_group_location" {
   description = "pecifies the supported Azure location where the resources exist. Changing this forces a new resource to be created."
   default     = ""
 }
 
-variable "azurerm_resource_group_name" {
+variable "resource_group_name" {
   description = "The name of the resource group in which to create the resources in this module. Changing this forces a new resource to be created."
   default     = ""
 }
@@ -20,6 +20,11 @@ variable "azurerm_resource_group_name" {
 variable "tags" {
   description = "Tags shared by all resources of this module. Will be merged with any other specific tags by resource"
   default     = {}
+}
+
+variable "num_suffix_digits" {
+  description = "How many digits to use for resources names."
+  default     = 2
 }
 
 ###
@@ -31,9 +36,9 @@ variable "availability_set_enabled" {
   default     = true
 }
 
-variable "availability_set_id" {
-  description = "If defined, this variable will be used by other resources instead of creating a new availability set inside this module."
-  default     = ""
+variable "availability_set_exists" {
+  description = "If defined, the existing availability set will be used by virtual machines instead of creating a new availability set inside this module."
+  default     = false
 }
 
 variable "availability_set_name" {
@@ -55,8 +60,8 @@ variable "network_interface_enabled" {
   default     = true
 }
 
-variable "network_interface_ids" {
-  description = "If defined, this variable will be used by other virtual machines instead of creating a new network interfaces inside this module."
+variable "network_interface_names" {
+  description = "If defined, this network interfaces will be used by other virtual machines instead of creating a new network interfaces inside this module."
   default     = [""]
 }
 
@@ -123,4 +128,13 @@ variable "network_interface_ip_configuration_public_ip_address_id" {
 variable "network_interface_tags" {
   description = "Tags specific to the network interface."
   default     = {}
+}
+
+###
+# Virtual Machine
+###
+
+variable "vm_count" {
+  description = "How many virtual machines to create."
+  default     = 1
 }
