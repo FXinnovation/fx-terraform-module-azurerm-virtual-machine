@@ -30,7 +30,7 @@ resource "azurerm_availability_set" "this" {
 resource "azurerm_network_interface" "this" {
   count = local.should_create_network_interface ? var.vm_count : 0
 
-  name                = var.vm_count > 0 ? format("%s-%${var.num_suffix_digits}d", var.network_interface_name, count.index + 1) : var.network_interface_name
+  name                = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.network_interface_name, count.index + 1) : var.network_interface_name
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 
@@ -41,7 +41,7 @@ resource "azurerm_network_interface" "this" {
   dns_servers                   = var.network_interface_dns_servers
 
   ip_configuration {
-    name                          = var.vm_count > 0 ? format("%s-%${var.num_suffix_digits}d", var.network_interface_ip_configuration_name, count.index + 1) : var.network_interface_ip_configuration_name
+    name                          = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.network_interface_ip_configuration_name, count.index + 1) : var.network_interface_ip_configuration_name
     subnet_id                     = var.network_interface_ip_configuration_subnet_id
     private_ip_address            = var.network_interface_ip_configuration_private_ip_address
     private_ip_address_allocation = var.network_interface_ip_configuration_private_ip_address_allocation
