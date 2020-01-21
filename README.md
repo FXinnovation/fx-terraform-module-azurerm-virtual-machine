@@ -41,5 +41,10 @@ See `examples` folders for usage of this module.
 | Name | Description |
 |------|-------------|
 | availability\_set\_id |  |
+| network\_interface\_applied\_dns\_servers |  |
+| network\_interface\_id |  |
+| network\_interface\_mac\_address |  |
+| network\_interface\_private\_ip\_address |  |
+| network\_interface\_virtual\_machine\_id |  |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
