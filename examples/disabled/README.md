@@ -25,7 +25,7 @@ terraform destroy
 | Name | Description |
 |------|-------------|
 | availibility\_set\_id |  |
-| network\_interface\_applied\_dns\_servers  |  |
+| network\_interface\_applied\_dns\_servers |  |
 | network\_interface\_id |  |
 | network\_interface\_mac\_address |  |
 | network\_interface\_private\_ip\_address |  |

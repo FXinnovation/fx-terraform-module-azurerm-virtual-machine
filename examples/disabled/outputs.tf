@@ -18,6 +18,6 @@ output "network_interface_virtual_machine_id" {
   value = module.example.network_interface_virtual_machine_id
 }
 
-output "network_interface_applied_dns_servers " {
+output "network_interface_applied_dns_servers" {
   value = module.example.network_interface_applied_dns_servers
 }
