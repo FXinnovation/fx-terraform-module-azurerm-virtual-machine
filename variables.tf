@@ -55,9 +55,9 @@ variable "network_interface_enabled" {
   default     = true
 }
 
-variable "network_interface_id" {
-  description = "If defined, this variable will be used by other resources instead of creating a new network interface inside this module."
-  default     = ""
+variable "network_interface_ids" {
+  description = "If defined, this variable will be used by other virtual machines instead of creating a new network interfaces inside this module."
+  default     = [""]
 }
 
 variable "network_interface_name" {

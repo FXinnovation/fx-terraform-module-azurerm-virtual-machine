@@ -1,6 +1,6 @@
 locals {
-  should_create_availability_set  = var.enabled && var.availability_set_enabled && (var.availability_set_id == "")
-  should_create_network_interface = var.enabled && var.network_interface_enabled && (var.network_interface_id == "")
+  should_create_availability_set  = var.enabled && var.availability_set_enabled && coalesce(var.availability_set_id)
+  should_create_network_interface = var.enabled && var.network_interface_enabled && coalesce(concat(var.network_interface_ids, [""])[0])
 }
 
 ###
