@@ -51,6 +51,9 @@ module "example" {
     env = "test"
   }
 
-  availability_set_id  = azurerm_availability_set.example.id
-  network_interface_id = azurerm_network_interface.example.id
+
+  availability_set_id       = azurerm_availability_set.example.id
+  availability_set_enabled  = false
+  network_interface_id      = azurerm_network_interface.example.id
+  network_interface_enabled = false
 }
