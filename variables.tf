@@ -65,6 +65,11 @@ variable "network_interface_names" {
   default     = [""]
 }
 
+variable "network_interface_exists" {
+  description = "If defined, will use var.network_interface_names to get network interfaces instead of creating a new network interfaces inside this module."
+  default     = false
+}
+
 variable "network_interface_name" {
   description = "The name of the network interface. Changing this forces a new resource to be created."
   default     = ""

@@ -51,7 +51,8 @@ module "example" {
     env = "test"
   }
 
-  availability_set_name   = azurerm_availability_set.example.name
-  availability_set_exists = true
-  network_interface_names = [azurerm_network_interface.example.name]
+  availability_set_name    = azurerm_availability_set.example.name
+  availability_set_exists  = true
+  network_interface_names  = [azurerm_network_interface.example.name]
+  network_interface_exists = true
 }

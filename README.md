@@ -29,6 +29,7 @@ See `examples` folders for usage of this module.
 | network\_interface\_enable\_accelerated\_networking | Enables Azure Accelerated Networking using SR-IOV. Only certain VM instance sizes are supported. | `bool` | `false` | no |
 | network\_interface\_enable\_ip\_forwarding | Enables IP Forwarding on the NIC. | `bool` | `false` | no |
 | network\_interface\_enabled | Whether or not to create a network interface. | `bool` | `true` | no |
+| network\_interface\_exists | If defined, will use var.network\_interface\_names to get network interfaces instead of creating a new network interfaces inside this module. | `bool` | `false` | no |
 | network\_interface\_internal\_dns\_name\_label | Relative DNS name for this NIC used for internal communications between VMs in the same VNet. | `string` | `""` | no |
 | network\_interface\_ip\_configuration\_name | User-defined name of the IP. | `string` | `""` | no |
 | network\_interface\_ip\_configuration\_private\_ip\_address | Static IP Address. | `string` | `""` | no |
