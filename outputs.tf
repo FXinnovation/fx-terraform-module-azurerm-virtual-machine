@@ -25,3 +25,15 @@ output "network_interface_private_ip_addresses" {
 output "network_interface_virtual_machine_ids" {
   value = compact(concat(azurerm_network_interface.this.*.virtual_machine_id, [""]))
 }
+
+###
+# Virtual Machines
+###
+
+output "ids" {
+  value = compact(concat(azurerm_virtual_machine.linux.*.id, azurerm_virtual_machine.windows.*.id, [""]))
+}
+
+output "identities" {
+  value = compact(concat(azurerm_virtual_machine.linux.*.identity, azurerm_virtual_machine.windows.*.identity, [""]))
+}

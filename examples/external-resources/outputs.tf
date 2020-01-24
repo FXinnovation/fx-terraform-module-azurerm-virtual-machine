@@ -17,3 +17,11 @@ output "network_interface_private_ip_addresses" {
 output "network_interface_virtual_machine_ids" {
   value = module.example.network_interface_virtual_machine_ids
 }
+
+output "ids" {
+  value = module.example.ids
+}
+
+output "identities" {
+  value = module.example.identities
+}

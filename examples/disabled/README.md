@@ -29,6 +29,8 @@ No provider.
 | Name | Description |
 |------|-------------|
 | availability\_set\_id | n/a |
+| identities | n/a |
+| ids | n/a |
 | network\_interface\_ids | n/a |
 | network\_interface\_mac\_addresses | n/a |
 | network\_interface\_private\_ip\_addresses | n/a |
