@@ -56,7 +56,7 @@ See `examples` folders for usage of this module.
 | os\_profile\_computer\_name | Specifies the name of the Virtual Machine. | `string` | `"hostname"` | no |
 | os\_profile\_custom\_data | Specifies custom data to supply to the machine. On Linux-based systems, this can be used as a cloud-init script. On other systems, this will be copied as a file on disk. Internally, Terraform will base64 encode this value before sending it to the API. The maximum length of the binary array is 65535 bytes. | `string` | `""` | no |
 | os\_profile\_linux\_config\_disable\_password\_authentication | Specifies whether password authentication should be disabled. If set to false, an admin\_password must be specified. | `bool` | `true` | no |
-| os\_profile\_linux\_config\_ssh\_keys | One or more ssh\_keys blocks. This field is required if disable\_password\_authentication is set to true. | `list(object({ key_data = string, key_path = string }))` | `[]` | no |
+| os\_profile\_linux\_config\_ssh\_keys | One or more ssh\_keys blocks. This field is required if disable\_password\_authentication is set to true. | `list(object({ key_data = string, path = string }))` | `[]` | no |
 | os\_profile\_secrets\_source\_vault\_id | Specifies the ID of the Key Vault to use. | `string` | `""` | no |
 | os\_profile\_secrets\_vault\_certificates | One or more vault\_certificates blocks. | `list(object({ certificate_url = string, certificate_store = string }))` | `[]` | no |
 | os\_profile\_windows\_config\_enable\_automatic\_upgrades | Are automatic updates enabled on this Virtual Machine? | `bool` | `false` | no |

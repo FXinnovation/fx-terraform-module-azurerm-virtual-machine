@@ -147,7 +147,7 @@ resource "azurerm_virtual_machine" "linux" {
 
       content {
         key_data = ssh_keys.key_data
-        key_path = ssh_keys.key_path
+        path     = ssh_keys.path
       }
     }
   }
