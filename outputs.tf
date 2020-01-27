@@ -35,5 +35,5 @@ output "ids" {
 }
 
 output "identities" {
-  value = compact(concat(azurerm_virtual_machine.linux.*.identity, azurerm_virtual_machine.windows.*.identity, [""]))
+  value = compact(concat(flatten(azurerm_virtual_machine.linux.*.identity), flatten(azurerm_virtual_machine.windows.*.identity), [""]))
 }
