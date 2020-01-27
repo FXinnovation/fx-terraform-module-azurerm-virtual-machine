@@ -309,7 +309,7 @@ variable "storage_os_disk_caching" {
 
 variable "storage_os_disk_size_gb" {
   description = "Specifies the size of the OS Disk in gigabytes."
-  default     = 8
+  default     = 30
 }
 
 variable "storage_os_managed_disk_id" {
