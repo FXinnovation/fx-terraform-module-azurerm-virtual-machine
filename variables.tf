@@ -357,3 +357,77 @@ variable "winrm_certificate_url" {
   description = "The ID of the Key Vault Secret which contains the encrypted Certificate which should be installed on the Virtual Machine. This certificate must also be specified in the vault_certificates block within the os_profile_secrets block."
   default     = ""
 }
+
+###
+# Managed Disks
+###
+
+variable "managed_disk_count" {
+  description = "How many additional managed disk to attach to EACH Virtual Machines."
+  default     = 0
+}
+
+variable "managed_disk_names" {
+  description = "Specifies the names of the Managed Disks. Changing this forces a new resource to be created."
+  type        = list(string)
+  default     = ["manage-disk"]
+}
+
+variable "managed_disk_storage_account_types" {
+  description = "The types of storage to use for the Managed Disks. Possible values inside the list are Standard_LRS, Premium_LRS, StandardSSD_LRS or UltraSSD_LRS."
+  type        = list(string)
+  default     = ["Standard_LRS"]
+}
+
+variable "managed_disk_size_gbs" {
+  description = "Specifies the sizes of the Managed Disks to create in gigabytes. If create_option is Copy or FromImage, then the value must be equal to or greater than the source's size."
+  type        = list(number)
+  default     = [5]
+}
+
+variable "managed_disk_create_options" {
+  description = "The methods to use when creating the Managed Disks. Possible values include: Empty, FromImage, Copy, Import, Restore."
+  type        = list(string)
+  default     = ["Empty"]
+}
+
+variable "managed_disk_cachings" {
+  description = "Specifies the caching requirements for the Managed Disks. Possible values include None, ReadOnly and ReadWrite."
+  type        = list(string)
+  default     = ["ReadWrite"]
+}
+
+variable "managed_disk_write_accelerator_enableds" {
+  description = "Specifies if Write Accelerator is enabled on Managed Disks. This can only be enabled on Premium_LRS managed disks with no caching and M-Series VMs."
+  type        = list(bool)
+  default     = [false]
+}
+
+variable "managed_disk_image_reference_ids" {
+  description = "IDs of an existing platform/marketplace disk image to copy when create_option is FromImage. CAREFUL: if you create multiple Managed Disks with different create_option, make sure this list matches with the disks having \"FromImage\" on (meaning this list may have empty values)."
+  type        = list(string)
+  default     = [""]
+}
+
+variable "managed_disk_source_resource_ids" {
+  description = "The IDs of existing Managed Disks to copy create_option is Copy or the recovery points to restore when create_option is Restore. CAREFUL: if you create multiple Managed Disks with different create_option, make sure this list matches with the disks having \"Copy\"/\"Restore\" on (meaning this list may have empty values)."
+  type        = list(string)
+  default     = [""]
+}
+
+variable "managed_disk_source_uris" {
+  description = "URI to a valid VHD file to be used when create_option is Import. CAREFUL: if you create multiple Managed Disks with different create_option, make sure this list matches with the disks having \"Import\" on (meaning this list may have empty values)."
+  type        = list(string)
+  default     = [""]
+}
+
+variable "managed_disk_os_types" {
+  description = "Specify values when the source of an Import or Copy operation targets a source that contains an operating system. Valid values inside the list are Linux or Windows. CAREFUL: if you create multiple Managed Disks with different create_option, make sure this list matches with the disks having \"Copy\"/\"Import\"  on (meaning this list may have empty values)."
+  type        = list(string)
+  default     = [""]
+}
+
+variable "managed_disk_tags" {
+  description = "Tags specific to the Managed Disks."
+  default     = {}
+}

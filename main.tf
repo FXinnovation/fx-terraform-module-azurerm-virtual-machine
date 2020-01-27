@@ -330,3 +330,44 @@ resource "azurerm_virtual_machine" "windows" {
     },
   )
 }
+
+###
+# Managed Disks
+###
+
+resource "azurerm_managed_disk" "this" {
+  count = var.enabled && var.managed_disk_count > 0 ? var.managed_disk_count * var.vm_count : 0
+
+  location            = var.resource_group_location
+  resource_group_name = var.resource_group_name
+
+  name                 = var.managed_disk_names[floor((count.index - 1) / var.vm_count) % var.managed_disk_count]
+  storage_account_type = var.managed_disk_storage_account_types[floor((count.index - 1) / var.vm_count) % var.managed_disk_count]
+  disk_size_gb         = var.managed_disk_size_gbs[floor((count.index - 1) / var.vm_count) % var.managed_disk_count]
+
+  create_option = var.managed_disk_create_options[floor((count.index - 1) / var.vm_count) % var.managed_disk_count]
+
+  image_reference_id = var.managed_disk_image_reference_ids[floor((count.index - 1) / var.vm_count) % var.managed_disk_count]
+  source_resource_id = var.managed_disk_source_resource_ids[floor((count.index - 1) / var.vm_count) % var.managed_disk_count]
+  source_uri         = var.managed_disk_source_uris[floor((count.index - 1) / var.vm_count) % var.managed_disk_count]
+  os_type            = var.managed_disk_os_types[floor((count.index - 1) / var.vm_count) % var.managed_disk_count]
+
+  tags = merge(
+    var.tags,
+    var.managed_disk_tags,
+    {
+      Terraform = "true"
+    },
+  )
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "this" {
+  count = var.enabled && var.vm_count > 0 ? var.managed_disk_count * var.vm_count : 0
+
+  managed_disk_id    = azurerm_managed_disk.this.*.id[count.index]
+  virtual_machine_id = local.vm_ids[count.index % var.vm_count]
+
+  lun                       = count.index
+  caching                   = var.managed_disk_cachings[count.index % var.managed_disk_count]
+  write_accelerator_enabled = var.managed_disk_write_accelerator_enableds[count.index % var.managed_disk_count]
+}
