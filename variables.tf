@@ -196,12 +196,12 @@ variable "os_profile_computer_name" {
 
 variable "os_profile_admin_username" {
   description = "Specifies the name of the local administrator account."
-  default     = "admin"
+  default     = ""
 }
 
 variable "os_profile_admin_password" {
   description = "The password associated with the local administrator account."
-  default     = "THIS_MUST_BE_CHANGED"
+  default     = ""
 }
 
 variable "os_profile_custom_data" {
@@ -235,11 +235,6 @@ variable "os_profile_windows_config_timezone" {
   description = "Specifies the time zone of the virtual machine"
   default     = "UTC"
 }
-
-//variable "An additional_unattend_config block." {
-//  description = "Should the Azure Virtual Machine Guest Agent be installed on this Virtual Machine?"
-//  default     = []
-//}
 
 variable "os_profile_secrets_source_vault_id" {
   description = "Specifies the ID of the Key Vault to use."
