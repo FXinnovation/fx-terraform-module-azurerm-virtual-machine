@@ -31,7 +31,7 @@ output "network_interface_virtual_machine_ids" {
 ###
 
 output "ids" {
-  value = compact(concat(azurerm_virtual_machine.linux.*.id, azurerm_virtual_machine.windows.*.id, [""]))
+  value = local.vm_ids
 }
 
 output "identities" {
