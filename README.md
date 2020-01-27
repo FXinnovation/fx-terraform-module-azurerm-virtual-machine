@@ -25,6 +25,7 @@ See `examples` folders for usage of this module.
 | additional\_unattend\_config\_setting\_name | Specifies the name of the setting to which the content applies. Possible values are: FirstLogonCommands and AutoLogon. | `string` | `"FirstLogonCommands"` | no |
 | availability\_set\_enabled | Whether or not to create an availability set. | `bool` | `true` | no |
 | availability\_set\_exists | If defined, the existing availability set will be used by virtual machines instead of creating a new availability set inside this module. | `bool` | `false` | no |
+| availability\_set\_managed | Specifies whether the availability set is managed or not. Possible values are true (to specify aligned) or false (to specify classic). | `bool` | `true` | no |
 | availability\_set\_name | Specifies the name of the availability set. Changing this forces a new resource to be created. | `string` | `""` | no |
 | availability\_set\_tags | Tags specific to the availability set. | `map` | `{}` | no |
 | boot\_diagnostics\_enabled | Should Boot Diagnostics be enabled for this Virtual Machine? | `bool` | `false` | no |

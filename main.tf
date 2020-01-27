@@ -14,6 +14,8 @@ resource "azurerm_availability_set" "this" {
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 
+  managed = var.availability_set_managed
+
   tags = merge(
     var.tags,
     var.availability_set_tags,

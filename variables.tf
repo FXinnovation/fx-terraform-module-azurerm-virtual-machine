@@ -46,6 +46,11 @@ variable "availability_set_name" {
   default     = ""
 }
 
+variable "availability_set_managed" {
+  description = "Specifies whether the availability set is managed or not. Possible values are true (to specify aligned) or false (to specify classic)."
+  default     = true
+}
+
 variable "availability_set_tags" {
   description = "Tags specific to the availability set."
   default     = {}
