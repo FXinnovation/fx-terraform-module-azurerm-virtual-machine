@@ -73,7 +73,7 @@ resource "azurerm_virtual_machine" "linux" {
   delete_os_disk_on_termination    = var.delete_os_disk_on_termination
   delete_data_disks_on_termination = var.delete_data_disks_on_termination
 
-  availability_set_id = var.availability_set_enabled ? (var.availability_set_exists ? data.azurerm_availability_set.this.id : concat(azurerm_availability_set.this.*.id, [""])[0]) : ""
+  availability_set_id = var.availability_set_enabled ? (var.availability_set_exists ? data.azurerm_availability_set.this.*.id[0] : concat(azurerm_availability_set.this.*.id, [""])[0]) : ""
 
   additional_capabilities {
     ultra_ssd_enabled = var.additional_capabilities_ultra_ssd_enabled
@@ -203,7 +203,7 @@ resource "azurerm_virtual_machine" "windows" {
   delete_os_disk_on_termination    = var.delete_os_disk_on_termination
   delete_data_disks_on_termination = var.delete_data_disks_on_termination
 
-  availability_set_id = var.availability_set_enabled ? (var.availability_set_exists ? data.azurerm_availability_set.this.id : concat(azurerm_availability_set.this.*.id, [""])[0]) : ""
+  availability_set_id = var.availability_set_enabled ? (var.availability_set_exists ? data.azurerm_availability_set.this.*.id[0] : concat(azurerm_availability_set.this.*.id, [""])[0]) : ""
 
   additional_capabilities {
     ultra_ssd_enabled = var.additional_capabilities_ultra_ssd_enabled
