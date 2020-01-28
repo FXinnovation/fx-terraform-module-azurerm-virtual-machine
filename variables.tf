@@ -294,7 +294,7 @@ variable "storage_os_disk_create_option" {
 
 variable "storage_os_disk_name" {
   description = "Specifies how the OS Disk should be created. Possible values are Attach (managed disks only) and FromImage."
-  default     = "FromImage"
+  default     = "disk"
 }
 
 variable "storage_os_disk_caching" {
@@ -326,7 +326,6 @@ variable "storage_os_vhd_uri" {
   description = "Specifies the URI of the VHD file backing this Unmanaged OS Disk. Changing this forces a new resource to be created."
   default     = ""
 }
-
 
 variable "vm_count" {
   description = "How many Virtual Machines to create."

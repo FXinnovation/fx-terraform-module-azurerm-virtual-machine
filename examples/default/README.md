@@ -15,7 +15,7 @@ terraform destroy
 
 | Name | Version |
 |------|---------|
-| azurerm | ~>1.38.0 |
+| azurerm | ~>1.42.0 |
 | random | n/a |
 
 ## Inputs
@@ -32,6 +32,7 @@ terraform destroy
 | Name | Description |
 |------|-------------|
 | availability\_set\_id | n/a |
+| azurerm\_managed\_disk\_ids | n/a |
 | identities | n/a |
 | ids | n/a |
 | network\_interface\_ids | n/a |

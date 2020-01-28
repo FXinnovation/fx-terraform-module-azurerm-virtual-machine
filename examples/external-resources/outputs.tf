@@ -25,3 +25,7 @@ output "ids" {
 output "identities" {
   value = module.example.identities
 }
+
+output "azurerm_managed_disk_ids" {
+  value = module.example.azurerm_managed_disk_ids
+}

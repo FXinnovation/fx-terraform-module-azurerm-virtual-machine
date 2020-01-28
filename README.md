@@ -89,7 +89,7 @@ See `examples` folders for usage of this module.
 | storage\_image\_reference\_version | Specifies the version of the image used to create the virtual machine. Changing this forces a new resource to be created. | `string` | `"latest"` | no |
 | storage\_os\_disk\_caching | Specifies the caching requirements for the OS Disk. Possible values include None, ReadOnly and ReadWrite. | `string` | `"ReadWrite"` | no |
 | storage\_os\_disk\_create\_option | Specifies how the OS Disk should be created. Possible values are Attach (managed disks only) and FromImage. | `string` | `"FromImage"` | no |
-| storage\_os\_disk\_name | Specifies how the OS Disk should be created. Possible values are Attach (managed disks only) and FromImage. | `string` | `"FromImage"` | no |
+| storage\_os\_disk\_name | Specifies how the OS Disk should be created. Possible values are Attach (managed disks only) and FromImage. | `string` | `"disk"` | no |
 | storage\_os\_disk\_size\_gb | Specifies the size of the OS Disk in gigabytes. | `number` | `30` | no |
 | storage\_os\_managed\_disk\_id | SSpecifies the ID of an existing Managed Disk which should be attached as the OS Disk of this Virtual Machine. If this is set then the create\_option must be set to Attach. | `string` | `""` | no |
 | storage\_os\_managed\_disk\_type | Specifies the type of Managed Disk which should be created. Possible values are Standard\_LRS, StandardSSD\_LRS or Premium\_LRS. | `string` | `"Standard_LRS"` | no |
