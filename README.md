@@ -108,6 +108,7 @@ See `examples` folders for usage of this module.
 | Name | Description |
 |------|-------------|
 | availability\_set\_id | n/a |
+| azurerm\_managed\_disk\_ids | n/a |
 | identities | n/a |
 | ids | n/a |
 | network\_interface\_ids | n/a |

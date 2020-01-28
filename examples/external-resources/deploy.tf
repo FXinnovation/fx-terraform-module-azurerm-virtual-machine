@@ -25,7 +25,9 @@ resource "azurerm_subnet" "example" {
 }
 
 resource "azurerm_availability_set" "example" {
-  name                = "tftest${random_string.this.result}"
+  name = "tftest${random_string.this.result}"
+
+  managed             = true
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
 }
@@ -52,6 +54,7 @@ module "example" {
   }
 
   availability_set_name    = azurerm_availability_set.example.name
+  availability_set_enabled = true
   availability_set_exists  = true
   network_interface_names  = [azurerm_network_interface.example.name]
   network_interface_exists = true
