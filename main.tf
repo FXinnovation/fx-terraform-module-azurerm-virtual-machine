@@ -136,15 +136,11 @@ resource "azurerm_virtual_machine" "linux" {
     }
   }
 
-  dynamic "os_profile" {
-    for_each = var.os_profile_admin_username != "" ? [1] : []
-
-    content {
-      computer_name  = var.os_profile_computer_name
-      admin_username = var.os_profile_admin_username
-      admin_password = var.os_profile_admin_password
-      custom_data    = var.os_profile_custom_data
-    }
+  os_profile {
+    computer_name  = var.os_profile_computer_name
+    admin_username = var.os_profile_admin_username
+    admin_password = var.os_profile_admin_password
+    custom_data    = var.os_profile_custom_data
   }
 
   os_profile_linux_config {
@@ -154,8 +150,8 @@ resource "azurerm_virtual_machine" "linux" {
       for_each = var.os_profile_linux_config_ssh_keys
 
       content {
-        key_data = ssh_keys.key_data
-        path     = ssh_keys.path
+        key_data = ssh_keys.value.key_data
+        path     = format("/home/%s/.ssh/authorized_keys", var.os_profile_admin_username)
       }
     }
   }
@@ -180,8 +176,8 @@ resource "azurerm_virtual_machine" "linux" {
         for_each = var.os_profile_secrets_vault_certificates
 
         content {
-          certificate_url   = vault_certificates.certificate_url
-          certificate_store = vault_certificates.certificate_store
+          certificate_url   = vault_certificates.value.certificate_url
+          certificate_store = vault_certificates.value.certificate_store
         }
       }
     }
@@ -319,8 +315,8 @@ resource "azurerm_virtual_machine" "windows" {
         for_each = var.os_profile_secrets_vault_certificates
 
         content {
-          certificate_url   = vault_certificates.certificate_url
-          certificate_store = vault_certificates.certificate_store
+          certificate_url   = vault_certificates.value.certificate_url
+          certificate_store = vault_certificates.value.certificate_store
         }
       }
     }

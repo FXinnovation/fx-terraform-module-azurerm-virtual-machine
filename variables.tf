@@ -217,7 +217,7 @@ variable "os_profile_linux_config_disable_password_authentication" {
 variable "os_profile_linux_config_ssh_keys" {
   description = "One or more ssh_keys blocks. This field is required if disable_password_authentication is set to true."
   default     = []
-  type        = list(object({ key_data = string, path = string }))
+  type        = list(object({ key_data = string }))
 }
 
 
