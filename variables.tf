@@ -196,12 +196,12 @@ variable "os_profile_computer_name" {
 
 variable "os_profile_admin_username" {
   description = "Specifies the name of the local administrator account."
-  default     = ""
+  default     = "testadmin"
 }
 
 variable "os_profile_admin_password" {
   description = "The password associated with the local administrator account."
-  default     = ""
+  default     = "TO_BE_CHANGED"
 }
 
 variable "os_profile_custom_data" {

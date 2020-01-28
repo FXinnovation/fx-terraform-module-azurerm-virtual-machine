@@ -147,15 +147,6 @@ resource "azurerm_virtual_machine" "linux" {
     }
   }
 
-  dynamic "os_profile" {
-    for_each = var.os_profile_admin_username == "" ? [1] : []
-
-    content {
-      computer_name = var.os_profile_computer_name
-      custom_data   = var.os_profile_custom_data
-    }
-  }
-
   os_profile_linux_config {
     disable_password_authentication = var.os_profile_linux_config_disable_password_authentication
 
