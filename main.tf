@@ -66,7 +66,7 @@ resource "azurerm_network_interface" "this" {
 ###
 
 resource "azurerm_virtual_machine" "linux" {
-  count = var.vm_type == "Linux" ? var.vm_count : 0
+  count = var.enabled && var.vm_type == "Linux" ? var.vm_count : 0
 
   name                  = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
   location              = var.resource_group_location
@@ -194,14 +194,14 @@ resource "azurerm_virtual_machine" "linux" {
 
 
 resource "azurerm_virtual_machine" "windows" {
-  count = var.vm_type == "Windows" ? var.vm_count : 0
+  count = var.enabled && var.vm_type == "Windows" ? var.vm_count : 0
 
   license_type = var.license_type
 
   name                  = var.vm_count > 0 ? format("%s-%${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
   location              = var.resource_group_location
   resource_group_name   = var.resource_group_name
-  network_interface_ids = ["${azurerm_network_interface.this.*.id[count.index]}"]
+  network_interface_ids = var.network_interface_exists ? ["${data.azurerm_network_interface.this.*.id[count.index]}"] : ["${azurerm_network_interface.this.*.id[count.index]}"]
   vm_size               = var.vm_size
 
   delete_os_disk_on_termination    = var.delete_os_disk_on_termination
