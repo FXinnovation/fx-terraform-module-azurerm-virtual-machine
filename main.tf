@@ -111,7 +111,7 @@ resource "azurerm_virtual_machine" "linux" {
     for_each = var.storage_os_disk_create_option == "Attach" ? [1] : []
 
     content {
-      name                      = var.storage_os_disk_name
+      name                      = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
       caching                   = var.storage_os_disk_caching
       create_option             = var.storage_os_disk_create_option
       disk_size_gb              = var.storage_os_disk_size_gb
@@ -126,7 +126,7 @@ resource "azurerm_virtual_machine" "linux" {
     for_each = var.storage_os_disk_create_option == "FromImage" ? [1] : []
 
     content {
-      name                      = var.storage_os_disk_name
+      name                      = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
       caching                   = var.storage_os_disk_caching
       create_option             = var.storage_os_disk_create_option
       disk_size_gb              = var.storage_os_disk_size_gb
@@ -241,7 +241,7 @@ resource "azurerm_virtual_machine" "windows" {
     for_each = var.storage_os_disk_create_option == "Attach" ? [1] : []
 
     content {
-      name                      = var.storage_os_disk_name
+      name                      = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
       caching                   = var.storage_os_disk_caching
       create_option             = var.storage_os_disk_create_option
       disk_size_gb              = var.storage_os_disk_size_gb
@@ -256,7 +256,7 @@ resource "azurerm_virtual_machine" "windows" {
     for_each = var.storage_os_disk_create_option == "FromImage" ? [1] : []
 
     content {
-      name                      = var.storage_os_disk_name
+      name                      = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
       caching                   = var.storage_os_disk_caching
       create_option             = var.storage_os_disk_create_option
       disk_size_gb              = var.storage_os_disk_size_gb
