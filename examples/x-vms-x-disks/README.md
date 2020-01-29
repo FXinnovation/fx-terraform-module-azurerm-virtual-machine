@@ -1,6 +1,6 @@
-# External resources example
+# X VMs X Disks example
 
-This will use externally created resources.
+This will create multiple VMs with multiple data disks attached to them.
 
 ## Usage
 ```
