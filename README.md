@@ -66,7 +66,7 @@ See `examples` folders for usage of this module.
 | network\_interface\_network\_security\_group\_id | The ID of the Network Security Group to associate with the network interface. | `string` | `""` | no |
 | network\_interface\_tags | Tags specific to the network interface. | `map` | `{}` | no |
 | num\_suffix\_digits | How many digits to use for resources names. | `number` | `2` | no |
-| os\_profile\_admin\_password | The password associated with the local administrator account. | `string` | `"TO_BE_CHANGED"` | no |
+| os\_profile\_admin\_password | The password associated with the local administrator account. | `string` | `"Passw0rd_TO_BE_CHANGED!"` | no |
 | os\_profile\_admin\_username | Specifies the name of the local administrator account. | `string` | `"testadmin"` | no |
 | os\_profile\_computer\_name | Specifies the name of the Virtual Machine. | `string` | `"hostname"` | no |
 | os\_profile\_custom\_data | Specifies custom data to supply to the machine. On Linux-based systems, this can be used as a cloud-init script. On other systems, this will be copied as a file on disk. Internally, Terraform will base64 encode this value before sending it to the API. The maximum length of the binary array is 65535 bytes. | `string` | `""` | no |

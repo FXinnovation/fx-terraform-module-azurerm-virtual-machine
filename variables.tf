@@ -201,7 +201,7 @@ variable "os_profile_admin_username" {
 
 variable "os_profile_admin_password" {
   description = "The password associated with the local administrator account."
-  default     = "TO_BE_CHANGED"
+  default     = "Passw0rd_TO_BE_CHANGED!"
 }
 
 variable "os_profile_custom_data" {
