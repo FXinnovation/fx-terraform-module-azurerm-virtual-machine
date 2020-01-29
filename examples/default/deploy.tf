@@ -25,7 +25,7 @@ resource "azurerm_subnet" "example" {
 }
 
 module "example" {
-  source = ".."
+  source = "../.."
 
   resource_group_location = azurerm_resource_group.example.location
   resource_group_name     = azurerm_resource_group.example.name
