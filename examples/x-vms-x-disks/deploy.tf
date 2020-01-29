@@ -46,6 +46,7 @@ module "example" {
     test = "tftest${random_string.this.result}"
   }
 
+  name     = "tftest${random_string.this.result}"
   vm_count = 2
   vm_size  = "Standard_B2s"
   vm_type  = "Windows"
@@ -58,7 +59,7 @@ module "example" {
   winrm_protocol = "HTTP"
 
   managed_disk_count                      = 3
-  managed_disk_names                      = ["disk1", "disk2", "disk3"]
+  managed_disk_names                      = ["tftest1${random_string.this.result}", "tftest2${random_string.this.result}", "tftest3${random_string.this.result}"]
   managed_disk_storage_account_types      = ["Standard_LRS"]
   managed_disk_size_gbs                   = [5, 6, 10]
   managed_disk_create_options             = ["Empty", "Empty", "Empty"]
