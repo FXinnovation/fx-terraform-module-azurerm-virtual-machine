@@ -39,7 +39,7 @@ resource "azurerm_network_interface" "this" {
   resource_group_name = var.resource_group_name
 
   network_security_group_id     = var.network_interface_network_security_group_id
-  internal_dns_name_label       = var.network_interface_internal_dns_name_label
+  internal_dns_name_label       = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.network_interface_internal_dns_name_label, count.index + 1) : var.network_interface_internal_dns_name_label
   enable_ip_forwarding          = var.network_interface_enable_ip_forwarding
   enable_accelerated_networking = var.network_interface_enable_accelerated_networking
   dns_servers                   = var.network_interface_dns_servers
