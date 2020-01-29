@@ -423,7 +423,7 @@ variable "managed_disk_source_uris" {
 variable "managed_disk_os_types" {
   description = "Specify values when the source of an Import or Copy operation targets a source that contains an operating system. Valid values inside the list are Linux or Windows. CAREFUL: if you create multiple Managed Disks with different create_option, make sure this list matches with the disks having \"Copy\"/\"Import\"  on (meaning this list may have empty values)."
   type        = list(string)
-  default     = [""]
+  default     = ["Linux"]
 }
 
 variable "managed_disk_tags" {

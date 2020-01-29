@@ -65,6 +65,8 @@ module "example" {
   managed_disk_create_options             = ["Empty", "Empty", "Empty"]
   managed_disk_cachings                   = ["ReadWrite"]
   managed_disk_write_accelerator_enableds = [false]
+  managed_disk_os_types                   = ["Windows"]
+
   managed_disk_tags = {
     test = "tftest${random_string.this.result}"
   }
