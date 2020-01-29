@@ -55,6 +55,8 @@ module "example" {
   storage_image_reference_publisher = "MicrosoftWindowsServer"
   storage_os_disk_size_gb           = 127
 
+  winrm_protocol = "HTTP"
+
   managed_disk_count                      = 3
   managed_disk_names                      = ["disk1", "disk2", "disk3"]
   managed_disk_storage_account_types      = ["Standard_LRS"]
