@@ -198,7 +198,7 @@ resource "azurerm_virtual_machine" "windows" {
 
   license_type = var.license_type
 
-  name                  = var.vm_count > 0 ? format("%s-%${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
+  name                  = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
   location              = var.resource_group_location
   resource_group_name   = var.resource_group_name
   network_interface_ids = var.network_interface_exists ? ["${data.azurerm_network_interface.this.*.id[count.index]}"] : ["${azurerm_network_interface.this.*.id[count.index]}"]
