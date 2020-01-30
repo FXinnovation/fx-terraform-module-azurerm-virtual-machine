@@ -107,33 +107,16 @@ resource "azurerm_virtual_machine" "linux" {
     }
   }
 
-  dynamic "storage_os_disk" {
-    for_each = var.storage_os_disk_create_option == "Attach" ? [1] : []
-
-    content {
-      name                      = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
-      caching                   = var.storage_os_disk_caching
-      create_option             = var.storage_os_disk_create_option
-      disk_size_gb              = var.storage_os_disk_size_gb
-      managed_disk_id           = var.storage_os_managed_disk_id
-      managed_disk_type         = var.storage_os_managed_disk_type
-      write_accelerator_enabled = var.storage_os_write_accelerator_enabled
-      os_type                   = "Linux"
-    }
-  }
-
-  dynamic "storage_os_disk" {
-    for_each = var.storage_os_disk_create_option == "FromImage" ? [1] : []
-
-    content {
-      name                      = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
-      caching                   = var.storage_os_disk_caching
-      create_option             = var.storage_os_disk_create_option
-      disk_size_gb              = var.storage_os_disk_size_gb
-      vhd_uri                   = var.storage_os_vhd_uri
-      write_accelerator_enabled = var.storage_os_write_accelerator_enabled
-      os_type                   = "Linux"
-    }
+  storage_os_disk {
+    name                      = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
+    caching                   = var.storage_os_disk_caching
+    create_option             = var.storage_os_disk_create_option
+    disk_size_gb              = var.storage_os_disk_size_gb
+    managed_disk_id           = var.storage_os_disk_create_option == "Attach" ? var.storage_os_managed_disk_id : null
+    managed_disk_type         = var.storage_os_disk_create_option == "Attach" ? var.storage_os_managed_disk_type : null
+    vhd_uri                   = var.storage_os_disk_create_option == "FromImage" ? var.storage_os_vhd_uri : null
+    write_accelerator_enabled = var.storage_os_write_accelerator_enabled
+    os_type                   = "Linux"
   }
 
   os_profile {
@@ -237,33 +220,16 @@ resource "azurerm_virtual_machine" "windows" {
     }
   }
 
-  dynamic "storage_os_disk" {
-    for_each = var.storage_os_disk_create_option == "Attach" ? [1] : []
-
-    content {
-      name                      = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
-      caching                   = var.storage_os_disk_caching
-      create_option             = var.storage_os_disk_create_option
-      disk_size_gb              = var.storage_os_disk_size_gb
-      managed_disk_id           = var.storage_os_managed_disk_id
-      managed_disk_type         = var.storage_os_managed_disk_type
-      write_accelerator_enabled = var.storage_os_write_accelerator_enabled
-      os_type                   = "Windows"
-    }
-  }
-
-  dynamic "storage_os_disk" {
-    for_each = var.storage_os_disk_create_option == "FromImage" ? [1] : []
-
-    content {
-      name                      = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
-      caching                   = var.storage_os_disk_caching
-      create_option             = var.storage_os_disk_create_option
-      disk_size_gb              = var.storage_os_disk_size_gb
-      vhd_uri                   = var.storage_os_vhd_uri
-      write_accelerator_enabled = var.storage_os_write_accelerator_enabled
-      os_type                   = "Windows"
-    }
+  storage_os_disk {
+    name                      = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
+    caching                   = var.storage_os_disk_caching
+    create_option             = var.storage_os_disk_create_option
+    disk_size_gb              = var.storage_os_disk_size_gb
+    managed_disk_id           = var.storage_os_disk_create_option == "Attach" ? var.storage_os_managed_disk_id : null
+    managed_disk_type         = var.storage_os_disk_create_option == "Attach" ? var.storage_os_managed_disk_type : null
+    vhd_uri                   = var.storage_os_disk_create_option == "FromImage" ? var.storage_os_vhd_uri : null
+    write_accelerator_enabled = var.storage_os_write_accelerator_enabled
+    os_type                   = "Windows"
   }
 
   os_profile {
