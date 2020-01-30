@@ -120,7 +120,7 @@ resource "azurerm_virtual_machine" "linux" {
   }
 
   os_profile {
-    computer_name  = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
+    computer_name  = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
     admin_username = var.os_profile_admin_username
     admin_password = var.os_profile_admin_password
     custom_data    = var.os_profile_custom_data
@@ -233,7 +233,7 @@ resource "azurerm_virtual_machine" "windows" {
   }
 
   os_profile {
-    computer_name  = substr((var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name), -15, 15)
+    computer_name  = substr((var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name), -15, 15)
     admin_username = var.os_profile_admin_username
     admin_password = var.os_profile_admin_password
     custom_data    = var.os_profile_custom_data
