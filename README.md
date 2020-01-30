@@ -40,7 +40,7 @@ See `examples` folders for usage of this module.
 | managed\_disk\_count | How many additional managed disk to attach to EACH Virtual Machines. | `number` | `0` | no |
 | managed\_disk\_create\_options | The methods to use when creating the Managed Disks. Possible values include: Empty, FromImage, Copy, Import, Restore. | `list(string)` | <pre>[<br>  "Empty"<br>]<br></pre> | no |
 | managed\_disk\_image\_reference\_ids | IDs of an existing platform/marketplace disk image to copy when create\_option is FromImage. CAREFUL: if you create multiple Managed Disks with different create\_option, make sure this list matches with the disks having "FromImage" on (meaning this list may have empty values). | `list(string)` | <pre>[<br>  ""<br>]<br></pre> | no |
-| managed\_disk\_names | Specifies the names of the Managed Disks. Changing this forces a new resource to be created. | `list(string)` | <pre>[<br>  "manage-disk"<br>]<br></pre> | no |
+| managed\_disk\_names | Specifies the names of the Managed Disks. Changing this forces a new resource to be created. | `list(string)` | <pre>[<br>  "vm-manage-disk"<br>]<br></pre> | no |
 | managed\_disk\_os\_types | Specify values when the source of an Import or Copy operation targets a source that contains an operating system. Valid values inside the list are Linux or Windows. CAREFUL: if you create multiple Managed Disks with different create\_option, make sure this list matches with the disks having "Copy"/"Import"  on (meaning this list may have empty values). | `list(string)` | <pre>[<br>  "Linux"<br>]<br></pre> | no |
 | managed\_disk\_size\_gbs | Specifies the sizes of the Managed Disks to create in gigabytes. If create\_option is Copy or FromImage, then the value must be equal to or greater than the source's size. | `list(number)` | <pre>[<br>  5<br>]<br></pre> | no |
 | managed\_disk\_source\_resource\_ids | The IDs of existing Managed Disks to copy create\_option is Copy or the recovery points to restore when create\_option is Restore. CAREFUL: if you create multiple Managed Disks with different create\_option, make sure this list matches with the disks having "Copy"/"Restore" on (meaning this list may have empty values). | `list(string)` | <pre>[<br>  ""<br>]<br></pre> | no |
@@ -68,7 +68,6 @@ See `examples` folders for usage of this module.
 | num\_suffix\_digits | How many digits to use for resources names. | `number` | `2` | no |
 | os\_profile\_admin\_password | The password associated with the local administrator account. | `string` | `"Passw0rd_TO_BE_CHANGED!"` | no |
 | os\_profile\_admin\_username | Specifies the name of the local administrator account. | `string` | `"testadmin"` | no |
-| os\_profile\_computer\_name | Specifies the name of the Virtual Machine. | `string` | `"hostname"` | no |
 | os\_profile\_custom\_data | Specifies custom data to supply to the machine. On Linux-based systems, this can be used as a cloud-init script. On other systems, this will be copied as a file on disk. Internally, Terraform will base64 encode this value before sending it to the API. The maximum length of the binary array is 65535 bytes. | `string` | `""` | no |
 | os\_profile\_linux\_config\_disable\_password\_authentication | Specifies whether password authentication should be disabled. If set to false, an admin\_password must be specified. | `bool` | `true` | no |
 | os\_profile\_linux\_config\_ssh\_keys | One or more ssh\_keys blocks. This field is required if disable\_password\_authentication is set to true. | `list(object({ key_data = string }))` | `[]` | no |
@@ -89,7 +88,7 @@ See `examples` folders for usage of this module.
 | storage\_image\_reference\_version | Specifies the version of the image used to create the virtual machine. Changing this forces a new resource to be created. | `string` | `"latest"` | no |
 | storage\_os\_disk\_caching | Specifies the caching requirements for the OS Disk. Possible values include None, ReadOnly and ReadWrite. | `string` | `"ReadWrite"` | no |
 | storage\_os\_disk\_create\_option | Specifies how the OS Disk should be created. Possible values are Attach (managed disks only) and FromImage. | `string` | `"FromImage"` | no |
-| storage\_os\_disk\_name | Specifies how the OS Disk should be created. Possible values are Attach (managed disks only) and FromImage. | `string` | `"disk"` | no |
+| storage\_os\_disk\_name | Specifies how the OS Disk should be created. Possible values are Attach (managed disks only) and FromImage. | `string` | `"vm-disk"` | no |
 | storage\_os\_disk\_size\_gb | Specifies the size of the OS Disk in gigabytes. | `number` | `30` | no |
 | storage\_os\_managed\_disk\_id | SSpecifies the ID of an existing Managed Disk which should be attached as the OS Disk of this Virtual Machine. If this is set then the create\_option must be set to Attach. | `string` | `""` | no |
 | storage\_os\_managed\_disk\_type | Specifies the type of Managed Disk which should be created. Possible values are Standard\_LRS, StandardSSD\_LRS or Premium\_LRS. | `string` | `"Standard_LRS"` | no |

@@ -189,11 +189,6 @@ variable "name" {
   default     = "vm"
 }
 
-variable "os_profile_computer_name" {
-  description = "Specifies the name of the Virtual Machine."
-  default     = "hostname"
-}
-
 variable "os_profile_admin_username" {
   description = "Specifies the name of the local administrator account."
   default     = "testadmin"
@@ -294,7 +289,7 @@ variable "storage_os_disk_create_option" {
 
 variable "storage_os_disk_name" {
   description = "Specifies how the OS Disk should be created. Possible values are Attach (managed disks only) and FromImage."
-  default     = "disk"
+  default     = "vm-disk"
 }
 
 variable "storage_os_disk_caching" {
@@ -369,7 +364,7 @@ variable "managed_disk_count" {
 variable "managed_disk_names" {
   description = "Specifies the names of the Managed Disks. Changing this forces a new resource to be created."
   type        = list(string)
-  default     = ["manage-disk"]
+  default     = ["vm-manage-disk"]
 }
 
 variable "managed_disk_storage_account_types" {
