@@ -31,11 +31,11 @@ output "network_interface_virtual_machine_ids" {
 ###
 
 output "ids" {
-  value = compact(concat(azurerm_virtual_machine.this.*.id, [""]))
+  value = azurerm_virtual_machine.this.*.id
 }
 
 output "identities" {
-  value = compact(concat(azurerm_virtual_machine.this.*.identity, [""]))
+  value = azurerm_virtual_machine.this.*.identity
 }
 
 ###
