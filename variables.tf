@@ -65,19 +65,19 @@ variable "network_interface_enabled" {
   default     = true
 }
 
-variable "network_interface_names" {
+variable "network_interface_external_names" {
   description = "If defined, this network interfaces will be used by other virtual machines instead of creating a new network interfaces inside this module."
   default     = [""]
 }
 
 variable "network_interface_exists" {
-  description = "If defined, will use var.network_interface_names to get network interfaces instead of creating a new network interfaces inside this module."
+  description = "If defined, will use var.network_interface_external_names to get network interfaces instead of creating a new network interfaces inside this module."
   default     = false
 }
 
-variable "network_interface_name" {
+variable "network_interface_names" {
   description = "The name of the network interface. Changing this forces a new resource to be created."
-  default     = ""
+  default     = ["net-interface"]
 }
 
 variable "network_interface_network_security_group_id" {

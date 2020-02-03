@@ -32,7 +32,7 @@ resource "azurerm_availability_set" "this" {
 resource "azurerm_network_interface" "this" {
   count = local.should_create_network_interface ? var.vm_count : 0
 
-  name                = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.network_interface_name, count.index + 1) : var.network_interface_name
+  name                = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_names, count.index), count.index + 1) : element(var.network_interface_names, count.index)
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 

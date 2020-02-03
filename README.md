@@ -53,7 +53,8 @@ See `examples` folders for usage of this module.
 | network\_interface\_enable\_accelerated\_networking | Enables Azure Accelerated Networking using SR-IOV. Only certain VM instance sizes are supported. | `bool` | `false` | no |
 | network\_interface\_enable\_ip\_forwarding | Enables IP Forwarding on the NIC. | `bool` | `false` | no |
 | network\_interface\_enabled | Whether or not to create a network interface. | `bool` | `true` | no |
-| network\_interface\_exists | If defined, will use var.network\_interface\_names to get network interfaces instead of creating a new network interfaces inside this module. | `bool` | `false` | no |
+| network\_interface\_exists | If defined, will use var.network\_interface\_external\_names to get network interfaces instead of creating a new network interfaces inside this module. | `bool` | `false` | no |
+| network\_interface\_external\_names | If defined, this network interfaces will be used by other virtual machines instead of creating a new network interfaces inside this module. | `list` | <pre>[<br>  ""<br>]<br></pre> | no |
 | network\_interface\_internal\_dns\_name\_label | Relative DNS name for this NIC used for internal communications between VMs in the same VNet. | `string` | `""` | no |
 | network\_interface\_ip\_configuration\_name | User-defined name of the IP. | `string` | `""` | no |
 | network\_interface\_ip\_configuration\_private\_ip\_address | Static IP Address. | `string` | `""` | no |
@@ -61,8 +62,7 @@ See `examples` folders for usage of this module.
 | network\_interface\_ip\_configuration\_private\_ip\_address\_version | The IP Version to use. Possible values are IPv4 or IPv6. | `string` | `"IPv4"` | no |
 | network\_interface\_ip\_configuration\_public\_ip\_address\_id | Reference to a Public IP Address to associate with this NIC. | `string` | `""` | no |
 | network\_interface\_ip\_configuration\_subnet\_id | Reference to a subnet in which this NIC has been created. Required when private\_ip\_address\_version is IPv4. | `string` | `""` | no |
-| network\_interface\_name | The name of the network interface. Changing this forces a new resource to be created. | `string` | `""` | no |
-| network\_interface\_names | If defined, this network interfaces will be used by other virtual machines instead of creating a new network interfaces inside this module. | `list` | <pre>[<br>  ""<br>]<br></pre> | no |
+| network\_interface\_names | The name of the network interface. Changing this forces a new resource to be created. | `list` | <pre>[<br>  "net-interface"<br>]<br></pre> | no |
 | network\_interface\_network\_security\_group\_id | The ID of the Network Security Group to associate with the network interface. | `string` | `""` | no |
 | network\_interface\_tags | Tags specific to the network interface. | `map` | `{}` | no |
 | num\_suffix\_digits | How many digits to use for resources names. | `number` | `2` | no |
