@@ -1,3 +1,8 @@
+0.1.0 / 2020-01-29
+==================
+
+ * refactor: Virtual machine resource is now unique (VS split for Linux & Windows)
+
 0.0.0 / 2020-01-29
 ==================
 

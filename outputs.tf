@@ -31,11 +31,11 @@ output "network_interface_virtual_machine_ids" {
 ###
 
 output "ids" {
-  value = local.vm_ids
+  value = azurerm_virtual_machine.this.*.id
 }
 
 output "identities" {
-  value = compact(concat(flatten(azurerm_virtual_machine.linux.*.identity), flatten(azurerm_virtual_machine.windows.*.identity), [""]))
+  value = azurerm_virtual_machine.this.*.identity
 }
 
 ###
