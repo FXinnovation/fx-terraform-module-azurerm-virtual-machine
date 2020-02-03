@@ -75,64 +75,79 @@ variable "network_interface_exists" {
   default     = false
 }
 
+variable "network_interface_count" {
+  description = "How many Network Interfaces to create per Virtual Machine."
+  default     = 1
+}
+
 variable "network_interface_names" {
   description = "The name of the network interface. Changing this forces a new resource to be created."
   default     = ["net-interface"]
 }
 
-variable "network_interface_network_security_group_id" {
-  description = "The ID of the Network Security Group to associate with the network interface."
-  default     = ""
+variable "network_interface_network_security_group_ids" {
+  description = "The IDs of the Network Security Groups to associate with the network interfaces."
+  default     = [""]
 }
 
-variable "network_interface_internal_dns_name_label" {
-  description = "Relative DNS name for this NIC used for internal communications between VMs in the same VNet."
-  default     = ""
+variable "network_interface_internal_dns_name_labels" {
+  description = "Relative DNS names for this NIC used for internal communications between VMs in the same VNet."
+  type        = list(string)
+  default     = [""]
 }
 
-variable "network_interface_enable_ip_forwarding" {
-  description = "Enables IP Forwarding on the NIC. "
-  default     = false
+variable "network_interface_enable_ip_forwardings" {
+  description = "Enables IP Forwarding on the NICs."
+  type        = list(bool)
+  default     = [false]
 }
 
-variable "network_interface_enable_accelerated_networking" {
+variable "network_interface_enable_accelerated_networkings" {
   description = "Enables Azure Accelerated Networking using SR-IOV. Only certain VM instance sizes are supported."
-  default     = false
+  type        = list(bool)
+  default     = [false]
 }
 
 variable "network_interface_dns_servers" {
   description = "List of DNS servers IP addresses to use for this NIC, overrides the VNet-level server list"
-  default     = []
+  type        = list(list(string))
+  default     = [[null]]
 }
 
-variable "network_interface_ip_configuration_name" {
-  description = "User-defined name of the IP."
-  default     = ""
+variable "network_interface_ip_configuration_names" {
+  description = "User-defined name of the IPs for the Network Interfaces."
+  type        = list(string)
+  default     = [""]
 }
 
-variable "network_interface_ip_configuration_subnet_id" {
-  description = "Reference to a subnet in which this NIC has been created. Required when private_ip_address_version is IPv4."
-  default     = ""
+variable "network_interface_ip_configuration_subnet_ids" {
+  description = "Reference to subnets in which this NICs have been created. Required when private_ip_address_versions is IPv4."
+  type        = list(string)
+  default     = [""]
 }
 
-variable "network_interface_ip_configuration_private_ip_address" {
-  description = "Static IP Address."
-  default     = ""
+variable "network_interface_ip_configuration_private_ip_addresses" {
+  description = "Static IP Addresses."
+  type        = list(string)
+  default     = [""]
 }
 
-variable "network_interface_ip_configuration_private_ip_address_allocation" {
-  description = "Defines how a private IP address is assigned. Options are Static or Dynamic."
-  default     = "Dynamic"
+variable "network_interface_ip_configuration_private_ip_address_allocations" {
+  description = "Defines how a private IP addresses are assigned. Options are Static or Dynamic."
+  type        = list(string)
+  default     = ["Dynamic"]
 }
 
-variable "network_interface_ip_configuration_private_ip_address_version" {
-  description = "The IP Version to use. Possible values are IPv4 or IPv6."
-  default     = "IPv4"
+variable "network_interface_ip_configuration_private_ip_address_versions" {
+  description = "The IP versions to use. Possible values are IPv4 or IPv6."
+  type        = list(string)
+  default     = ["IPv4"]
 }
 
-variable "network_interface_ip_configuration_public_ip_address_id" {
+variable "network_interface_ip_configuration_public_ip_address_ids" {
   description = "Reference to a Public IP Address to associate with this NIC."
-  default     = ""
+  type        = list(string)
+  default     = [""]
 }
 
 variable "network_interface_tags" {

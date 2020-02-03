@@ -1,6 +1,6 @@
 # X VMs X Disks example
 
-This will create multiple VMs with multiple data disks attached to them.
+This will create multiple VMs with multiple network interfaces, with multiple data disks attached to them.
 
 ## Usage
 ```
