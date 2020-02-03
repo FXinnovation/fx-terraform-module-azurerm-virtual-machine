@@ -111,7 +111,7 @@ variable "network_interface_enable_accelerated_networkings" {
 variable "network_interface_dns_servers" {
   description = "List of DNS servers IP addresses to use for this NIC, overrides the VNet-level server list"
   type        = list(list(string))
-  default     = [[null]]
+  default     = [null]
 }
 
 variable "network_interface_ip_configuration_names" {

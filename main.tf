@@ -62,6 +62,7 @@ resource "azurerm_network_interface" "this" {
 ###
 # Virtual Machine
 ###
+
 resource "azurerm_virtual_machine" "this" {
   count = var.enabled ? var.vm_count : 0
 

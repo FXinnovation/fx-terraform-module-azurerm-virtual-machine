@@ -49,7 +49,7 @@ See `examples` folders for usage of this module.
 | managed\_disk\_write\_accelerator\_enableds | Specifies if Write Accelerator is enabled on Managed Disks. This can only be enabled on Premium\_LRS managed disks with no caching and M-Series VMs. | `list(bool)` | <pre>[<br>  false<br>]<br></pre> | no |
 | name | Specifies the name of the Virtual Machine. Changing this forces a new resource to be created. | `string` | `"vm"` | no |
 | network\_interface\_count | How many Network Interfaces to create per Virtual Machine. | `number` | `1` | no |
-| network\_interface\_dns\_servers | List of DNS servers IP addresses to use for this NIC, overrides the VNet-level server list | `list(list(string))` | <pre>[<br>  [<br>    null<br>  ]<br>]<br></pre> | no |
+| network\_interface\_dns\_servers | List of DNS servers IP addresses to use for this NIC, overrides the VNet-level server list | `list(list(string))` | <pre>[<br>  null<br>]<br></pre> | no |
 | network\_interface\_enable\_accelerated\_networkings | Enables Azure Accelerated Networking using SR-IOV. Only certain VM instance sizes are supported. | `list(bool)` | <pre>[<br>  false<br>]<br></pre> | no |
 | network\_interface\_enable\_ip\_forwardings | Enables IP Forwarding on the NICs. | `list(bool)` | <pre>[<br>  false<br>]<br></pre> | no |
 | network\_interface\_enabled | Whether or not to create a network interface. | `bool` | `true` | no |
