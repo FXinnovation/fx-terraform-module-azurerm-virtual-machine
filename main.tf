@@ -68,11 +68,12 @@ resource "azurerm_virtual_machine" "this" {
 
   license_type = var.vm_type == "Windows" ? var.license_type : null
 
-  name                  = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
-  location              = var.resource_group_location
-  resource_group_name   = var.resource_group_name
-  network_interface_ids = element(chunklist((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), var.network_interface_count), count.index)
-  vm_size               = var.vm_size
+  name                         = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
+  location                     = var.resource_group_location
+  resource_group_name          = var.resource_group_name
+  network_interface_ids        = element(chunklist((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), var.network_interface_count), count.index)
+  primary_network_interface_id = var.network_interface_exists ? data.azurerm_network_interface.this.*.id[count.index * var.network_interface_count] : azurerm_network_interface.this.*.id[count.index * var.network_interface_count]
+  vm_size                      = var.vm_size
 
   delete_os_disk_on_termination    = var.delete_os_disk_on_termination
   delete_data_disks_on_termination = var.delete_data_disks_on_termination
