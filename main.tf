@@ -59,6 +59,14 @@ resource "azurerm_network_interface" "this" {
   )
 }
 
+resource "azurerm_network_interface_application_security_group_association" "this" {
+  count = var.enabled ? var.network_interface_application_security_group_count * var.network_interface_count * var.vm_count : 0
+
+  network_interface_id          = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), count.index % var.network_interface_count)
+  ip_configuration_name         = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.ip_configuration.name : azurerm_network_interface.this.*.ip_configuration.name), count.index % var.network_interface_count)
+  application_security_group_id = element(var.network_interface_application_security_group_ids, floor(count.index / var.network_interface_count) % var.network_interface_application_security_group_count)
+}
+
 ###
 # Virtual Machine
 ###
