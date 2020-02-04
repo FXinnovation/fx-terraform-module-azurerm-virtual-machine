@@ -166,6 +166,17 @@ variable "network_interface_application_security_group_ids" {
   default     = [""]
 }
 
+variable "network_interface_application_gateway_backend_address_pool_count" {
+  description = "How many Gateway Backend Address Pools to create per Network Interface."
+  default     = 0
+}
+
+variable "network_interface_application_gateway_backend_address_pool_ids" {
+  description = "The IDs of the Application Gateway's Backend Address Pools which each Network Interface which should be connected to. Changing this forces a new resource to be created."
+  type        = list(string)
+  default     = [""]
+}
+
 ###
 # Virtual Machine
 ###

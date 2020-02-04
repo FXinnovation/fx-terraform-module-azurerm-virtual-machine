@@ -48,6 +48,8 @@ See `examples` folders for usage of this module.
 | managed\_disk\_tags | Tags specific to the Managed Disks. | `map` | `{}` | no |
 | managed\_disk\_write\_accelerator\_enableds | Specifies if Write Accelerator is enabled on Managed Disks. This can only be enabled on Premium\_LRS managed disks with no caching and M-Series VMs. | `list(bool)` | <pre>[<br>  false<br>]<br></pre> | no |
 | name | Specifies the name of the Virtual Machine. Changing this forces a new resource to be created. | `string` | `"vm"` | no |
+| network\_interface\_application\_gateway\_backend\_address\_pool\_count | How many Gateway Backend Address Pools to create per Network Interface. | `number` | `0` | no |
+| network\_interface\_application\_gateway\_backend\_address\_pool\_ids | The IDs of the Application Gateway's Backend Address Pools which each Network Interface which should be connected to. Changing this forces a new resource to be created. | `list(string)` | <pre>[<br>  ""<br>]<br></pre> | no |
 | network\_interface\_application\_security\_group\_count | How many Network Interfaces security groups to create per Network Interface. | `number` | `0` | no |
 | network\_interface\_application\_security\_group\_ids | The IDs of the Application Security Groups which each Network Interfaces which should be connected to. Changing this forces a new resource to be created. | `list(string)` | <pre>[<br>  ""<br>]<br></pre> | no |
 | network\_interface\_count | How many Network Interfaces to create per Virtual Machine. | `number` | `1` | no |
