@@ -172,7 +172,18 @@ variable "network_interface_application_gateway_backend_address_pool_count" {
 }
 
 variable "network_interface_application_gateway_backend_address_pool_ids" {
-  description = "The IDs of the Application Gateway's Backend Address Pools which each Network Interface which should be connected to. Changing this forces a new resource to be created."
+  description = "The IDs of the Application Gateway's Backend Address Pools which each Network Interfaces which should be connected to. Changing this forces a new resource to be created."
+  type        = list(string)
+  default     = [""]
+}
+
+variable "network_interface_backend_address_pool_count" {
+  description = "How many Backend Address Pools to create per Network Interface."
+  default     = 0
+}
+
+variable "network_interface_backend_address_pool_ids" {
+  description = "The IDs of the Load Balancer Backend Address Pools which each Network Interfaces which should be connected to. Changing this forces a new resource to be created."
   type        = list(string)
   default     = [""]
 }
