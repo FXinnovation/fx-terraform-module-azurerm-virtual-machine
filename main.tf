@@ -75,12 +75,20 @@ resource "azurerm_network_interface_application_gateway_backend_address_pool_ass
   backend_address_pool_id = element(var.network_interface_application_gateway_backend_address_pool_ids, floor(count.index / var.network_interface_count) % var.network_interface_application_gateway_backend_address_pool_count)
 }
 
-resource "azurerm_network_interface_backend_address_pool_association" "example" {
+resource "azurerm_network_interface_backend_address_pool_association" "this" {
   count = var.enabled ? var.network_interface_backend_address_pool_count * var.network_interface_count * var.vm_count : 0
 
   network_interface_id    = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), count.index % var.network_interface_count)
   ip_configuration_name   = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), (count.index % var.network_interface_count) + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
   backend_address_pool_id = element(var.network_interface_backend_address_pool_ids, floor(count.index / var.network_interface_count) % var.network_interface_backend_address_pool_count)
+}
+
+resource "azurerm_network_interface_nat_rule_association" "this" {
+  count = var.enabled ? var.network_interface_nat_rule_association_count * var.network_interface_count * var.vm_count : 0
+
+  network_interface_id  = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), count.index % var.network_interface_count)
+  ip_configuration_name = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), (count.index % var.network_interface_count) + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
+  nat_rule_id           = element(var.network_interface_nat_rule_id_ids, floor(count.index / var.network_interface_count) % var.network_interface_nat_rule_association_count)
 }
 
 ###

@@ -48,11 +48,11 @@ See `examples` folders for usage of this module.
 | managed\_disk\_tags | Tags specific to the Managed Disks. | `map` | `{}` | no |
 | managed\_disk\_write\_accelerator\_enableds | Specifies if Write Accelerator is enabled on Managed Disks. This can only be enabled on Premium\_LRS managed disks with no caching and M-Series VMs. | `list(bool)` | <pre>[<br>  false<br>]</pre> | no |
 | name | Specifies the name of the Virtual Machine. Changing this forces a new resource to be created. | `string` | `"vm"` | no |
-| network\_interface\_application\_gateway\_backend\_address\_pool\_count | How many Gateway Backend Address Pools to create per Network Interface. | `number` | `0` | no |
+| network\_interface\_application\_gateway\_backend\_address\_pool\_count | How many Gateway Backend Address Pools to associate per Network Interface. | `number` | `0` | no |
 | network\_interface\_application\_gateway\_backend\_address\_pool\_ids | The IDs of the Application Gateway's Backend Address Pools which each Network Interfaces which should be connected to. Changing this forces a new resource to be created. | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |
-| network\_interface\_application\_security\_group\_count | How many Network Interfaces security groups to create per Network Interface. | `number` | `0` | no |
+| network\_interface\_application\_security\_group\_count | How many Network Interfaces security groups to associate per Network Interface. | `number` | `0` | no |
 | network\_interface\_application\_security\_group\_ids | The IDs of the Application Security Groups which each Network Interfaces which should be connected to. Changing this forces a new resource to be created. | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |
-| network\_interface\_backend\_address\_pool\_count | How many Backend Address Pools to create per Network Interface. | `number` | `0` | no |
+| network\_interface\_backend\_address\_pool\_count | How many Backend Address Pools to associate per Network Interface. | `number` | `0` | no |
 | network\_interface\_backend\_address\_pool\_ids | The IDs of the Load Balancer Backend Address Pools which each Network Interfaces which should be connected to. Changing this forces a new resource to be created. | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |
 | network\_interface\_count | How many Network Interfaces to create per Virtual Machine. | `number` | `1` | no |
 | network\_interface\_dns\_servers | List of DNS servers IP addresses to use for this NIC, overrides the VNet-level server list | `list(list(string))` | <pre>[<br>  null<br>]</pre> | no |
@@ -69,6 +69,8 @@ See `examples` folders for usage of this module.
 | network\_interface\_ip\_configuration\_public\_ip\_address\_ids | Reference to a Public IP Address to associate with this NIC. | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |
 | network\_interface\_ip\_configuration\_subnet\_ids | Reference to subnets in which this NICs have been created. Required when private\_ip\_address\_versions is IPv4. | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |
 | network\_interface\_names | The name of the network interface. Changing this forces a new resource to be created. | `list` | <pre>[<br>  "net-interface"<br>]</pre> | no |
+| network\_interface\_nat\_rule\_association\_count | How many NAT Rules to associate per Network Interface. | `number` | `0` | no |
+| network\_interface\_nat\_rule\_id\_ids | The IDs of the Load Balancer NAT Rules which each Network Interfaces which should be connected to. Changing this forces a new resource to be created. | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |
 | network\_interface\_network\_security\_group\_ids | The IDs of the Network Security Groups to associate with the network interfaces. | `list` | <pre>[<br>  ""<br>]</pre> | no |
 | network\_interface\_tags | Tags specific to the network interface. | `map` | `{}` | no |
 | num\_suffix\_digits | How many digits to use for resources names. | `number` | `2` | no |
