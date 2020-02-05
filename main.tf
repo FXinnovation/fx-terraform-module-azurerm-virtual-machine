@@ -63,7 +63,7 @@ resource "azurerm_network_interface_application_security_group_association" "thi
   count = var.enabled ? var.network_interface_application_security_group_count * var.network_interface_count * var.vm_count : 0
 
   network_interface_id          = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), count.index % var.network_interface_count)
-  ip_configuration_name         = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.ip_configuration.name : azurerm_network_interface.this.*.ip_configuration.name), count.index % var.network_interface_count)
+  ip_configuration_name         = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), (count.index % var.network_interface_count) + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
   application_security_group_id = element(var.network_interface_application_security_group_ids, floor(count.index / var.network_interface_count) % var.network_interface_application_security_group_count)
 }
 
@@ -71,7 +71,7 @@ resource "azurerm_network_interface_application_gateway_backend_address_pool_ass
   count = var.enabled ? var.network_interface_application_gateway_backend_address_pool_count * var.network_interface_count * var.vm_count : 0
 
   network_interface_id    = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), count.index % var.network_interface_count)
-  ip_configuration_name   = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.ip_configuration.name : azurerm_network_interface.this.*.ip_configuration.name), count.index % var.network_interface_count)
+  ip_configuration_name   = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), (count.index % var.network_interface_count) + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
   backend_address_pool_id = element(var.network_interface_application_gateway_backend_address_pool_ids, floor(count.index / var.network_interface_count) % var.network_interface_application_gateway_backend_address_pool_count)
 }
 
