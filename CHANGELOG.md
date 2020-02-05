@@ -1,3 +1,8 @@
+0.3.0 / 2020-02-05
+==================
+
+ * feat: allows network interfaces associations: NAT rules, security groups and backend address pools.
+
 0.2.0 / 2020-02-03
 ==================
 
