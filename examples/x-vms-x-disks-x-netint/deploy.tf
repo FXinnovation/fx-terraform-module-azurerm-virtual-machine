@@ -23,6 +23,19 @@ resource "azurerm_subnet" "example" {
   address_prefix       = "10.0.0.0/24"
 }
 
+resource "azurerm_application_security_group" "example1" {
+  name                = "tftest${random_string.this.result}1"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+}
+
+resource "azurerm_application_security_group" "example2" {
+  name                = "tftest${random_string.this.result}1"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+}
+
+
 module "example" {
   source = "../.."
 
@@ -46,6 +59,9 @@ module "example" {
   network_interface_tags = {
     test = "tftest${random_string.this.result}"
   }
+
+  network_interface_application_security_group_count = 2
+  network_interface_application_security_group_ids   = [azurerm_application_security_group.example1.id, azurerm_application_security_group.example2.id]
 
   name     = "tftest${random_string.this.result}"
   vm_count = 2
