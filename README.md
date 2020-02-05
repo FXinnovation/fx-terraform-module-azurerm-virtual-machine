@@ -6,7 +6,6 @@ See `examples` folders for usage of this module.
 ## Limitation
 
 - Any call of this module will create resources in a single resource group.
-- Only one network interface pre VM is possible now.
 - Any network interfaces created in this module will have a single ip_configuration.
 - Tags for VMs are shared among all VMs. Same thing for managed disks.
 - Managed disks cannot be encrypted.
@@ -49,21 +48,22 @@ See `examples` folders for usage of this module.
 | managed\_disk\_tags | Tags specific to the Managed Disks. | `map` | `{}` | no |
 | managed\_disk\_write\_accelerator\_enableds | Specifies if Write Accelerator is enabled on Managed Disks. This can only be enabled on Premium\_LRS managed disks with no caching and M-Series VMs. | `list(bool)` | <pre>[<br>  false<br>]<br></pre> | no |
 | name | Specifies the name of the Virtual Machine. Changing this forces a new resource to be created. | `string` | `"vm"` | no |
-| network\_interface\_dns\_servers | List of DNS servers IP addresses to use for this NIC, overrides the VNet-level server list | `list` | `[]` | no |
-| network\_interface\_enable\_accelerated\_networking | Enables Azure Accelerated Networking using SR-IOV. Only certain VM instance sizes are supported. | `bool` | `false` | no |
-| network\_interface\_enable\_ip\_forwarding | Enables IP Forwarding on the NIC. | `bool` | `false` | no |
+| network\_interface\_count | How many Network Interfaces to create per Virtual Machine. | `number` | `1` | no |
+| network\_interface\_dns\_servers | List of DNS servers IP addresses to use for this NIC, overrides the VNet-level server list | `list(list(string))` | <pre>[<br>  null<br>]<br></pre> | no |
+| network\_interface\_enable\_accelerated\_networkings | Enables Azure Accelerated Networking using SR-IOV. Only certain VM instance sizes are supported. | `list(bool)` | <pre>[<br>  false<br>]<br></pre> | no |
+| network\_interface\_enable\_ip\_forwardings | Enables IP Forwarding on the NICs. | `list(bool)` | <pre>[<br>  false<br>]<br></pre> | no |
 | network\_interface\_enabled | Whether or not to create a network interface. | `bool` | `true` | no |
-| network\_interface\_exists | If defined, will use var.network\_interface\_names to get network interfaces instead of creating a new network interfaces inside this module. | `bool` | `false` | no |
-| network\_interface\_internal\_dns\_name\_label | Relative DNS name for this NIC used for internal communications between VMs in the same VNet. | `string` | `""` | no |
-| network\_interface\_ip\_configuration\_name | User-defined name of the IP. | `string` | `""` | no |
-| network\_interface\_ip\_configuration\_private\_ip\_address | Static IP Address. | `string` | `""` | no |
-| network\_interface\_ip\_configuration\_private\_ip\_address\_allocation | Defines how a private IP address is assigned. Options are Static or Dynamic. | `string` | `"Dynamic"` | no |
-| network\_interface\_ip\_configuration\_private\_ip\_address\_version | The IP Version to use. Possible values are IPv4 or IPv6. | `string` | `"IPv4"` | no |
-| network\_interface\_ip\_configuration\_public\_ip\_address\_id | Reference to a Public IP Address to associate with this NIC. | `string` | `""` | no |
-| network\_interface\_ip\_configuration\_subnet\_id | Reference to a subnet in which this NIC has been created. Required when private\_ip\_address\_version is IPv4. | `string` | `""` | no |
-| network\_interface\_name | The name of the network interface. Changing this forces a new resource to be created. | `string` | `""` | no |
-| network\_interface\_names | If defined, this network interfaces will be used by other virtual machines instead of creating a new network interfaces inside this module. | `list` | <pre>[<br>  ""<br>]<br></pre> | no |
-| network\_interface\_network\_security\_group\_id | The ID of the Network Security Group to associate with the network interface. | `string` | `""` | no |
+| network\_interface\_exists | If defined, will use var.network\_interface\_external\_names to get network interfaces instead of creating a new network interfaces inside this module. | `bool` | `false` | no |
+| network\_interface\_external\_names | If defined, this network interfaces will be used by other virtual machines instead of creating a new network interfaces inside this module. | `list` | <pre>[<br>  ""<br>]<br></pre> | no |
+| network\_interface\_internal\_dns\_name\_labels | Relative DNS names for this NIC used for internal communications between VMs in the same VNet. | `list(string)` | <pre>[<br>  ""<br>]<br></pre> | no |
+| network\_interface\_ip\_configuration\_names | User-defined name of the IPs for the Network Interfaces. | `list(string)` | <pre>[<br>  ""<br>]<br></pre> | no |
+| network\_interface\_ip\_configuration\_private\_ip\_address\_allocations | Defines how a private IP addresses are assigned. Options are Static or Dynamic. | `list(string)` | <pre>[<br>  "Dynamic"<br>]<br></pre> | no |
+| network\_interface\_ip\_configuration\_private\_ip\_address\_versions | The IP versions to use. Possible values are IPv4 or IPv6. | `list(string)` | <pre>[<br>  "IPv4"<br>]<br></pre> | no |
+| network\_interface\_ip\_configuration\_private\_ip\_addresses | Static IP Addresses. | `list(string)` | <pre>[<br>  ""<br>]<br></pre> | no |
+| network\_interface\_ip\_configuration\_public\_ip\_address\_ids | Reference to a Public IP Address to associate with this NIC. | `list(string)` | <pre>[<br>  ""<br>]<br></pre> | no |
+| network\_interface\_ip\_configuration\_subnet\_ids | Reference to subnets in which this NICs have been created. Required when private\_ip\_address\_versions is IPv4. | `list(string)` | <pre>[<br>  ""<br>]<br></pre> | no |
+| network\_interface\_names | The name of the network interface. Changing this forces a new resource to be created. | `list` | <pre>[<br>  "net-interface"<br>]<br></pre> | no |
+| network\_interface\_network\_security\_group\_ids | The IDs of the Network Security Groups to associate with the network interfaces. | `list` | <pre>[<br>  ""<br>]<br></pre> | no |
 | network\_interface\_tags | Tags specific to the network interface. | `map` | `{}` | no |
 | num\_suffix\_digits | How many digits to use for resources names. | `number` | `2` | no |
 | os\_profile\_admin\_password | The password associated with the local administrator account. | `string` | `"Passw0rd_TO_BE_CHANGED!"` | no |

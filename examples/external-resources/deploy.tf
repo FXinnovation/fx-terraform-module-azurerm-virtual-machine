@@ -56,8 +56,9 @@ module "example" {
   availability_set_name    = azurerm_availability_set.example.name
   availability_set_enabled = true
   availability_set_exists  = true
-  network_interface_names  = [azurerm_network_interface.example.name]
-  network_interface_exists = true
+
+  network_interface_external_names = [azurerm_network_interface.example.name]
+  network_interface_exists         = true
 
   name = "tftest${random_string.this.result}"
 

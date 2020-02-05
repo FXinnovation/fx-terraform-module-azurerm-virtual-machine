@@ -1,7 +1,7 @@
 data "azurerm_network_interface" "this" {
   count = var.enabled && var.network_interface_exists ? var.vm_count : 0
 
-  name                = var.network_interface_names[count.index]
+  name                = var.network_interface_external_names[count.index]
   resource_group_name = var.resource_group_name
 }
 

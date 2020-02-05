@@ -1,3 +1,8 @@
+0.2.0 / 2020-02-03
+==================
+
+ * feat: allows multiple network interfaces per Virtual Machine
+
 0.1.0 / 2020-01-29
 ==================
 

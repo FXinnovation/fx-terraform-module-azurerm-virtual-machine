@@ -30,24 +30,24 @@ resource "azurerm_availability_set" "this" {
 ###
 
 resource "azurerm_network_interface" "this" {
-  count = local.should_create_network_interface ? var.vm_count : 0
+  count = local.should_create_network_interface ? var.network_interface_count * var.vm_count : 0
 
-  name                = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.network_interface_name, count.index + 1) : var.network_interface_name
+  name                = var.network_interface_count * var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_names, count.index % var.network_interface_count), count.index + 1) : element(var.network_interface_names, count.index % var.network_interface_count)
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 
-  network_security_group_id     = var.network_interface_network_security_group_id
-  internal_dns_name_label       = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.network_interface_internal_dns_name_label, count.index + 1) : var.network_interface_internal_dns_name_label
-  enable_ip_forwarding          = var.network_interface_enable_ip_forwarding
-  enable_accelerated_networking = var.network_interface_enable_accelerated_networking
-  dns_servers                   = var.network_interface_dns_servers
+  network_security_group_id     = element(var.network_interface_network_security_group_ids, count.index % var.network_interface_count)
+  internal_dns_name_label       = var.network_interface_count * var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_internal_dns_name_labels, count.index % var.network_interface_count), count.index + 1) : element(var.network_interface_internal_dns_name_labels, count.index % var.network_interface_count)
+  enable_ip_forwarding          = element(var.network_interface_enable_ip_forwardings, count.index % var.network_interface_count)
+  enable_accelerated_networking = element(var.network_interface_enable_accelerated_networkings, count.index % var.network_interface_count)
+  dns_servers                   = element(var.network_interface_dns_servers, count.index % var.network_interface_count)
 
   ip_configuration {
-    name                          = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.network_interface_ip_configuration_name, count.index + 1) : var.network_interface_ip_configuration_name
-    subnet_id                     = var.network_interface_ip_configuration_subnet_id
-    private_ip_address            = var.network_interface_ip_configuration_private_ip_address
-    private_ip_address_allocation = var.network_interface_ip_configuration_private_ip_address_allocation
-    private_ip_address_version    = var.network_interface_ip_configuration_private_ip_address_version
+    name                          = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), count.index + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
+    subnet_id                     = element(var.network_interface_ip_configuration_subnet_ids, count.index % var.network_interface_count)
+    private_ip_address            = element(var.network_interface_ip_configuration_private_ip_addresses, count.index % var.network_interface_count)
+    private_ip_address_allocation = element(var.network_interface_ip_configuration_private_ip_address_allocations, count.index % var.network_interface_count)
+    private_ip_address_version    = element(var.network_interface_ip_configuration_private_ip_address_versions, count.index % var.network_interface_count)
   }
 
   tags = merge(
@@ -62,16 +62,18 @@ resource "azurerm_network_interface" "this" {
 ###
 # Virtual Machine
 ###
+
 resource "azurerm_virtual_machine" "this" {
   count = var.enabled ? var.vm_count : 0
 
   license_type = var.vm_type == "Windows" ? var.license_type : null
 
-  name                  = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
-  location              = var.resource_group_location
-  resource_group_name   = var.resource_group_name
-  network_interface_ids = var.network_interface_exists ? ["${data.azurerm_network_interface.this.*.id[count.index]}"] : ["${azurerm_network_interface.this.*.id[count.index]}"]
-  vm_size               = var.vm_size
+  name                         = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
+  location                     = var.resource_group_location
+  resource_group_name          = var.resource_group_name
+  network_interface_ids        = element(chunklist((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), var.network_interface_count), count.index)
+  primary_network_interface_id = var.network_interface_exists ? data.azurerm_network_interface.this.*.id[count.index * var.network_interface_count] : azurerm_network_interface.this.*.id[count.index * var.network_interface_count]
+  vm_size                      = var.vm_size
 
   delete_os_disk_on_termination    = var.delete_os_disk_on_termination
   delete_data_disks_on_termination = var.delete_data_disks_on_termination
@@ -214,7 +216,7 @@ resource "azurerm_managed_disk" "this" {
   resource_group_name = var.resource_group_name
 
 
-  name                 = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : element(var.managed_disk_names, floor(count.index / var.vm_count) % var.managed_disk_count)
+  name                 = var.managed_disk_count * var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : element(var.managed_disk_names, floor(count.index / var.vm_count) % var.managed_disk_count)
   storage_account_type = element(var.managed_disk_storage_account_types, floor(count.index / var.vm_count) % var.managed_disk_count)
   disk_size_gb         = element(var.managed_disk_size_gbs, floor(count.index / var.vm_count) % var.managed_disk_count)
 
