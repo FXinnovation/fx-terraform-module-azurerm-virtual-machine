@@ -31,7 +31,7 @@ resource "azurerm_application_security_group" "example1" {
 }
 
 resource "azurerm_application_security_group" "example2" {
-  name                = "tftest${random_string.this.result}1"
+  name                = "tftest${random_string.this.result}2"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
 }
