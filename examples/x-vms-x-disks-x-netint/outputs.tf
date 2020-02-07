@@ -10,6 +10,14 @@ output "network_interface_private_ip_addresses" {
   value = module.example.network_interface_private_ip_addresses
 }
 
+output "network_interface_mac_addresses" {
+  value = module.example.network_interface_mac_addresses
+}
+
+output "marketplace_agreement_ids" {
+  value = module.example.marketplace_agreement_ids
+}
+
 output "ids" {
   value = module.example.ids
 }
@@ -18,6 +26,6 @@ output "identities" {
   value = module.example.identities
 }
 
-output "azurerm_managed_disk_ids" {
-  value = module.example.azurerm_managed_disk_ids
+output "managed_disk_ids" {
+  value = module.example.managed_disk_ids
 }

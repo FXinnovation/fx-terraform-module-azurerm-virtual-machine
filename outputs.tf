@@ -35,9 +35,17 @@ output "identities" {
 }
 
 ###
-# Managed disks
+# Marketplace Agreement
 ###
 
-output "azurerm_managed_disk_ids" {
+output "marketplace_agreement_ids" {
+  value = azurerm_marketplace_agreement.this.*.id
+}
+
+###
+# Managed Disks
+###
+
+output "managed_disk_ids" {
   value = var.managed_disk_count > 0 && compact(concat(azurerm_managed_disk.this.*.id, [""])) != [] ? zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_managed_disk.this.*.id, [""])), var.managed_disk_count)) : {}
 }

@@ -32,6 +32,8 @@ No provider.
 | azurerm\_managed\_disk\_ids | n/a |
 | identities | n/a |
 | ids | n/a |
+| managed\_disk\_ids | n/a |
+| marketplace\_agreement\_ids | n/a |
 | network\_interface\_ids | n/a |
 | network\_interface\_private\_ip\_addresses | n/a |
 

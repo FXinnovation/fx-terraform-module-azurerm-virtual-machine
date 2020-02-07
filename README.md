@@ -47,6 +47,9 @@ See `examples` folders for usage of this module.
 | managed\_disk\_storage\_account\_types | The types of storage to use for the Managed Disks. Possible values inside the list are Standard\_LRS, Premium\_LRS, StandardSSD\_LRS or UltraSSD\_LRS. | `list(string)` | <pre>[<br>  "Standard_LRS"<br>]</pre> | no |
 | managed\_disk\_tags | Tags specific to the Managed Disks. | `map` | `{}` | no |
 | managed\_disk\_write\_accelerator\_enableds | Specifies if Write Accelerator is enabled on Managed Disks. This can only be enabled on Premium\_LRS managed disks with no caching and M-Series VMs. | `list(bool)` | <pre>[<br>  false<br>]</pre> | no |
+| marketplace\_agreement\_offers | Should Ultra SSD disk be enabled for this Virtual Machine? | `list` | `[]` | no |
+| marketplace\_agreement\_plans | Should Ultra SSD disk be enabled for this Virtual Machine? | `list` | `[]` | no |
+| marketplace\_agreement\_publishers | Should Ultra SSD disk be enabled for this Virtual Machine? | `list` | `[]` | no |
 | name | Specifies the name of the Virtual Machine. Changing this forces a new resource to be created. | `string` | `"vm"` | no |
 | network\_interface\_application\_gateway\_backend\_address\_pool\_count | How many Gateway Backend Address Pools to associate per Network Interface. | `number` | `0` | no |
 | network\_interface\_application\_gateway\_backend\_address\_pool\_ids | The IDs of the Application Gateway's Backend Address Pools which each Network Interfaces which should be connected to. Changing this forces a new resource to be created. Beware: network\_interface\_index value is the index per Virtual Machine. | `list(object({ network_interface_index = number, application_gateway_backend_address_pool_id = string }))` | <pre>[<br>  {<br>    "application_gateway_backend_address_pool_id": "",<br>    "network_interface_index": 0<br>  }<br>]</pre> | no |
@@ -115,9 +118,10 @@ See `examples` folders for usage of this module.
 | Name | Description |
 |------|-------------|
 | availability\_set\_id | n/a |
-| azurerm\_managed\_disk\_ids | n/a |
 | identities | n/a |
 | ids | n/a |
+| managed\_disk\_ids | n/a |
+| marketplace\_agreement\_ids | n/a |
 | network\_interface\_ids | n/a |
 | network\_interface\_mac\_addresses | n/a |
 | network\_interface\_private\_ip\_addresses | n/a |

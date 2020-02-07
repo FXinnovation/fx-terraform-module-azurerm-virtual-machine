@@ -93,6 +93,18 @@ resource "azurerm_network_interface_nat_rule_association" "this" {
 }
 
 ###
+# Marketplace Agreement
+###
+
+resource "azurerm_marketplace_agreement" "this" {
+  count = var.enabled && length(var.marketplace_agreement_publishers) > 0 ? length(var.marketplace_agreement_publishers) : 0
+
+  publisher = element(var.marketplace_agreement_publishers, count.index)
+  offer     = element(var.marketplace_agreement_offers, count.index)
+  plan      = element(var.marketplace_agreement_plans, count.index)
+}
+
+###
 # Virtual Machine
 ###
 

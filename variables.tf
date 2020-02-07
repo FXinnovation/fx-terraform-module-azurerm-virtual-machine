@@ -220,6 +220,25 @@ variable "network_interface_nat_rule_association_ids" {
 }
 
 ###
+# Marketplace Agreement
+###
+
+variable "marketplace_agreement_publishers" {
+  description = "Should Ultra SSD disk be enabled for this Virtual Machine?"
+  default     = []
+}
+
+variable "marketplace_agreement_offers" {
+  description = "Should Ultra SSD disk be enabled for this Virtual Machine?"
+  default     = []
+}
+
+variable "marketplace_agreement_plans" {
+  description = "Should Ultra SSD disk be enabled for this Virtual Machine?"
+  default     = []
+}
+
+###
 # Virtual Machine
 ###
 
