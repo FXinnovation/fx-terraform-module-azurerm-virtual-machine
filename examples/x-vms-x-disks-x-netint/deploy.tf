@@ -1,9 +1,11 @@
+data "azurerm_client_config" "current" {}
 
 resource "random_string" "this" {
   length  = 6
   upper   = false
   special = false
 }
+
 resource "azurerm_resource_group" "example" {
   name     = "tftest${random_string.this.result}"
   location = "West US"
@@ -57,6 +59,49 @@ resource "azurerm_lb_backend_address_pool" "example" {
   resource_group_name = azurerm_resource_group.example.name
   loadbalancer_id     = azurerm_lb.example.id
   name                = "tftest${random_string.this.result}"
+}
+
+resource "azurerm_key_vault" "example" {
+  name                = "tftest${random_string.this.result}"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  tenant_id           = data.azurerm_client_config.current.tenant_id
+  sku_name            = "standard"
+
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.service_principal_object_id
+
+    key_permissions = [
+      "create",
+      "get",
+      "list",
+      "wrapkey",
+      "unwrapkey",
+      "get",
+    ]
+
+    secret_permissions = [
+      "get",
+      "set",
+    ]
+  }
+}
+
+resource "azurerm_key_vault_key" "example" {
+  name         = "tftest${random_string.this.result}"
+  key_vault_id = azurerm_key_vault.example.id
+  key_type     = "RSA"
+  key_size     = 2048
+
+  key_opts = [
+    "decrypt",
+    "encrypt",
+    "sign",
+    "unwrapKey",
+    "verify",
+    "wrapKey",
+  ]
 }
 
 module "example" {
@@ -122,14 +167,16 @@ module "example" {
 
   winrm_protocol = "HTTP"
 
-  managed_disk_count                      = 3
-  managed_disk_names                      = ["tftest1${random_string.this.result}", "tftest2${random_string.this.result}", "tftest3${random_string.this.result}"]
-  managed_disk_storage_account_types      = ["Standard_LRS"]
-  managed_disk_size_gbs                   = [5, 6, 10]
-  managed_disk_create_options             = ["Empty", "Empty", "Empty"]
-  managed_disk_cachings                   = ["ReadWrite"]
-  managed_disk_write_accelerator_enableds = [false]
-  managed_disk_os_types                   = ["Windows"]
+  managed_disk_count                       = 3
+  managed_disk_names                       = ["tftest1${random_string.this.result}", "tftest2${random_string.this.result}", "tftest3${random_string.this.result}"]
+  managed_disk_storage_account_types       = ["Standard_LRS"]
+  managed_disk_size_gbs                    = [5, 6, 10]
+  managed_disk_create_options              = ["Empty", "Empty", "Empty"]
+  managed_disk_cachings                    = ["ReadWrite"]
+  managed_disk_write_accelerator_enableds  = [false]
+  managed_disk_os_types                    = ["Windows"]
+  managed_disk_source_vault_id             = azurerm_key_vault.example.id
+  managed_disk_key_encryption_key_key_urls = [azurerm_key_vault_key.example.id]
 
   managed_disk_tags = {
     test = "tftest${random_string.this.result}"

@@ -30,6 +30,7 @@ No provider.
 |------|-------------|
 | availability\_set\_id | n/a |
 | azurerm\_managed\_disk\_ids | n/a |
+| disk\_encryption\_set\_ids | n/a |
 | identities | n/a |
 | ids | n/a |
 | managed\_disk\_ids | n/a |

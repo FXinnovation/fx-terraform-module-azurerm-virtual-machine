@@ -29,3 +29,7 @@ output "identities" {
 output "managed_disk_ids" {
   value = module.example.managed_disk_ids
 }
+
+output "disk_encryption_set_ids" {
+  value = module.example.disk_encryption_set_ids
+}
