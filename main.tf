@@ -2,6 +2,7 @@ locals {
   should_create_availability_set  = var.enabled && var.availability_set_enabled && ! var.availability_set_exists
   should_create_network_interface = var.enabled && var.network_interface_enabled && ! var.network_interface_exists && var.vm_count > 0
   storage_os_disk_name            = var.storage_os_disk_name != "" ? var.storage_os_disk_name : var.name
+  supports_encryption_set         = var.resource_group_location == "East US 2" || var.resource_group_location == "Canada Central" || var.resource_group_location == "West Central US" || var.resource_group_location == "North Europe"
 }
 
 ###
@@ -123,7 +124,8 @@ resource "azurerm_virtual_machine" "this" {
   delete_os_disk_on_termination    = var.delete_os_disk_on_termination
   delete_data_disks_on_termination = var.delete_data_disks_on_termination
 
-  availability_set_id = var.availability_set_enabled ? (var.availability_set_exists ? data.azurerm_availability_set.this.*.id[0] : concat(azurerm_availability_set.this.*.id, [""])[0]) : ""
+  availability_set_id = var.availability_set_enabled ? (var.availability_set_exists ? data.azurerm_availability_set.this.*.id[0] : concat(azurerm_availability_set.this.*.id, [
+  ""])[0]) : ""
 
   additional_capabilities {
     ultra_ssd_enabled = var.additional_capabilities_ultra_ssd_enabled
@@ -135,7 +137,8 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   dynamic "storage_image_reference" {
-    for_each = var.storage_image_reference_id != "" ? [1] : []
+    for_each = var.storage_image_reference_id != "" ? [
+    1] : []
 
     content {
       id = var.storage_image_reference_id
@@ -143,7 +146,8 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   dynamic "storage_image_reference" {
-    for_each = var.storage_image_reference_publisher != "" ? [1] : []
+    for_each = var.storage_image_reference_publisher != "" ? [
+    1] : []
 
     content {
       publisher = var.storage_image_reference_publisher
@@ -173,7 +177,8 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   dynamic "os_profile_linux_config" {
-    for_each = var.vm_type == "Linux" ? [1] : []
+    for_each = var.vm_type == "Linux" ? [
+    1] : []
     content {
       disable_password_authentication = var.os_profile_linux_config_disable_password_authentication
 
@@ -189,7 +194,8 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   dynamic "os_profile_windows_config" {
-    for_each = var.vm_type == "Windows" ? [1] : []
+    for_each = var.vm_type == "Windows" ? [
+    1] : []
 
     content {
       provision_vm_agent        = var.os_profile_windows_config_provision_vm_agent
@@ -197,7 +203,8 @@ resource "azurerm_virtual_machine" "this" {
       timezone                  = var.os_profile_windows_config_timezone
 
       dynamic "additional_unattend_config" {
-        for_each = var.additional_unattend_config_content != "" ? [1] : []
+        for_each = var.additional_unattend_config_content != "" ? [
+        1] : []
 
         content {
           pass         = "oobeSystem"
@@ -215,7 +222,8 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   dynamic "plan" {
-    for_each = var.plan_name != "" ? [1] : []
+    for_each = var.plan_name != "" ? [
+    1] : []
 
     content {
       name      = var.plan_name
@@ -225,7 +233,8 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   dynamic "os_profile_secrets" {
-    for_each = var.os_profile_secrets_source_vault_id != "" ? [1] : []
+    for_each = var.os_profile_secrets_source_vault_id != "" ? [
+    1] : []
 
     content {
       source_vault_id = var.os_profile_secrets_source_vault_id
@@ -260,7 +269,6 @@ resource "azurerm_managed_disk" "this" {
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 
-
   name                 = var.managed_disk_count * var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.name, count.index + 1) : element(var.managed_disk_names, floor(count.index / var.vm_count) % var.managed_disk_count)
   storage_account_type = element(var.managed_disk_storage_account_types, floor(count.index / var.vm_count) % var.managed_disk_count)
   disk_size_gb         = element(var.managed_disk_size_gbs, floor(count.index / var.vm_count) % var.managed_disk_count)
@@ -272,9 +280,56 @@ resource "azurerm_managed_disk" "this" {
   source_uri         = element(var.managed_disk_source_uris, floor(count.index / var.vm_count) % var.managed_disk_count)
   os_type            = element(var.managed_disk_os_types, floor(count.index / var.vm_count) % var.managed_disk_count)
 
+  disk_encryption_set_id = local.supports_encryption_set ? element(azurerm_disk_encryption_set.this.*.id, count.index) : null
+
+  dynamic "encryption_settings" {
+    for_each = local.supports_encryption_set ? [0] : [1]
+
+    content {
+      enabled = true
+
+      dynamic "disk_encryption_key" {
+        for_each = var.managed_disk_disk_encryption_key_secret_urls
+
+        content {
+          secret_url      = element(var.managed_disk_disk_encryption_key_secret_urls, floor(count.index / var.vm_count) % var.managed_disk_count)
+          source_vault_id = var.managed_disk_source_vault_id
+        }
+      }
+
+      dynamic "key_encryption_key" {
+        for_each = var.managed_disk_disk_encryption_key_secret_urls
+
+        content {
+          key_url         = element(var.managed_disk_key_encryption_key_key_urls, floor(count.index / var.vm_count) % var.managed_disk_count)
+          source_vault_id = var.managed_disk_source_vault_id
+        }
+      }
+    }
+  }
+
   tags = merge(
     var.tags,
     var.managed_disk_tags,
+    {
+      Terraform = "true"
+    },
+  )
+}
+
+resource "azurerm_disk_encryption_set" "this" {
+  count = var.enabled && local.supports_encryption_set && var.managed_disk_count > 0 ? var.managed_disk_count * var.vm_count : 0
+
+  name = var.managed_disk_count * var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.disk_encryption_set_names, count.index + 1) : element(var.disk_encryption_set_names, floor(count.index / var.vm_count) % var.managed_disk_count)
+
+  location            = var.resource_group_location
+  resource_group_name = var.resource_group_name
+
+  key_vault_key_id = var.disk_encryption_set_key_vault_key_id
+
+  tags = merge(
+    var.tags,
+    var.disk_encryption_set_tags,
     {
       Terraform = "true"
     },

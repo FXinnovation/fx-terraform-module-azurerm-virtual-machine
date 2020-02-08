@@ -49,3 +49,7 @@ output "marketplace_agreement_ids" {
 output "managed_disk_ids" {
   value = var.managed_disk_count > 0 && compact(concat(azurerm_managed_disk.this.*.id, [""])) != [] ? zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_managed_disk.this.*.id, [""])), var.managed_disk_count)) : {}
 }
+
+output "disk_encryption_set_ids" {
+  value = compact(concat(azurerm_disk_encryption_set.this.*.id, [""]))
+}

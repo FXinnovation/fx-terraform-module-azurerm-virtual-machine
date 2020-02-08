@@ -1,3 +1,4 @@
+data "azurerm_client_config" "current" {}
 
 resource "random_string" "this" {
   length  = 6
@@ -7,7 +8,7 @@ resource "random_string" "this" {
 
 resource "azurerm_resource_group" "example" {
   name     = "tftest${random_string.this.result}"
-  location = "West US"
+  location = "Canada Central"
 }
 
 resource "azurerm_virtual_network" "example" {
@@ -28,6 +29,49 @@ resource "azurerm_application_security_group" "example" {
   name                = "tftest${random_string.this.result}"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
+}
+
+resource "azurerm_key_vault" "example" {
+  name                = "tftest${random_string.this.result}"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  tenant_id           = data.azurerm_client_config.current.tenant_id
+  sku_name            = "standard"
+
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.service_principal_object_id
+
+    key_permissions = [
+      "create",
+      "get",
+      "list",
+      "wrapkey",
+      "unwrapkey",
+      "get",
+    ]
+
+    secret_permissions = [
+      "get",
+      "set",
+    ]
+  }
+}
+
+resource "azurerm_key_vault_key" "example" {
+  name         = "tftest${random_string.this.result}"
+  key_vault_id = azurerm_key_vault.example.id
+  key_type     = "RSA"
+  key_size     = 2048
+
+  key_opts = [
+    "decrypt",
+    "encrypt",
+    "sign",
+    "unwrapKey",
+    "verify",
+    "wrapKey",
+  ]
 }
 
 module "example" {
@@ -62,6 +106,10 @@ module "example" {
       application_security_group_id = azurerm_application_security_group.example.id
     },
   ]
+
+  managed_disk_source_vault_id             = azurerm_key_vault.example.id
+  disk_encryption_set_key_vault_key_id     = azurerm_key_vault_key.example.id
+  managed_disk_key_encryption_key_key_urls = [azurerm_key_vault_key.example.id]
 
   name = "tftest${random_string.this.result}"
 

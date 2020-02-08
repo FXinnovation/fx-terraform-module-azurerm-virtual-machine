@@ -489,6 +489,18 @@ variable "managed_disk_cachings" {
   default     = ["ReadWrite"]
 }
 
+variable "managed_disk_disk_encryption_key_secret_urls" {
+  description = "The URLs to the Key Vault Secrets used as the Disk Encryption Keys. This can be found as id on the azurerm_key_vault_secret resource."
+  type        = list(string)
+  default     = [""]
+}
+
+variable "managed_disk_key_encryption_key_key_urls" {
+  description = "The URLs to the Key Vault Keys used as the Key Encryption Keys. This can be found as id on the azurerm_key_vault_key resource."
+  type        = list(string)
+  default     = [""]
+}
+
 variable "managed_disk_write_accelerator_enableds" {
   description = "Specifies if Write Accelerator is enabled on Managed Disks. This can only be enabled on Premium_LRS managed disks with no caching and M-Series VMs."
   type        = list(bool)
@@ -521,5 +533,26 @@ variable "managed_disk_os_types" {
 
 variable "managed_disk_tags" {
   description = "Tags specific to the Managed Disks."
+  default     = {}
+}
+
+variable "managed_disk_source_vault_id" {
+  description = "The URL of the Key Vault. This can be found as vault_uri on the azurerm_key_vault resource."
+  default     = ""
+}
+
+variable "disk_encryption_set_names" {
+  description = "The names of the Disk Encryption Sets. Changing this forces a new resource to be created."
+  type        = list(string)
+  default     = ["encryption-set"]
+}
+
+variable "disk_encryption_set_key_vault_key_id" {
+  description = "Specifies the URL to a Key Vault Key (either from a Key Vault Key, or the Key URL for the Key Vault Secret)."
+  default     = ""
+}
+
+variable "disk_encryption_set_tags" {
+  description = "Tags specific to the Disk Encryption Sets."
   default     = {}
 }
