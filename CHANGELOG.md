@@ -1,3 +1,9 @@
+0.5.0 / 2020-02-11
+==================
+
+ * feat: adds marketplace agreement resource
+ * feat: adds managed disks encryption and make it mandatory
+
 0.4.0 / 2020-02-10
 ==================
 
