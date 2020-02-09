@@ -327,6 +327,10 @@ resource "azurerm_disk_encryption_set" "this" {
 
   key_vault_key_id = var.disk_encryption_set_key_vault_key_id
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   tags = merge(
     var.tags,
     var.disk_encryption_set_tags,
