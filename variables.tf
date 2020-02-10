@@ -115,37 +115,37 @@ variable "network_interface_dns_servers" {
 }
 
 variable "network_interface_ip_configuration_names" {
-  description = "User-defined name of the IPs for the Network Interfaces."
+  description = "User-defined name of the IPs for the Network Interfaces. Careful: this defines all the IP configurations meaning network_interface_count times vm_count."
   type        = list(string)
   default     = [""]
 }
 
 variable "network_interface_ip_configuration_subnet_ids" {
-  description = "Reference to subnets in which this NICs have been created. Required when private_ip_address_versions is IPv4."
+  description = "Reference to subnets in which this NICs have been created. Required when private_ip_address_versions is IPv4. Careful: this defines all the IP configurations meaning network_interface_count times vm_count."
   type        = list(string)
   default     = [""]
 }
 
 variable "network_interface_ip_configuration_private_ip_addresses" {
-  description = "Static IP Addresses."
+  description = "Static IP Addresses. Careful: this defines all the IP configurations meaning network_interface_count times vm_count."
   type        = list(string)
   default     = [""]
 }
 
 variable "network_interface_ip_configuration_private_ip_address_allocations" {
-  description = "Defines how a private IP addresses are assigned. Options are Static or Dynamic."
+  description = "Defines how a private IP addresses are assigned. Options are Static or Dynamic. Careful: this defines all the IP configurations meaning network_interface_count times vm_count."
   type        = list(string)
   default     = ["Dynamic"]
 }
 
 variable "network_interface_ip_configuration_private_ip_address_versions" {
-  description = "The IP versions to use. Possible values are IPv4 or IPv6."
+  description = "The IP versions to use. Possible values are IPv4 or IPv6. Careful: this defines all the IP configurations meaning network_interface_count times vm_count."
   type        = list(string)
   default     = ["IPv4"]
 }
 
 variable "network_interface_ip_configuration_public_ip_address_ids" {
-  description = "Reference to a Public IP Address to associate with this NIC."
+  description = "Reference to a Public IP Address to associate with this NIC. Careful: this defines all the IP configurations meaning network_interface_count times vm_count."
   type        = list(string)
   default     = [""]
 }
