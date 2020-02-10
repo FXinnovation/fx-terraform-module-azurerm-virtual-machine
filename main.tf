@@ -298,7 +298,7 @@ resource "azurerm_managed_disk" "this" {
       }
 
       dynamic "key_encryption_key" {
-        for_each = var.managed_disk_disk_encryption_key_secret_urls
+        for_each = var.managed_disk_key_encryption_key_key_urls
 
         content {
           key_url         = element(var.managed_disk_key_encryption_key_key_urls, floor(count.index / var.vm_count) % var.managed_disk_count)

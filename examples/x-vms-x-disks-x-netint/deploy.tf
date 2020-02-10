@@ -76,6 +76,7 @@ resource "azurerm_key_vault" "example" {
       "create",
       "get",
       "list",
+      "delete",
       "wrapkey",
       "unwrapkey",
       "get",

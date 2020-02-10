@@ -45,6 +45,7 @@ resource "azurerm_key_vault" "example" {
     key_permissions = [
       "create",
       "get",
+      "delete",
       "list",
       "wrapkey",
       "unwrapkey",
