@@ -45,6 +45,8 @@ module "example" {
     env = "test"
   }
 
+  num_suffix_digits = 4
+
   availability_set_name = "tftest${random_string.this.result}"
   availability_set_tags = {
     test = "tftest${random_string.this.result}"

@@ -53,7 +53,7 @@ module "example" {
   network_interface_count                       = 2
   network_interface_names                       = ["tftest${random_string.this.result}"]
   network_interface_internal_dns_name_labels    = ["tftest${random_string.this.result}-first", "tftest${random_string.this.result}-second"]
-  network_interface_ip_configuration_names      = ["tftest${random_string.this.result}"]
+  network_interface_ip_configuration_names      = ["tftest${random_string.this.result}", "tftest${random_string.this.result}2", "tftest${random_string.this.result}3", "tftest${random_string.this.result}4"]
   network_interface_ip_configuration_subnet_ids = [azurerm_subnet.example.id]
   network_interface_tags = {
     test = "tftest${random_string.this.result}"
