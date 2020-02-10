@@ -1,6 +1,7 @@
 locals {
   should_create_availability_set  = var.enabled && var.availability_set_enabled && ! var.availability_set_exists
   should_create_network_interface = var.enabled && var.network_interface_enabled && ! var.network_interface_exists && var.vm_count > 0
+  storage_os_disk_name            = var.storage_os_disk_name != "" ? var.storage_os_disk_name : var.name
 }
 
 ###
@@ -141,7 +142,7 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   storage_os_disk {
-    name                      = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
+    name                      = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", local.storage_os_disk_name, count.index + 1) : local.storage_os_disk_name
     caching                   = var.storage_os_disk_caching
     create_option             = var.storage_os_disk_create_option
     disk_size_gb              = var.storage_os_disk_size_gb
