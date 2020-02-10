@@ -32,18 +32,18 @@ resource "azurerm_availability_set" "this" {
 resource "azurerm_network_interface" "this" {
   count = local.should_create_network_interface ? var.network_interface_count * var.vm_count : 0
 
-  name                = var.network_interface_count * var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_names, count.index % var.network_interface_count), count.index + 1) : element(var.network_interface_names, count.index % var.network_interface_count)
+  name                = var.network_interface_count * var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", element(var.network_interface_names, count.index % var.network_interface_count), count.index + 1) : element(var.network_interface_names, count.index % var.network_interface_count)
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 
   network_security_group_id     = element(var.network_interface_network_security_group_ids, count.index % var.network_interface_count)
-  internal_dns_name_label       = var.network_interface_count * var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_internal_dns_name_labels, count.index % var.network_interface_count), count.index + 1) : element(var.network_interface_internal_dns_name_labels, count.index % var.network_interface_count)
+  internal_dns_name_label       = var.network_interface_count * var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", element(var.network_interface_internal_dns_name_labels, count.index % var.network_interface_count), count.index + 1) : element(var.network_interface_internal_dns_name_labels, count.index % var.network_interface_count)
   enable_ip_forwarding          = element(var.network_interface_enable_ip_forwardings, count.index % var.network_interface_count)
   enable_accelerated_networking = element(var.network_interface_enable_accelerated_networkings, count.index % var.network_interface_count)
   dns_servers                   = element(var.network_interface_dns_servers, count.index % var.network_interface_count)
 
   ip_configuration {
-    name                          = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), count.index + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
+    name                          = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), count.index + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
     subnet_id                     = element(var.network_interface_ip_configuration_subnet_ids, count.index % var.network_interface_count)
     private_ip_address            = element(var.network_interface_ip_configuration_private_ip_addresses, count.index % var.network_interface_count)
     private_ip_address_allocation = element(var.network_interface_ip_configuration_private_ip_address_allocations, count.index % var.network_interface_count)
@@ -63,7 +63,7 @@ resource "azurerm_network_interface_application_security_group_association" "thi
   count = var.enabled ? var.network_interface_application_security_group_count * var.network_interface_count * var.vm_count : 0
 
   network_interface_id          = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), count.index % var.network_interface_count)
-  ip_configuration_name         = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), (count.index % var.network_interface_count) + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
+  ip_configuration_name         = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), (count.index % var.network_interface_count) + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
   application_security_group_id = element(var.network_interface_application_security_group_ids, floor(count.index / var.network_interface_count) % var.network_interface_application_security_group_count)
 }
 
@@ -71,7 +71,7 @@ resource "azurerm_network_interface_application_gateway_backend_address_pool_ass
   count = var.enabled ? var.network_interface_application_gateway_backend_address_pool_count * var.network_interface_count * var.vm_count : 0
 
   network_interface_id    = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), count.index % var.network_interface_count)
-  ip_configuration_name   = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), (count.index % var.network_interface_count) + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
+  ip_configuration_name   = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), (count.index % var.network_interface_count) + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
   backend_address_pool_id = element(var.network_interface_application_gateway_backend_address_pool_ids, floor(count.index / var.network_interface_count) % var.network_interface_application_gateway_backend_address_pool_count)
 }
 
@@ -79,7 +79,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "this" {
   count = var.enabled ? var.network_interface_backend_address_pool_count * var.network_interface_count * var.vm_count : 0
 
   network_interface_id    = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), count.index % var.network_interface_count)
-  ip_configuration_name   = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), (count.index % var.network_interface_count) + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
+  ip_configuration_name   = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), (count.index % var.network_interface_count) + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
   backend_address_pool_id = element(var.network_interface_backend_address_pool_ids, floor(count.index / var.network_interface_count) % var.network_interface_backend_address_pool_count)
 }
 
@@ -87,7 +87,7 @@ resource "azurerm_network_interface_nat_rule_association" "this" {
   count = var.enabled ? var.network_interface_nat_rule_association_count * var.network_interface_count * var.vm_count : 0
 
   network_interface_id  = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), count.index % var.network_interface_count)
-  ip_configuration_name = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), (count.index % var.network_interface_count) + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
+  ip_configuration_name = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), (count.index % var.network_interface_count) + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
   nat_rule_id           = element(var.network_interface_nat_rule_id_ids, floor(count.index / var.network_interface_count) % var.network_interface_nat_rule_association_count)
 }
 
@@ -100,7 +100,7 @@ resource "azurerm_virtual_machine" "this" {
 
   license_type = var.vm_type == "Windows" ? var.license_type : null
 
-  name                         = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
+  name                         = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
   location                     = var.resource_group_location
   resource_group_name          = var.resource_group_name
   network_interface_ids        = element(chunklist((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), var.network_interface_count), count.index)
@@ -141,7 +141,7 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   storage_os_disk {
-    name                      = var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
+    name                      = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.storage_os_disk_name, count.index + 1) : var.storage_os_disk_name
     caching                   = var.storage_os_disk_caching
     create_option             = var.storage_os_disk_create_option
     disk_size_gb              = var.storage_os_disk_size_gb
@@ -153,7 +153,7 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   os_profile {
-    computer_name  = var.vm_type == "Windows" ? substr((var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name), -15, 15) : var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
+    computer_name  = var.vm_type == "Windows" ? substr((var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name), -15, 15) : var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
     admin_username = var.os_profile_admin_username
     admin_password = var.os_profile_admin_password
     custom_data    = var.os_profile_custom_data
@@ -248,7 +248,7 @@ resource "azurerm_managed_disk" "this" {
   resource_group_name = var.resource_group_name
 
 
-  name                 = var.managed_disk_count * var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.name, count.index + 1) : element(var.managed_disk_names, floor(count.index / var.vm_count) % var.managed_disk_count)
+  name                 = var.managed_disk_count * var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.name, count.index + 1) : element(var.managed_disk_names, floor(count.index / var.vm_count) % var.managed_disk_count)
   storage_account_type = element(var.managed_disk_storage_account_types, floor(count.index / var.vm_count) % var.managed_disk_count)
   disk_size_gb         = element(var.managed_disk_size_gbs, floor(count.index / var.vm_count) % var.managed_disk_count)
 
