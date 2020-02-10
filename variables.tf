@@ -155,20 +155,10 @@ variable "network_interface_tags" {
   default     = {}
 }
 
-variable "network_interface_application_security_group_count" {
-  description = "How many Network Interfaces security groups to associate per Network Interface."
-  default     = 0
-}
-
 variable "network_interface_application_security_group_ids" {
   description = "The IDs of the Application Security Groups which each Network Interfaces which should be connected to. Changing this forces a new resource to be created."
   type        = list(string)
   default     = [""]
-}
-
-variable "network_interface_application_gateway_backend_address_pool_count" {
-  description = "How many Gateway Backend Address Pools to associate per Network Interface."
-  default     = 0
 }
 
 variable "network_interface_application_gateway_backend_address_pool_ids" {
@@ -177,20 +167,10 @@ variable "network_interface_application_gateway_backend_address_pool_ids" {
   default     = [""]
 }
 
-variable "network_interface_backend_address_pool_count" {
-  description = "How many Backend Address Pools to associate per Network Interface."
-  default     = 0
-}
-
 variable "network_interface_backend_address_pool_ids" {
   description = "The IDs of the Load Balancer Backend Address Pools which each Network Interfaces which should be connected to. Changing this forces a new resource to be created."
   type        = list(string)
   default     = [""]
-}
-
-variable "network_interface_nat_rule_association_count" {
-  description = "How many NAT Rules to associate per Network Interface."
-  default     = 0
 }
 
 variable "network_interface_nat_rule_id_ids" {

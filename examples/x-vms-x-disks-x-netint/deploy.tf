@@ -35,6 +35,30 @@ resource "azurerm_application_security_group" "example2" {
   resource_group_name = azurerm_resource_group.example.name
 }
 
+resource "azurerm_public_ip" "example" {
+  name                = "tftest${random_string.this.result}"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  allocation_method   = "Static"
+}
+
+resource "azurerm_lb" "example" {
+  name                = "tftest${random_string.this.result}"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+
+  frontend_ip_configuration {
+    name                 = "tftest${random_string.this.result}"
+    public_ip_address_id = azurerm_public_ip.example.id
+  }
+}
+
+resource "azurerm_lb_backend_address_pool" "example" {
+  resource_group_name = azurerm_resource_group.example.name
+  loadbalancer_id     = azurerm_lb.example.id
+  name                = "tftest${random_string.this.result}"
+}
+
 module "example" {
   source = "../.."
 
@@ -59,8 +83,8 @@ module "example" {
     test = "tftest${random_string.this.result}"
   }
 
-  network_interface_application_security_group_count = 2
-  network_interface_application_security_group_ids   = [azurerm_application_security_group.example1.id, azurerm_application_security_group.example2.id]
+  network_interface_backend_address_pool_ids       = ["", azurerm_lb_backend_address_pool.example.id]
+  network_interface_application_security_group_ids = [azurerm_application_security_group.example1.id, azurerm_application_security_group.example2.id]
 
   name     = "tftest${random_string.this.result}"
   vm_count = 2
