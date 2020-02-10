@@ -11,19 +11,19 @@ output "availability_set_id" {
 ###
 
 output "network_interface_ids" {
-  value = compact(concat(azurerm_network_interface.this.*.id, [""]))
+  value = zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_network_interface.this.*.id, [""])), var.network_interface_count))
 }
 
 output "network_interface_mac_addresses" {
-  value = compact(concat(azurerm_network_interface.this.*.mac_address, [""]))
+  value = zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_network_interface.this.*.mac_address, [""])), var.network_interface_count))
 }
 
 output "network_interface_private_ip_addresses" {
-  value = compact(concat(azurerm_network_interface.this.*.private_ip_address, [""]))
+  value = zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_network_interface.this.*.private_ip_address, [""])), var.network_interface_count))
 }
 
 output "network_interface_virtual_machine_ids" {
-  value = compact(concat(azurerm_network_interface.this.*.virtual_machine_id, [""]))
+  value = zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_network_interface.this.*.virtual_machine_id, [""])), var.network_interface_count))
 }
 
 ###
@@ -39,9 +39,9 @@ output "identities" {
 }
 
 ###
-# Virtual Machines
+# Managed disks
 ###
 
 output "azurerm_managed_disk_ids" {
-  value = compact(concat(azurerm_managed_disk.this.*.id, [""]))
+  value = zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_managed_disk.this.*.id, [""])), var.managed_disk_count))
 }
