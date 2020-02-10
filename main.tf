@@ -43,7 +43,7 @@ resource "azurerm_network_interface" "this" {
   dns_servers                   = element(var.network_interface_dns_servers, count.index % var.network_interface_count)
 
   ip_configuration {
-    name                          = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count), count.index + 1) : element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
+    name                          = element(var.network_interface_ip_configuration_names, count.index % var.network_interface_count)
     subnet_id                     = element(var.network_interface_ip_configuration_subnet_ids, count.index % var.network_interface_count)
     private_ip_address            = element(var.network_interface_ip_configuration_private_ip_addresses, count.index % var.network_interface_count)
     private_ip_address_allocation = element(var.network_interface_ip_configuration_private_ip_address_allocations, count.index % var.network_interface_count)
