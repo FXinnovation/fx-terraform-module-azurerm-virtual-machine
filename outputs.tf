@@ -14,16 +14,8 @@ output "network_interface_ids" {
   value = var.network_interface_count > 0 ? zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_network_interface.this.*.id, [""])), var.network_interface_count)) : {}
 }
 
-output "network_interface_mac_addresses" {
-  value = var.network_interface_count > 0 ? zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_network_interface.this.*.mac_address, [""])), var.network_interface_count)) : {}
-}
-
 output "network_interface_private_ip_addresses" {
   value = var.network_interface_count > 0 ? zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_network_interface.this.*.private_ip_address, [""])), var.network_interface_count)) : {}
-}
-
-output "network_interface_virtual_machine_ids" {
-  value = var.network_interface_count > 0 ? zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_network_interface.this.*.virtual_machine_id, [""])), var.network_interface_count)) : {}
 }
 
 ###
