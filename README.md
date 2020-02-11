@@ -97,7 +97,7 @@ See `examples` folders for usage of this module.
 | plan\_name | Specifies the name of the image from the marketplace. | `string` | `""` | no |
 | plan\_product | Specifies the product of the image from the marketplace. | `string` | `""` | no |
 | plan\_publisher | Specifies the publisher of the image. | `string` | `""` | no |
-| resource\_group\_location | pecifies the supported Azure location where the resources exist. Changing this forces a new resource to be created. | `string` | `""` | no |
+| resource\_group\_location | Specifies the supported Azure location where the resources exist. Changing this forces a new resource to be created. | `string` | `""` | no |
 | resource\_group\_name | The name of the resource group in which to create the resources in this module. Changing this forces a new resource to be created. | `string` | `""` | no |
 | storage\_image\_reference\_id | Specifies the ID of the Custom Image which the Virtual Machine should be created from. Changing this forces a new resource to be created. | `string` | `""` | no |
 | storage\_image\_reference\_offer | Specifies the offer of the image used to create the virtual machine. Changing this forces a new resource to be created. | `string` | `"UbuntuServer"` | no |

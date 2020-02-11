@@ -178,6 +178,7 @@ module "example" {
   managed_disk_os_types                   = ["Windows"]
   managed_disk_source_vault_id            = azurerm_key_vault.example.id
   managed_disk_key_encryption_key_urls    = [azurerm_key_vault_key.example.id]
+  managed_disk_encryption_key_secret_urls = [azurerm_key_vault_key.example.id]
 
   managed_disk_tags = {
     test = "tftest${random_string.this.result}"

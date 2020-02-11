@@ -8,7 +8,7 @@ variable "enabled" {
 }
 
 variable "resource_group_location" {
-  description = "pecifies the supported Azure location where the resources exist. Changing this forces a new resource to be created."
+  description = "Specifies the supported Azure location where the resources exist. Changing this forces a new resource to be created."
   default     = ""
 }
 

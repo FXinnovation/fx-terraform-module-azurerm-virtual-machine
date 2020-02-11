@@ -2,7 +2,7 @@ locals {
   should_create_availability_set  = var.enabled && var.availability_set_enabled && ! var.availability_set_exists
   should_create_network_interface = var.enabled && var.network_interface_enabled && ! var.network_interface_exists && var.vm_count > 0
   storage_os_disk_name            = var.storage_os_disk_name != "" ? var.storage_os_disk_name : var.name
-  supports_encryption_set         = var.resource_group_location == "East US 2" || var.resource_group_location == "Canada Central" || var.resource_group_location == "West Central US" || var.resource_group_location == "North Europe"
+  supports_encryption_set         = var.resource_group_location == "eastus2" || var.resource_group_location == "canadacentral" || var.resource_group_location == "westcentralus" || var.resource_group_location == "northeurope"
 }
 
 ###
@@ -272,7 +272,7 @@ resource "azurerm_managed_disk" "this" {
   source_uri         = element(var.managed_disk_source_uris, floor(count.index / var.vm_count) % var.managed_disk_count)
   os_type            = element(var.managed_disk_os_types, floor(count.index / var.vm_count) % var.managed_disk_count)
 
-  disk_encryption_set_id = local.supports_encryption_set ? element(azurerm_disk_encryption_set.this.*.id, count.index) : null
+  disk_encryption_set_id = local.supports_encryption_set && var.managed_disk_encryption_settings_enabled ? element(azurerm_disk_encryption_set.this.*.id, count.index) : null
 
   dynamic "encryption_settings" {
     for_each = local.supports_encryption_set ? [0] : [1]
@@ -310,7 +310,7 @@ resource "azurerm_managed_disk" "this" {
 }
 
 resource "azurerm_disk_encryption_set" "this" {
-  count = var.enabled && local.supports_encryption_set && var.managed_disk_count > 0 ? var.managed_disk_count * var.vm_count : 0
+  count = var.enabled && local.supports_encryption_set && var.managed_disk_encryption_settings_enabled && var.managed_disk_count > 0 ? var.managed_disk_count * var.vm_count : 0
 
   name = var.managed_disk_count * var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.disk_encryption_set_names, count.index + 1) : element(var.disk_encryption_set_names, floor(count.index / var.vm_count) % var.managed_disk_count)
 
