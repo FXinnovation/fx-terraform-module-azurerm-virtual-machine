@@ -156,27 +156,27 @@ variable "network_interface_tags" {
 }
 
 variable "network_interface_application_security_group_ids" {
-  description = "The IDs of the Application Security Groups which each Network Interfaces which should be connected to. Changing this forces a new resource to be created."
-  type        = list(string)
-  default     = [""]
+  description = "The IDs of the Application Security Groups which each Network Interfaces which should be connected to. Changing this forces a new resource to be created. Beware: network_interface_index value is the index per Virtual Machine."
+  type        = list(object({ network_interface_index = number, application_security_group_id = string }))
+  default     = []
 }
 
 variable "network_interface_application_gateway_backend_address_pool_ids" {
-  description = "The IDs of the Application Gateway's Backend Address Pools which each Network Interfaces which should be connected to. Changing this forces a new resource to be created."
-  type        = list(string)
-  default     = [""]
+  description = "The IDs of the Application Gateway's Backend Address Pools which each Network Interfaces which should be connected to. Changing this forces a new resource to be created. Beware: network_interface_index value is the index per Virtual Machine."
+  type        = list(object({ network_interface_index = number, application_gateway_backend_address_pool_id = string }))
+  default     = []
 }
 
 variable "network_interface_backend_address_pool_ids" {
-  description = "The IDs of the Load Balancer Backend Address Pools which each Network Interfaces which should be connected to. Changing this forces a new resource to be created."
-  type        = list(string)
-  default     = [""]
+  description = "The IDs of the Load Balancer Backend Address Pools which each Network Interfaces which should be connected to. Changing this forces a new resource to be created. Beware: network_interface_index value is the index per Virtual Machine."
+  type        = list(object({ network_interface_index = number, backend_address_pool_id = string }))
+  default     = []
 }
 
-variable "network_interface_nat_rule_id_ids" {
-  description = "The IDs of the Load Balancer NAT Rules which each Network Interfaces which should be connected to. Changing this forces a new resource to be created."
-  type        = list(string)
-  default     = [""]
+variable "network_interface_nat_rule_association_ids" {
+  description = "The IDs of the Load Balancer NAT Rules which each Network Interfaces which should be connected to. Changing this forces a new resource to be created. Beware: network_interface_index value is the index per Virtual Machine."
+  type        = list(object({ network_interface_index = number, nat_rule_id = string }))
+  default     = []
 }
 
 ###

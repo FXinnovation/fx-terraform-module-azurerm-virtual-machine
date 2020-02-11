@@ -83,8 +83,30 @@ module "example" {
     test = "tftest${random_string.this.result}"
   }
 
-  network_interface_backend_address_pool_ids       = ["", azurerm_lb_backend_address_pool.example.id]
-  network_interface_application_security_group_ids = [azurerm_application_security_group.example1.id, azurerm_application_security_group.example2.id]
+  network_interface_backend_address_pool_ids = [
+    {
+      network_interface_index = 1
+      backend_address_pool_id = azurerm_lb_backend_address_pool.example.id
+    },
+  ]
+  network_interface_application_security_group_ids = [
+    {
+      network_interface_index = 0
+      backend_address_pool_id = azurerm_application_security_group.example1.id
+    },
+    {
+      network_interface_index = 0
+      backend_address_pool_id = azurerm_application_security_group.example2.id
+    },
+    {
+      network_interface_index = 1
+      backend_address_pool_id = azurerm_application_security_group.example1.id
+    },
+    {
+      network_interface_index = 1
+      backend_address_pool_id = azurerm_application_security_group.example2.id
+    },
+  ]
 
   name     = "tftest${random_string.this.result}"
   vm_count = 2

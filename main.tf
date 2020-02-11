@@ -61,35 +61,35 @@ resource "azurerm_network_interface" "this" {
 }
 
 resource "azurerm_network_interface_application_security_group_association" "this" {
-  count = var.enabled && length(var.network_interface_application_gateway_backend_address_pool_ids) > 0 ? var.network_interface_count * var.vm_count : 0
+  count = var.enabled ? length(var.network_interface_application_security_group_ids) * var.network_interface_count : 0
 
-  network_interface_id          = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), count.index)
-  ip_configuration_name         = element(var.network_interface_ip_configuration_names, count.index)
-  application_security_group_id = element(var.network_interface_application_security_group_ids, count.index)
+  network_interface_id          = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), element(var.network_interface_application_security_group_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
+  ip_configuration_name         = element(var.network_interface_ip_configuration_names, element(var.network_interface_application_security_group_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
+  application_security_group_id = element(var.network_interface_application_security_group_ids, element(var.network_interface_application_security_group_ids, count.index).application_security_group_id)
 }
 
 resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "this" {
-  count = var.enabled && length(var.network_interface_application_gateway_backend_address_pool_ids) > 0 ? var.network_interface_count * var.vm_count : 0
+  count = var.enabled ? length(var.network_interface_application_gateway_backend_address_pool_ids) * var.network_interface_count : 0
 
-  network_interface_id    = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), count.index)
-  ip_configuration_name   = element(var.network_interface_ip_configuration_names, count.index)
-  backend_address_pool_id = element(var.network_interface_application_gateway_backend_address_pool_ids, count.index)
+  network_interface_id    = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), element(var.network_interface_application_gateway_backend_address_pool_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
+  ip_configuration_name   = element(var.network_interface_ip_configuration_names, element(var.network_interface_application_security_group_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
+  backend_address_pool_id = element(var.network_interface_application_gateway_backend_address_pool_ids, element(var.network_interface_application_gateway_backend_address_pool_ids, count.index).backend_address_pool_id)
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "this" {
-  count = var.enabled && length(var.network_interface_backend_address_pool_ids) > 0 ? var.network_interface_count * var.vm_count : 0
+  count = var.enabled ? length(var.network_interface_application_gateway_backend_address_pool_ids) * var.network_interface_count : 0
 
-  network_interface_id    = element(var.network_interface_backend_address_pool_ids, count.index) != "" ? element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), count.index) : null
-  ip_configuration_name   = element(var.network_interface_backend_address_pool_ids, count.index) != "" ? element(var.network_interface_ip_configuration_names, count.index) : null
-  backend_address_pool_id = element(var.network_interface_backend_address_pool_ids, count.index) != "" ? element(var.network_interface_application_gateway_backend_address_pool_ids, count.index) : null
+  network_interface_id    = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), element(var.network_interface_application_gateway_backend_address_pool_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
+  ip_configuration_name   = element(var.network_interface_ip_configuration_names, element(var.network_interface_application_gateway_backend_address_pool_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
+  backend_address_pool_id = element(var.network_interface_application_gateway_backend_address_pool_ids, element(var.network_interface_application_gateway_backend_address_pool_ids, count.index).backend_address_pool_id)
 }
 
 resource "azurerm_network_interface_nat_rule_association" "this" {
-  count = var.enabled && length(var.network_interface_nat_rule_id_ids) > 0 ? var.network_interface_count * var.vm_count : 0
+  count = var.enabled ? length(var.network_interface_nat_rule_association_ids) * var.network_interface_count : 0
 
-  network_interface_id  = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), count.index)
-  ip_configuration_name = element(var.network_interface_ip_configuration_names, count.index)
-  nat_rule_id           = element(var.network_interface_nat_rule_id_ids, count.index)
+  network_interface_id  = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), element(var.network_interface_nat_rule_association_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
+  ip_configuration_name = element(var.network_interface_ip_configuration_names, element(var.network_interface_nat_rule_association_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
+  nat_rule_id           = element(var.network_interface_nat_rule_association_ids, element(var.network_interface_nat_rule_association_ids, count.index).nat_rule_id)
 }
 
 ###
