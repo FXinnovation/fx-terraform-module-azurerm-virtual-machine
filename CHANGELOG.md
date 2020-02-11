@@ -1,3 +1,12 @@
+0.4.0 / 2020-02-10
+==================
+
+ * fix: makes sure network interface associations works as intended
+ * feat: outputs are now organized in maps: vm_id => values
+ * feat: IP configuration names does not iterate anymore
+ * feat: default names does not contain dashes anymore
+ * feat: storage_os_disk_name now defaults to VM name
+
 0.3.0 / 2020-02-05
 ==================
 
