@@ -34,7 +34,7 @@ See `examples` folders for usage of this module.
 | delete\_data\_disks\_on\_termination | Should the Data Disks (either the Managed Disks / VHD Blobs) be deleted when the Virtual Machine is destroyed? | `bool` | `false` | no |
 | delete\_os\_disk\_on\_termination | Should the OS Disk (either the Managed Disk / VHD Blob) be deleted when the Virtual Machine is destroyed? | `bool` | `false` | no |
 | disk\_encryption\_set\_key\_vault\_key\_id | Specifies the URL to a Key Vault Key (either from a Key Vault Key, or the Key URL for the Key Vault Secret). | `string` | `""` | no |
-| disk\_encryption\_set\_names | The names of the Disk Encryption Sets. Changing this forces a new resource to be created. | `list(string)` | <pre>[<br>  "encryption-set"<br>]</pre> | no |
+| disk\_encryption\_set\_name | The name of the Disk Encryption Sets. Changing this forces a new resource to be created. | `string` | `"encryption-set"` | no |
 | disk\_encryption\_set\_tags | Tags specific to the Disk Encryption Sets. | `map` | `{}` | no |
 | enabled | Enable or disable module | `bool` | `true` | no |
 | license\_type | Specifies the BYOL Type for this Virtual Machine. This is only applicable to Windows Virtual Machines. Possible values are Windows\_Client and Windows\_Server. | `string` | `"Windows_Server"` | no |

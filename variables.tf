@@ -547,10 +547,10 @@ variable "managed_disk_source_vault_id" {
   default     = ""
 }
 
-variable "disk_encryption_set_names" {
-  description = "The names of the Disk Encryption Sets. Changing this forces a new resource to be created."
-  type        = list(string)
-  default     = ["encryption-set"]
+variable "disk_encryption_set_name" {
+  description = "The name of the Disk Encryption Sets. Changing this forces a new resource to be created."
+  type        = string
+  default     = "encryption-set"
 }
 
 variable "disk_encryption_set_key_vault_key_id" {

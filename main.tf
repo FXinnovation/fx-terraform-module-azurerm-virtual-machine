@@ -310,9 +310,9 @@ resource "azurerm_managed_disk" "this" {
 }
 
 resource "azurerm_disk_encryption_set" "this" {
-  count = var.enabled && local.supports_encryption_set && var.managed_disk_encryption_settings_enabled && var.managed_disk_count > 0 ? var.managed_disk_count * var.vm_count : 0
+  count = var.enabled && local.supports_encryption_set && var.managed_disk_encryption_settings_enabled && var.managed_disk_count > 0 ? var.vm_count : 0
 
-  name = var.managed_disk_count * var.vm_count > 0 ? format("%s-%0${var.num_suffix_digits}d", var.disk_encryption_set_names, count.index + 1) : element(var.disk_encryption_set_names, floor(count.index / var.vm_count) % var.managed_disk_count)
+  name = var.vm_count > 1 ? format("%s%0${var.num_suffix_digits}d", var.disk_encryption_set_name, count.index + 1) : var.disk_encryption_set_name
 
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
