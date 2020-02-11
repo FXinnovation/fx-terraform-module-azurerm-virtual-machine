@@ -38,6 +38,8 @@ resource "azurerm_key_vault" "example" {
   tenant_id           = data.azurerm_client_config.current.tenant_id
   sku_name            = "standard"
 
+  enabled_for_disk_encryption = true
+
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
     object_id = data.azurerm_client_config.current.service_principal_object_id
@@ -54,6 +56,7 @@ resource "azurerm_key_vault" "example" {
 
     secret_permissions = [
       "get",
+      "delete",
       "set",
     ]
   }
