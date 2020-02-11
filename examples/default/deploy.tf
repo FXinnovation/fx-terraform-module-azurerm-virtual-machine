@@ -57,8 +57,8 @@ module "example" {
 
   network_interface_application_security_group_ids = [
     {
-      network_interface_index = 0
-      backend_address_pool_id = azurerm_application_security_group.example.id
+      network_interface_index       = 0
+      application_security_group_id = azurerm_application_security_group.example.id
     },
   ]
 
