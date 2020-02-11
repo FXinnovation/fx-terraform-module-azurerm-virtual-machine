@@ -489,13 +489,19 @@ variable "managed_disk_cachings" {
   default     = ["ReadWrite"]
 }
 
-variable "managed_disk_disk_encryption_key_secret_urls" {
+variable "managed_disk_encryption_settings_enabled" {
+  description = "The URLs to the Key Vault Secrets used as the Disk Encryption Keys. This can be found as id on the azurerm_key_vault_secret resource."
+  type        = bool
+  default     = true
+}
+
+variable "managed_disk_encryption_key_secret_urls" {
   description = "The URLs to the Key Vault Secrets used as the Disk Encryption Keys. This can be found as id on the azurerm_key_vault_secret resource."
   type        = list(string)
   default     = [""]
 }
 
-variable "managed_disk_key_encryption_key_key_urls" {
+variable "managed_disk_key_encryption_key_urls" {
   description = "The URLs to the Key Vault Keys used as the Key Encryption Keys. This can be found as id on the azurerm_key_vault_key resource."
   type        = list(string)
   default     = [""]

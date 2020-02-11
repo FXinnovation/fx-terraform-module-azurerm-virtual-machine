@@ -168,16 +168,16 @@ module "example" {
 
   winrm_protocol = "HTTP"
 
-  managed_disk_count                       = 3
-  managed_disk_names                       = ["tftest1${random_string.this.result}", "tftest2${random_string.this.result}", "tftest3${random_string.this.result}"]
-  managed_disk_storage_account_types       = ["Standard_LRS"]
-  managed_disk_size_gbs                    = [5, 6, 10]
-  managed_disk_create_options              = ["Empty", "Empty", "Empty"]
-  managed_disk_cachings                    = ["ReadWrite"]
-  managed_disk_write_accelerator_enableds  = [false]
-  managed_disk_os_types                    = ["Windows"]
-  managed_disk_source_vault_id             = azurerm_key_vault.example.id
-  managed_disk_key_encryption_key_key_urls = [azurerm_key_vault_key.example.id]
+  managed_disk_count                      = 3
+  managed_disk_names                      = ["tftest1${random_string.this.result}", "tftest2${random_string.this.result}", "tftest3${random_string.this.result}"]
+  managed_disk_storage_account_types      = ["Standard_LRS"]
+  managed_disk_size_gbs                   = [5, 6, 10]
+  managed_disk_create_options             = ["Empty", "Empty", "Empty"]
+  managed_disk_cachings                   = ["ReadWrite"]
+  managed_disk_write_accelerator_enableds = [false]
+  managed_disk_os_types                   = ["Windows"]
+  managed_disk_source_vault_id            = azurerm_key_vault.example.id
+  managed_disk_key_encryption_key_urls    = [azurerm_key_vault_key.example.id]
 
   managed_disk_tags = {
     test = "tftest${random_string.this.result}"

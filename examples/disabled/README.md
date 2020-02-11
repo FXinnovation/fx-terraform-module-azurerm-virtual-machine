@@ -29,13 +29,13 @@ No provider.
 | Name | Description |
 |------|-------------|
 | availability\_set\_id | n/a |
-| azurerm\_managed\_disk\_ids | n/a |
 | disk\_encryption\_set\_ids | n/a |
 | identities | n/a |
 | ids | n/a |
 | managed\_disk\_ids | n/a |
 | marketplace\_agreement\_ids | n/a |
 | network\_interface\_ids | n/a |
+| network\_interface\_mac\_addresses | n/a |
 | network\_interface\_private\_ip\_addresses | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

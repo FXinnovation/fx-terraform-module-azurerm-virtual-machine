@@ -286,22 +286,22 @@ resource "azurerm_managed_disk" "this" {
     for_each = local.supports_encryption_set ? [0] : [1]
 
     content {
-      enabled = true
+      enabled = var.managed_disk_encryption_settings_enabled
 
       dynamic "disk_encryption_key" {
-        for_each = var.managed_disk_disk_encryption_key_secret_urls
+        for_each = var.managed_disk_encryption_key_secret_urls
 
         content {
-          secret_url      = element(var.managed_disk_disk_encryption_key_secret_urls, floor(count.index / var.vm_count) % var.managed_disk_count)
+          secret_url      = element(var.managed_disk_encryption_key_secret_urls, floor(count.index / var.vm_count) % var.managed_disk_count)
           source_vault_id = var.managed_disk_source_vault_id
         }
       }
 
       dynamic "key_encryption_key" {
-        for_each = var.managed_disk_key_encryption_key_key_urls
+        for_each = var.managed_disk_key_encryption_key_urls
 
         content {
-          key_url         = element(var.managed_disk_key_encryption_key_key_urls, floor(count.index / var.vm_count) % var.managed_disk_count)
+          key_url         = element(var.managed_disk_key_encryption_key_urls, floor(count.index / var.vm_count) % var.managed_disk_count)
           source_vault_id = var.managed_disk_source_vault_id
         }
       }

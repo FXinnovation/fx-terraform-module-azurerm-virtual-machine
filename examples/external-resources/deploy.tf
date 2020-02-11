@@ -105,8 +105,8 @@ module "example" {
   network_interface_external_names = [azurerm_network_interface.example.name]
   network_interface_exists         = true
 
-  managed_disk_source_vault_id             = azurerm_key_vault.example.id
-  managed_disk_key_encryption_key_key_urls = [azurerm_key_vault_key.example.id]
+  managed_disk_source_vault_id         = azurerm_key_vault.example.id
+  managed_disk_key_encryption_key_urls = [azurerm_key_vault_key.example.id]
 
   name = "tftest${random_string.this.result}"
 
