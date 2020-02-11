@@ -124,8 +124,7 @@ resource "azurerm_virtual_machine" "this" {
   delete_os_disk_on_termination    = var.delete_os_disk_on_termination
   delete_data_disks_on_termination = var.delete_data_disks_on_termination
 
-  availability_set_id = var.availability_set_enabled ? (var.availability_set_exists ? data.azurerm_availability_set.this.*.id[0] : concat(azurerm_availability_set.this.*.id, [
-  ""])[0]) : ""
+  availability_set_id = var.availability_set_enabled ? (var.availability_set_exists ? data.azurerm_availability_set.this.*.id[0] : concat(azurerm_availability_set.this.*.id, [""])[0]) : ""
 
   additional_capabilities {
     ultra_ssd_enabled = var.additional_capabilities_ultra_ssd_enabled
@@ -137,8 +136,7 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   dynamic "storage_image_reference" {
-    for_each = var.storage_image_reference_id != "" ? [
-    1] : []
+    for_each = var.storage_image_reference_id != "" ? [1] : []
 
     content {
       id = var.storage_image_reference_id
@@ -146,8 +144,7 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   dynamic "storage_image_reference" {
-    for_each = var.storage_image_reference_publisher != "" ? [
-    1] : []
+    for_each = var.storage_image_reference_publisher != "" ? [1] : []
 
     content {
       publisher = var.storage_image_reference_publisher
@@ -177,8 +174,7 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   dynamic "os_profile_linux_config" {
-    for_each = var.vm_type == "Linux" ? [
-    1] : []
+    for_each = var.vm_type == "Linux" ? [1] : []
     content {
       disable_password_authentication = var.os_profile_linux_config_disable_password_authentication
 
@@ -194,8 +190,7 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   dynamic "os_profile_windows_config" {
-    for_each = var.vm_type == "Windows" ? [
-    1] : []
+    for_each = var.vm_type == "Windows" ? [1] : []
 
     content {
       provision_vm_agent        = var.os_profile_windows_config_provision_vm_agent
@@ -203,8 +198,7 @@ resource "azurerm_virtual_machine" "this" {
       timezone                  = var.os_profile_windows_config_timezone
 
       dynamic "additional_unattend_config" {
-        for_each = var.additional_unattend_config_content != "" ? [
-        1] : []
+        for_each = var.additional_unattend_config_content != "" ? [1] : []
 
         content {
           pass         = "oobeSystem"
@@ -222,8 +216,7 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   dynamic "plan" {
-    for_each = var.plan_name != "" ? [
-    1] : []
+    for_each = var.plan_name != "" ? [1] : []
 
     content {
       name      = var.plan_name
@@ -233,8 +226,7 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   dynamic "os_profile_secrets" {
-    for_each = var.os_profile_secrets_source_vault_id != "" ? [
-    1] : []
+    for_each = var.os_profile_secrets_source_vault_id != "" ? [1] : []
 
     content {
       source_vault_id = var.os_profile_secrets_source_vault_id
