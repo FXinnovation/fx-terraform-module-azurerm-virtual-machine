@@ -61,7 +61,7 @@ resource "azurerm_network_interface" "this" {
 }
 
 resource "azurerm_network_interface_application_security_group_association" "this" {
-  count = var.enabled ? length(var.network_interface_application_security_group_ids) * var.network_interface_count : 0
+  count = var.enabled && var.network_interface_application_security_group_ids[0].application_security_group_id != "" ? length(var.network_interface_application_security_group_ids) * var.network_interface_count : 0
 
   network_interface_id          = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), element(var.network_interface_application_security_group_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
   ip_configuration_name         = element(var.network_interface_ip_configuration_names, element(var.network_interface_application_security_group_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
@@ -69,15 +69,15 @@ resource "azurerm_network_interface_application_security_group_association" "thi
 }
 
 resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "this" {
-  count = var.enabled ? length(var.network_interface_application_gateway_backend_address_pool_ids) * var.network_interface_count : 0
+  count = var.enabled && var.network_interface_application_gateway_backend_address_pool_ids[0].application_gateway_backend_address_pool_id != "" ? length(var.network_interface_application_gateway_backend_address_pool_ids) * var.network_interface_count : 0
 
   network_interface_id    = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), element(var.network_interface_application_gateway_backend_address_pool_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
   ip_configuration_name   = element(var.network_interface_ip_configuration_names, element(var.network_interface_application_security_group_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
-  backend_address_pool_id = element(var.network_interface_application_gateway_backend_address_pool_ids, element(var.network_interface_application_gateway_backend_address_pool_ids, count.index).backend_address_pool_id)
+  backend_address_pool_id = element(var.network_interface_application_gateway_backend_address_pool_ids, element(var.network_interface_application_gateway_backend_address_pool_ids, count.index).application_gateway_backend_address_pool_id)
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "this" {
-  count = var.enabled ? length(var.network_interface_application_gateway_backend_address_pool_ids) * var.network_interface_count : 0
+  count = var.enabled && var.network_interface_application_gateway_backend_address_pool_ids[0].backend_address_pool_id != "" ? length(var.network_interface_application_gateway_backend_address_pool_ids) * var.network_interface_count : 0
 
   network_interface_id    = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), element(var.network_interface_application_gateway_backend_address_pool_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
   ip_configuration_name   = element(var.network_interface_ip_configuration_names, element(var.network_interface_application_gateway_backend_address_pool_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
@@ -85,7 +85,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "this" {
 }
 
 resource "azurerm_network_interface_nat_rule_association" "this" {
-  count = var.enabled ? length(var.network_interface_nat_rule_association_ids) * var.network_interface_count : 0
+  count = var.enabled && var.network_interface_nat_rule_association_ids[0].nat_rule_id != "" ? length(var.network_interface_nat_rule_association_ids) * var.network_interface_count : 0
 
   network_interface_id  = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), element(var.network_interface_nat_rule_association_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
   ip_configuration_name = element(var.network_interface_ip_configuration_names, element(var.network_interface_nat_rule_association_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
