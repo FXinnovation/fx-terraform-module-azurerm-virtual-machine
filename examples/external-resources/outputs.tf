@@ -10,10 +10,6 @@ output "network_interface_private_ip_addresses" {
   value = module.example.network_interface_private_ip_addresses
 }
 
-output "network_interface_mac_addresses" {
-  value = module.example.network_interface_mac_addresses
-}
-
 output "marketplace_agreement_ids" {
   value = module.example.marketplace_agreement_ids
 }

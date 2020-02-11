@@ -38,7 +38,6 @@ terraform destroy
 | managed\_disk\_ids | n/a |
 | marketplace\_agreement\_ids | n/a |
 | network\_interface\_ids | n/a |
-| network\_interface\_mac\_addresses | n/a |
 | network\_interface\_private\_ip\_addresses | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
