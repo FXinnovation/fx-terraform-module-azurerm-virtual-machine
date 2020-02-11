@@ -55,6 +55,7 @@ module "example" {
     test = "tftest${random_string.this.result}"
   }
 
+  network_interface_application_security_group_count = 1
   network_interface_application_security_group_ids = [
     {
       network_interface_index       = 0

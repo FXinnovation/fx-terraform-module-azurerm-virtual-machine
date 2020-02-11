@@ -83,12 +83,14 @@ module "example" {
     test = "tftest${random_string.this.result}"
   }
 
+  network_interface_backend_address_pool_count = 1
   network_interface_backend_address_pool_ids = [
     {
       network_interface_index = 1
       backend_address_pool_id = azurerm_lb_backend_address_pool.example.id
     },
   ]
+  network_interface_application_security_group_count = 4
   network_interface_application_security_group_ids = [
     {
       network_interface_index       = 0
