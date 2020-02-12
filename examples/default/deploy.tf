@@ -78,6 +78,12 @@ resource "azurerm_key_vault_key" "example" {
   ]
 }
 
+resource "azurerm_key_vault_secret" "example" {
+  name         = "tftest${random_string.this.result}"
+  value        = random_string.this.result
+  key_vault_id = azurerm_key_vault.example.id
+}
+
 module "example" {
   source = "../.."
 
@@ -111,11 +117,11 @@ module "example" {
     },
   ]
 
-  managed_disk_count                   = 1
-  managed_disk_names                   = ["tftest${random_string.this.result}"]
-  managed_disk_source_vault_id         = azurerm_key_vault.example.id
-  disk_encryption_set_name             = "tftest${random_string.this.result}"
-  disk_encryption_set_key_vault_key_id = azurerm_key_vault_key.example.id
+  managed_disk_count                      = 1
+  managed_disk_names                      = ["tftest${random_string.this.result}"]
+  managed_disk_source_vault_id            = azurerm_key_vault.example.id
+  managed_disk_key_encryption_key_urls    = [azurerm_key_vault_key.example.id]
+  managed_disk_encryption_key_secret_urls = [azurerm_key_vault_secret.example.id]
 
   name = "tftest${random_string.this.result}"
 

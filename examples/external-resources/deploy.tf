@@ -92,6 +92,12 @@ resource "azurerm_key_vault_key" "example" {
   ]
 }
 
+resource "azurerm_key_vault_secret" "example" {
+  name         = "tftest${random_string.this.result}"
+  value        = random_string.this.result
+  key_vault_id = azurerm_key_vault.example.id
+}
+
 module "example" {
   source = "../.."
 
@@ -108,8 +114,9 @@ module "example" {
   network_interface_external_names = [azurerm_network_interface.example.name]
   network_interface_exists         = true
 
-  managed_disk_source_vault_id         = azurerm_key_vault.example.id
-  managed_disk_key_encryption_key_urls = [azurerm_key_vault_key.example.id]
+  managed_disk_source_vault_id            = azurerm_key_vault.example.id
+  managed_disk_key_encryption_key_urls    = [azurerm_key_vault_key.example.id]
+  managed_disk_encryption_key_secret_urls = [azurerm_key_vault_secret.example.id]
 
   name = "tftest${random_string.this.result}"
 

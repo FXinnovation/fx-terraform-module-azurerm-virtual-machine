@@ -33,9 +33,6 @@ See `examples` folders for usage of this module.
 | boot\_diagnostics\_storage\_uri | The Storage Account's Blob Endpoint which should hold the virtual machine's diagnostic files. | `string` | `""` | no |
 | delete\_data\_disks\_on\_termination | Should the Data Disks (either the Managed Disks / VHD Blobs) be deleted when the Virtual Machine is destroyed? | `bool` | `false` | no |
 | delete\_os\_disk\_on\_termination | Should the OS Disk (either the Managed Disk / VHD Blob) be deleted when the Virtual Machine is destroyed? | `bool` | `false` | no |
-| disk\_encryption\_set\_key\_vault\_key\_id | Specifies the URL to a Key Vault Key (either from a Key Vault Key, or the Key URL for the Key Vault Secret). | `string` | `""` | no |
-| disk\_encryption\_set\_name | The name of the Disk Encryption Sets. Changing this forces a new resource to be created. | `string` | `"encryption-set"` | no |
-| disk\_encryption\_set\_tags | Tags specific to the Disk Encryption Sets. | `map` | `{}` | no |
 | enabled | Enable or disable module | `bool` | `true` | no |
 | license\_type | Specifies the BYOL Type for this Virtual Machine. This is only applicable to Windows Virtual Machines. Possible values are Windows\_Client and Windows\_Server. | `string` | `"Windows_Server"` | no |
 | managed\_disk\_cachings | Specifies the caching requirements for the Managed Disks. Possible values include None, ReadOnly and ReadWrite. | `list(string)` | <pre>[<br>  "ReadWrite"<br>]</pre> | no |
@@ -125,7 +122,6 @@ See `examples` folders for usage of this module.
 | Name | Description |
 |------|-------------|
 | availability\_set\_id | n/a |
-| disk\_encryption\_set\_ids | n/a |
 | identities | n/a |
 | ids | n/a |
 | managed\_disk\_ids | n/a |

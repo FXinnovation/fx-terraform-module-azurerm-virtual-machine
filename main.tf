@@ -272,10 +272,8 @@ resource "azurerm_managed_disk" "this" {
   source_uri         = element(var.managed_disk_source_uris, floor(count.index / var.vm_count) % var.managed_disk_count)
   os_type            = element(var.managed_disk_os_types, floor(count.index / var.vm_count) % var.managed_disk_count)
 
-  disk_encryption_set_id = local.supports_encryption_set && var.managed_disk_encryption_settings_enabled ? element(azurerm_disk_encryption_set.this.*.id, count.index) : null
-
   dynamic "encryption_settings" {
-    for_each = local.supports_encryption_set ? [0] : [1]
+    for_each = var.managed_disk_encryption_settings_enabled ? [1] : [0]
 
     content {
       enabled = var.managed_disk_encryption_settings_enabled
@@ -303,29 +301,6 @@ resource "azurerm_managed_disk" "this" {
   tags = merge(
     var.tags,
     var.managed_disk_tags,
-    {
-      Terraform = "true"
-    },
-  )
-}
-
-resource "azurerm_disk_encryption_set" "this" {
-  count = var.enabled && local.supports_encryption_set && var.managed_disk_encryption_settings_enabled && var.managed_disk_count > 0 ? var.vm_count : 0
-
-  name = var.vm_count > 1 ? format("%s%0${var.num_suffix_digits}d", var.disk_encryption_set_name, count.index + 1) : var.disk_encryption_set_name
-
-  location            = var.resource_group_location
-  resource_group_name = var.resource_group_name
-
-  key_vault_key_id = var.disk_encryption_set_key_vault_key_id
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  tags = merge(
-    var.tags,
-    var.disk_encryption_set_tags,
     {
       Terraform = "true"
     },

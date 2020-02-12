@@ -546,19 +546,3 @@ variable "managed_disk_source_vault_id" {
   description = "The URL of the Key Vault. This can be found as vault_uri on the azurerm_key_vault resource."
   default     = ""
 }
-
-variable "disk_encryption_set_name" {
-  description = "The name of the Disk Encryption Sets. Changing this forces a new resource to be created."
-  type        = string
-  default     = "encryption-set"
-}
-
-variable "disk_encryption_set_key_vault_key_id" {
-  description = "Specifies the URL to a Key Vault Key (either from a Key Vault Key, or the Key URL for the Key Vault Secret)."
-  default     = ""
-}
-
-variable "disk_encryption_set_tags" {
-  description = "Tags specific to the Disk Encryption Sets."
-  default     = {}
-}
