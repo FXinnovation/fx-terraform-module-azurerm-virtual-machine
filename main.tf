@@ -288,7 +288,11 @@ resource "azurerm_managed_disk" "this_os" {
   storage_account_type = var.storage_os_managed_disk_type
   disk_size_gb         = var.storage_os_disk_size_gb
 
-  create_option = "Attach"
+  create_option = var.storage_os_disk_managed_disk_create_option
+
+  image_reference_id = var.storage_os_disk_managed_disk_create_option == "FromImage" ? data.azurerm_platform_image.this_os.id : null
+  source_resource_id = var.storage_os_disk_managed_disk_create_option == "Copy" ? var.storage_os_disk_managed_disk_source_resource_id : null
+  source_uri         = var.storage_os_disk_managed_disk_create_option == "Import" ? var.storage_os_disk_managed_disk_source_uri : null
 
   os_type = var.vm_type == "Windows" ? "Windows" : "Linux"
 
@@ -339,10 +343,11 @@ resource "azurerm_managed_disk" "this" {
 
   create_option = element(var.managed_disk_create_options, floor(count.index / var.vm_count) % var.managed_disk_count)
 
-  image_reference_id = element(var.managed_disk_image_reference_ids, floor(count.index / var.vm_count) % var.managed_disk_count)
-  source_resource_id = element(var.managed_disk_source_resource_ids, floor(count.index / var.vm_count) % var.managed_disk_count)
-  source_uri         = element(var.managed_disk_source_uris, floor(count.index / var.vm_count) % var.managed_disk_count)
-  os_type            = element(var.managed_disk_os_types, floor(count.index / var.vm_count) % var.managed_disk_count)
+  image_reference_id = element(var.managed_disk_create_options, floor(count.index / var.vm_count) % var.managed_disk_count) == "FromImage" ? element(var.managed_disk_image_reference_ids, floor(count.index / var.vm_count) % var.managed_disk_count) : null
+  source_resource_id = element(var.managed_disk_create_options, floor(count.index / var.vm_count) % var.managed_disk_count) == "Copy" ? element(var.managed_disk_source_resource_ids, floor(count.index / var.vm_count) % var.managed_disk_count) : null
+  source_uri         = element(var.managed_disk_create_options, floor(count.index / var.vm_count) % var.managed_disk_count) == "Import" ? element(var.managed_disk_source_uris, floor(count.index / var.vm_count) % var.managed_disk_count) : null
+
+  os_type = element(var.managed_disk_os_types, floor(count.index / var.vm_count) % var.managed_disk_count)
 
   tags = merge(
     var.tags,

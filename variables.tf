@@ -410,8 +410,18 @@ variable "storage_os_write_accelerator_enabled" {
   default     = false
 }
 
-variable "storage_os_vhd_uri" {
-  description = "Specifies the URI of the VHD file backing this Unmanaged OS Disk. Changing this forces a new resource to be created."
+variable "storage_os_disk_managed_disk_create_option" {
+  description = "The method to use when creating the managed disk. Changing this forces a new resource to be created. For the OS disk. Possible values include: Empty, FromImage, Copy, Import, Restore."
+  default     = "FromImage"
+}
+
+variable "storage_os_disk_managed_disk_source_resource_id" {
+  description = "Copy an existing managed disk or snapshot. For the OS disk. Only when storage_os_disk_managed_disk_create_option = Copy."
+  default     = ""
+}
+
+variable "storage_os_disk_managed_disk_source_uri" {
+  description = "Import a VHD file in to the managed disk. For the OS disk. Only when storage_os_disk_managed_disk_create_option = Import."
   default     = ""
 }
 
