@@ -450,6 +450,11 @@ variable "winrm_certificate_url" {
   default     = ""
 }
 
+variable "machine_extension_name" {
+  description = "The name of the virtual machine extension peering. Changing this forces a new resource to be created."
+  default     = "machine-ext"
+}
+
 ###
 # Managed Disks
 ###
@@ -543,6 +548,11 @@ variable "managed_disk_tags" {
 }
 
 variable "managed_disk_source_vault_id" {
+  description = "The ID of the Key Vault. This can be found as id on the azurerm_key_vault resource."
+  default     = ""
+}
+
+variable "managed_disk_source_vault_uri" {
   description = "The URL of the Key Vault. This can be found as vault_uri on the azurerm_key_vault resource."
   default     = ""
 }

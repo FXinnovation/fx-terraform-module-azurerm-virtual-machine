@@ -35,6 +35,7 @@ See `examples` folders for usage of this module.
 | delete\_os\_disk\_on\_termination | Should the OS Disk (either the Managed Disk / VHD Blob) be deleted when the Virtual Machine is destroyed? | `bool` | `false` | no |
 | enabled | Enable or disable module | `bool` | `true` | no |
 | license\_type | Specifies the BYOL Type for this Virtual Machine. This is only applicable to Windows Virtual Machines. Possible values are Windows\_Client and Windows\_Server. | `string` | `"Windows_Server"` | no |
+| machine\_extension\_name | The name of the virtual machine extension peering. Changing this forces a new resource to be created. | `string` | `"machine-ext"` | no |
 | managed\_disk\_cachings | Specifies the caching requirements for the Managed Disks. Possible values include None, ReadOnly and ReadWrite. | `list(string)` | <pre>[<br>  "ReadWrite"<br>]</pre> | no |
 | managed\_disk\_count | How many additional managed disk to attach to EACH Virtual Machines. | `number` | `0` | no |
 | managed\_disk\_create\_options | The methods to use when creating the Managed Disks. Possible values include: Empty, FromImage, Copy, Import, Restore. | `list(string)` | <pre>[<br>  "Empty"<br>]</pre> | no |
@@ -47,7 +48,8 @@ See `examples` folders for usage of this module.
 | managed\_disk\_size\_gbs | Specifies the sizes of the Managed Disks to create in gigabytes. If create\_option is Copy or FromImage, then the value must be equal to or greater than the source's size. | `list(number)` | <pre>[<br>  5<br>]</pre> | no |
 | managed\_disk\_source\_resource\_ids | The IDs of existing Managed Disks to copy create\_option is Copy or the recovery points to restore when create\_option is Restore. CAREFUL: if you create multiple Managed Disks with different create\_option, make sure this list matches with the disks having "Copy"/"Restore" on (meaning this list may have empty values). | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |
 | managed\_disk\_source\_uris | URI to a valid VHD file to be used when create\_option is Import. CAREFUL: if you create multiple Managed Disks with different create\_option, make sure this list matches with the disks having "Import" on (meaning this list may have empty values). | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |
-| managed\_disk\_source\_vault\_id | The URL of the Key Vault. This can be found as vault\_uri on the azurerm\_key\_vault resource. | `string` | `""` | no |
+| managed\_disk\_source\_vault\_id | The ID of the Key Vault. This can be found as id on the azurerm\_key\_vault resource. | `string` | `""` | no |
+| managed\_disk\_source\_vault\_uri | The URL of the Key Vault. This can be found as vault\_uri on the azurerm\_key\_vault resource. | `string` | `""` | no |
 | managed\_disk\_storage\_account\_types | The types of storage to use for the Managed Disks. Possible values inside the list are Standard\_LRS, Premium\_LRS, StandardSSD\_LRS or UltraSSD\_LRS. | `list(string)` | <pre>[<br>  "Standard_LRS"<br>]</pre> | no |
 | managed\_disk\_tags | Tags specific to the Managed Disks. | `map` | `{}` | no |
 | managed\_disk\_write\_accelerator\_enableds | Specifies if Write Accelerator is enabled on Managed Disks. This can only be enabled on Premium\_LRS managed disks with no caching and M-Series VMs. | `list(bool)` | <pre>[<br>  false<br>]</pre> | no |
