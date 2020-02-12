@@ -382,12 +382,12 @@ variable "storage_image_reference_version" {
 
 variable "storage_os_disk_create_option" {
   description = "Specifies how the OS Disk should be created. Possible values are Attach (managed disks only) and FromImage."
-  default     = "FromImage"
+  default     = "Attach"
 }
 
 variable "storage_os_disk_name" {
-  description = "Specifies how the OS Disk should be created. Possible values are Attach (managed disks only) and FromImage."
-  default     = "vm-disk"
+  description = "Specifies the name of the OS Disk. If empty, the name of the VMs will be used as names for the disks."
+  default     = ""
 }
 
 variable "storage_os_disk_caching" {
@@ -398,11 +398,6 @@ variable "storage_os_disk_caching" {
 variable "storage_os_disk_size_gb" {
   description = "Specifies the size of the OS Disk in gigabytes."
   default     = 30
-}
-
-variable "storage_os_managed_disk_id" {
-  description = "SSpecifies the ID of an existing Managed Disk which should be attached as the OS Disk of this Virtual Machine. If this is set then the create_option must be set to Attach."
-  default     = ""
 }
 
 variable "storage_os_managed_disk_type" {

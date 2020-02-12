@@ -159,7 +159,7 @@ resource "azurerm_virtual_machine" "this" {
     caching                   = var.storage_os_disk_caching
     create_option             = var.storage_os_disk_create_option
     disk_size_gb              = var.storage_os_disk_size_gb
-    managed_disk_id           = var.storage_os_disk_create_option == "Attach" ? var.storage_os_managed_disk_id : null
+    managed_disk_id           = var.storage_os_disk_create_option == "Attach" ? element(azurerm_managed_disk.this_os.*.id, count.index) : null
     managed_disk_type         = var.storage_os_disk_create_option == "Attach" ? var.storage_os_managed_disk_type : null
     vhd_uri                   = var.storage_os_disk_create_option == "FromImage" ? var.storage_os_vhd_uri : null
     write_accelerator_enabled = var.storage_os_write_accelerator_enabled
@@ -254,11 +254,9 @@ resource "azurerm_virtual_machine" "this" {
 resource "azurerm_virtual_machine_extension" "this" {
   count = var.enabled && var.managed_disk_encryption_settings_enabled ? var.vm_count : 0
 
-  name                = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.machine_extension_name, count.index + 1) : var.machine_extension_name
-  location            = var.resource_group_location
-  resource_group_name = var.resource_group_name
+  name = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.machine_extension_name, count.index + 1) : var.machine_extension_name
 
-  virtual_machine_name = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
+  virtual_machine_id   = element(azurerm_virtual_machine.this.*.id, count.index)
   publisher            = "Microsoft.Azure.Security"
   type                 = var.vm_type == "Windows" ? "AzureDiskEncryption" : "AzureDiskEncryptionForLinux"
   type_handler_version = "2.2"
@@ -280,6 +278,55 @@ SETTINGS
 # Managed Disks
 ###
 
+resource "azurerm_managed_disk" "this_os" {
+  count = var.enabled && var.storage_os_disk_create_option == "Attach" ? var.vm_count : 0
+
+  location            = var.resource_group_location
+  resource_group_name = var.resource_group_name
+
+  name                 = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", local.storage_os_disk_name, count.index + 1) : local.storage_os_disk_name
+  storage_account_type = var.storage_os_managed_disk_type
+  disk_size_gb         = var.storage_os_disk_size_gb
+
+  create_option = "Attach"
+
+  os_type = var.vm_type == "Windows" ? "Windows" : "Linux"
+
+  dynamic "encryption_settings" {
+    for_each = var.managed_disk_encryption_settings_enabled ? [1] : [0]
+
+    content {
+      enabled = var.managed_disk_encryption_settings_enabled
+
+      dynamic "disk_encryption_key" {
+        for_each = var.managed_disk_encryption_key_secret_urls
+
+        content {
+          secret_url      = element(var.managed_disk_encryption_key_secret_urls, count.index)
+          source_vault_id = var.managed_disk_source_vault_id
+        }
+      }
+
+      dynamic "key_encryption_key" {
+        for_each = var.managed_disk_key_encryption_key_urls
+
+        content {
+          key_url         = element(var.managed_disk_key_encryption_key_urls, count.index)
+          source_vault_id = var.managed_disk_source_vault_id
+        }
+      }
+    }
+  }
+
+  tags = merge(
+    var.tags,
+    var.managed_disk_tags,
+    {
+      Terraform = "true"
+    },
+  )
+}
+
 resource "azurerm_managed_disk" "this" {
   count = var.enabled && var.managed_disk_count > 0 ? var.managed_disk_count * var.vm_count : 0
 
@@ -296,32 +343,6 @@ resource "azurerm_managed_disk" "this" {
   source_resource_id = element(var.managed_disk_source_resource_ids, floor(count.index / var.vm_count) % var.managed_disk_count)
   source_uri         = element(var.managed_disk_source_uris, floor(count.index / var.vm_count) % var.managed_disk_count)
   os_type            = element(var.managed_disk_os_types, floor(count.index / var.vm_count) % var.managed_disk_count)
-
-  dynamic "encryption_settings" {
-    for_each = var.managed_disk_encryption_settings_enabled ? [1] : [0]
-
-    content {
-      enabled = var.managed_disk_encryption_settings_enabled
-
-      dynamic "disk_encryption_key" {
-        for_each = var.managed_disk_encryption_key_secret_urls
-
-        content {
-          secret_url      = element(var.managed_disk_encryption_key_secret_urls, floor(count.index / var.vm_count) % var.managed_disk_count)
-          source_vault_id = var.managed_disk_source_vault_id
-        }
-      }
-
-      dynamic "key_encryption_key" {
-        for_each = var.managed_disk_key_encryption_key_urls
-
-        content {
-          key_url         = element(var.managed_disk_key_encryption_key_urls, floor(count.index / var.vm_count) % var.managed_disk_count)
-          source_vault_id = var.managed_disk_source_vault_id
-        }
-      }
-    }
-  }
 
   tags = merge(
     var.tags,
