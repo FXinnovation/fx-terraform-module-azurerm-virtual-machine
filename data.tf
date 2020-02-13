@@ -17,5 +17,4 @@ data "azurerm_platform_image" "this_os" {
   publisher = var.storage_image_reference_publisher
   offer     = var.storage_image_reference_offer
   sku       = var.storage_image_reference_sku
-  version   = var.storage_image_reference_version
 }
