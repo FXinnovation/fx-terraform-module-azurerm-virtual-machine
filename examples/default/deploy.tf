@@ -112,7 +112,7 @@ module "example" {
   ]
 
   managed_disk_count                   = 1
-  managed_disk_names                   = ["tftest${random_string.this.result}"]
+  managed_disk_names                   = ["tftest${random_string.this.result}ext"]
   managed_disk_source_vault_id         = azurerm_key_vault.example.id
   managed_disk_source_vault_uri        = azurerm_key_vault.example.vault_uri
   managed_disk_key_encryption_key_urls = [azurerm_key_vault_key.example.id]
