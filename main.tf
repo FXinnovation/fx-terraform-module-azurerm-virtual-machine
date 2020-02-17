@@ -296,32 +296,6 @@ resource "azurerm_managed_disk" "this_os" {
 
   os_type = var.vm_type == "Windows" ? "Windows" : "Linux"
 
-  dynamic "encryption_settings" {
-    for_each = var.managed_disk_encryption_settings_enabled ? [1] : [0]
-
-    content {
-      enabled = var.managed_disk_encryption_settings_enabled
-
-      dynamic "disk_encryption_key" {
-        for_each = var.managed_disk_encryption_key_secret_urls
-
-        content {
-          secret_url      = element(var.managed_disk_encryption_key_secret_urls, count.index)
-          source_vault_id = var.managed_disk_source_vault_id
-        }
-      }
-
-      dynamic "key_encryption_key" {
-        for_each = var.managed_disk_key_encryption_key_urls
-
-        content {
-          key_url         = element(var.managed_disk_key_encryption_key_urls, count.index)
-          source_vault_id = var.managed_disk_source_vault_id
-        }
-      }
-    }
-  }
-
   tags = merge(
     var.tags,
     var.managed_disk_tags,
