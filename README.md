@@ -111,7 +111,6 @@ See `examples` folders for usage of this module.
 | storage\_os\_disk\_name | Specifies the name of the OS Disk. If empty, the name of the VMs will be used as names for the disks. | `string` | `""` | no |
 | storage\_os\_disk\_size\_gb | Specifies the size of the OS Disk in gigabytes. | `number` | `30` | no |
 | storage\_os\_managed\_disk\_type | Specifies the type of Managed Disk which should be created. Possible values are Standard\_LRS, StandardSSD\_LRS or Premium\_LRS. | `string` | `"Standard_LRS"` | no |
-| storage\_os\_vhd\_uri | Specifies the URI of the VHD file backing this Unmanaged Data Disk. Changing this forces a new resource to be created. | `string` | `""` | no |
 | storage\_os\_write\_accelerator\_enabled | Specifies if Write Accelerator is enabled on the disk. This can only be enabled on Premium\_LRS managed disks with no caching and M-Series VMs. | `bool` | `false` | no |
 | tags | Tags shared by all resources of this module. Will be merged with any other specific tags by resource | `map` | `{}` | no |
 | vm\_count | How many Virtual Machines to create. | `number` | `1` | no |

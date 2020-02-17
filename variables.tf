@@ -390,11 +390,6 @@ variable "storage_os_disk_name" {
   default     = ""
 }
 
-variable "storage_os_vhd_uri" {
-  description = "Specifies the URI of the VHD file backing this Unmanaged Data Disk. Changing this forces a new resource to be created."
-  default     = ""
-}
-
 variable "storage_os_disk_caching" {
   description = "Specifies the caching requirements for the OS Disk. Possible values include None, ReadOnly and ReadWrite."
   default     = "ReadWrite"

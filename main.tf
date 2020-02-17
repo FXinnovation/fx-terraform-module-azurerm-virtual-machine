@@ -161,7 +161,6 @@ resource "azurerm_virtual_machine" "this" {
     disk_size_gb              = var.storage_os_disk_size_gb
     managed_disk_id           = var.storage_os_disk_create_option == "Attach" ? element(azurerm_managed_disk.this_os.*.id, count.index) : null
     managed_disk_type         = var.storage_os_disk_create_option == "Attach" ? var.storage_os_managed_disk_type : null
-    vhd_uri                   = var.storage_os_disk_create_option == "FromImage" ? var.storage_os_vhd_uri : null
     write_accelerator_enabled = var.storage_os_write_accelerator_enabled
     os_type                   = var.vm_type == "Windows" ? "Windows" : "Linux"
   }
@@ -256,10 +255,11 @@ resource "azurerm_virtual_machine_extension" "this" {
 
   name = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.machine_extension_name, count.index + 1) : var.machine_extension_name
 
-  virtual_machine_id   = element(azurerm_virtual_machine.this.*.id, count.index)
-  publisher            = "Microsoft.Azure.Security"
-  type                 = var.vm_type == "Windows" ? "AzureDiskEncryption" : "AzureDiskEncryptionForLinux"
-  type_handler_version = "2.2"
+  virtual_machine_id         = element(azurerm_virtual_machine.this.*.id, count.index)
+  publisher                  = "Microsoft.Azure.Security"
+  type                       = var.vm_type == "Windows" ? "AzureDiskEncryption" : "AzureDiskEncryptionForLinux"
+  type_handler_version       = var.vm_type == "Windows" ? "2.2" : "1.1"
+  auto_upgrade_minor_version = true
 
   settings = <<SETTINGS
 {
@@ -272,6 +272,14 @@ resource "azurerm_virtual_machine_extension" "this" {
   "VolumeType": "All"
 }
 SETTINGS
+
+  tags = merge(
+    var.tags,
+    var.vm_tags,
+    {
+      Terraform = "true"
+    },
+  )
 }
 
 ###
