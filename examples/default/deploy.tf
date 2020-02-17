@@ -87,6 +87,15 @@ module "example" {
     env = "test"
   }
 
+  vm_type = "Windows"
+
+  storage_image_reference_offer     = "WindowsServer"
+  storage_image_reference_sku       = "2019-Datacenter"
+  storage_image_reference_publisher = "MicrosoftWindowsServer"
+  storage_os_disk_size_gb           = 127
+
+  winrm_protocol = "HTTP"
+
   num_suffix_digits = 4
 
   availability_set_name = "tftest${random_string.this.result}"
