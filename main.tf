@@ -160,7 +160,7 @@ resource "azurerm_virtual_machine" "this" {
     create_option             = var.storage_os_disk_create_option
     disk_size_gb              = var.storage_os_disk_size_gb
     managed_disk_id           = var.storage_os_disk_create_option == "Attach" ? element(azurerm_managed_disk.this_os.*.id, count.index) : null
-    managed_disk_type         = var.storage_os_disk_create_option == "Attach" ? var.storage_os_managed_disk_type : null
+    managed_disk_type         = var.storage_os_managed_disk_type
     write_accelerator_enabled = var.storage_os_write_accelerator_enabled
     os_type                   = var.vm_type == "Windows" ? "Windows" : "Linux"
   }
