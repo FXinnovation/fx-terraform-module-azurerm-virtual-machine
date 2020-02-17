@@ -261,7 +261,7 @@ resource "azurerm_virtual_machine_extension" "this" {
   virtual_machine_id         = element(azurerm_virtual_machine.this.*.id, count.index)
   publisher                  = "Microsoft.Azure.Security"
   type                       = var.vm_type == "Windows" ? "AzureDiskEncryption" : "AzureDiskEncryptionForLinux"
-  type_handler_version       = var.vm_type == "Windows" ? "2.2" : "1.1"
+  type_handler_version       = "2.2"
   auto_upgrade_minor_version = true
 
   settings = <<SETTINGS
