@@ -28,6 +28,8 @@ See `examples` folders for usage of this module.
 | availability\_set\_exists | If defined, the existing availability set will be used by virtual machines instead of creating a new availability set inside this module. | `bool` | `false` | no |
 | availability\_set\_managed | Specifies whether the availability set is managed or not. Possible values are true (to specify aligned) or false (to specify classic). | `bool` | `true` | no |
 | availability\_set\_name | Specifies the name of the availability set. Changing this forces a new resource to be created. | `string` | `""` | no |
+| availability\_set\_platform\_fault\_domain\_count | Specifies the number of fault domains that are used. | `number` | `2` | no |
+| availability\_set\_platform\_update\_domain\_count | Specifies the number of update domains that are used. | `number` | `5` | no |
 | availability\_set\_tags | Tags specific to the availability set. | `map` | `{}` | no |
 | boot\_diagnostics\_enabled | Should Boot Diagnostics be enabled for this Virtual Machine? | `bool` | `false` | no |
 | boot\_diagnostics\_storage\_uri | The Storage Account's Blob Endpoint which should hold the virtual machine's diagnostic files. | `string` | `""` | no |
@@ -39,7 +41,6 @@ See `examples` folders for usage of this module.
 | managed\_disk\_cachings | Specifies the caching requirements for the Managed Disks. Possible values include None, ReadOnly and ReadWrite. | `list(string)` | <pre>[<br>  "ReadWrite"<br>]</pre> | no |
 | managed\_disk\_count | How many additional managed disk to attach to EACH Virtual Machines. | `number` | `0` | no |
 | managed\_disk\_create\_options | The methods to use when creating the Managed Disks. Possible values include: Empty, FromImage, Copy, Import, Restore. | `list(string)` | <pre>[<br>  "Empty"<br>]</pre> | no |
-| managed\_disk\_encryption\_key\_secret\_urls | The URLs to the Key Vault Secrets used as the Disk Encryption Keys. This can be found as id on the azurerm\_key\_vault\_secret resource. | `list(string)` | `[]` | no |
 | managed\_disk\_encryption\_settings\_enabled | The URLs to the Key Vault Secrets used as the Disk Encryption Keys. This can be found as id on the azurerm\_key\_vault\_secret resource. | `bool` | `true` | no |
 | managed\_disk\_image\_reference\_ids | IDs of an existing platform/marketplace disk image to copy when create\_option is FromImage. CAREFUL: if you create multiple Managed Disks with different create\_option, make sure this list matches with the disks having "FromImage" on (meaning this list may have empty values). | `list(string)` | <pre>[<br>  ""<br>]</pre> | no |
 | managed\_disk\_key\_encryption\_key\_urls | The URLs to the Key Vault Keys used as the Key Encryption Keys. This can be found as id on the azurerm\_key\_vault\_key resource. | `list(string)` | `[]` | no |

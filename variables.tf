@@ -51,6 +51,16 @@ variable "availability_set_managed" {
   default     = true
 }
 
+variable "availability_set_platform_update_domain_count" {
+  description = "Specifies the number of update domains that are used."
+  default     = 5
+}
+
+variable "availability_set_platform_fault_domain_count" {
+  description = "Specifies the number of fault domains that are used."
+  default     = 2
+}
+
 variable "availability_set_tags" {
   description = "Tags specific to the availability set."
   default     = {}
@@ -503,12 +513,6 @@ variable "managed_disk_encryption_settings_enabled" {
   description = "The URLs to the Key Vault Secrets used as the Disk Encryption Keys. This can be found as id on the azurerm_key_vault_secret resource."
   type        = bool
   default     = true
-}
-
-variable "managed_disk_encryption_key_secret_urls" {
-  description = "The URLs to the Key Vault Secrets used as the Disk Encryption Keys. This can be found as id on the azurerm_key_vault_secret resource."
-  type        = list(string)
-  default     = []
 }
 
 variable "managed_disk_key_encryption_key_urls" {
