@@ -322,7 +322,7 @@ resource "azurerm_managed_disk" "this" {
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 
-  name                 = var.managed_disk_count * var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.name, count.index + 1) : element(var.managed_disk_names, floor(count.index / var.vm_count) % var.managed_disk_count)
+  name                 = var.managed_disk_count * var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", element(var.managed_disk_names, floor(count.index / var.vm_count) % var.managed_disk_count), floor(count.index / var.vm_count) + 1) : element(var.managed_disk_names, floor(count.index / var.vm_count) % var.managed_disk_count)
   storage_account_type = element(var.managed_disk_storage_account_types, floor(count.index / var.vm_count) % var.managed_disk_count)
   disk_size_gb         = element(var.managed_disk_size_gbs, floor(count.index / var.vm_count) % var.managed_disk_count)
 
