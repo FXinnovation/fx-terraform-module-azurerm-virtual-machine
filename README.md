@@ -105,7 +105,7 @@ See `examples` folders for usage of this module.
 | storage\_image\_reference\_sku | Specifies the SKU of the image used to create the virtual machine. Changing this forces a new resource to be created. | `string` | `"18.04-LTS"` | no |
 | storage\_image\_reference\_version | Specifies the version of the image used to create the virtual machine. Changing this forces a new resource to be created. | `string` | `"latest"` | no |
 | storage\_os\_disk\_caching | Specifies the caching requirements for the OS Disk. Possible values include None, ReadOnly and ReadWrite. | `string` | `"ReadWrite"` | no |
-| storage\_os\_disk\_create\_option | Specifies how the OS Disk should be created. Possible values are Attach (managed disks only) and FromImage. | `string` | `"Attach"` | no |
+| storage\_os\_disk\_create\_option | Specifies how the OS Disk should be created. Possible values are Attach (managed disks only) and FromImage. | `string` | `"FromImage"` | no |
 | storage\_os\_disk\_managed\_disk\_create\_option | The method to use when creating the managed disk. Changing this forces a new resource to be created. For the OS disk. Possible values include: Empty, FromImage, Copy, Import, Restore. | `string` | `"FromImage"` | no |
 | storage\_os\_disk\_managed\_disk\_source\_resource\_id | Copy an existing managed disk or snapshot. For the OS disk. Only when storage\_os\_disk\_managed\_disk\_create\_option = Copy. | `string` | `""` | no |
 | storage\_os\_disk\_managed\_disk\_source\_uri | Import a VHD file in to the managed disk. For the OS disk. Only when storage\_os\_disk\_managed\_disk\_create\_option = Import. | `string` | `""` | no |

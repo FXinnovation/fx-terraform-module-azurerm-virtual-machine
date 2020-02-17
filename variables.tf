@@ -392,7 +392,7 @@ variable "storage_image_reference_version" {
 
 variable "storage_os_disk_create_option" {
   description = "Specifies how the OS Disk should be created. Possible values are Attach (managed disks only) and FromImage."
-  default     = "Attach"
+  default     = "FromImage"
 }
 
 variable "storage_os_disk_name" {
