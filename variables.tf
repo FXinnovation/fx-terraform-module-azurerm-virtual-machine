@@ -447,7 +447,7 @@ variable "vm_type" {
 
 variable "vm_size" {
   description = "Specifies the size of the Virtual Machines. https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes?toc=%2Fazure%2Fvirtual-machines%2Fwindows%2Ftoc.json."
-  default     = "Standard_B1ls"
+  default     = "Standard_B2ms"
 }
 
 variable "vm_tags" {

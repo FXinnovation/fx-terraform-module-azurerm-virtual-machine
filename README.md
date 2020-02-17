@@ -115,7 +115,7 @@ See `examples` folders for usage of this module.
 | storage\_os\_write\_accelerator\_enabled | Specifies if Write Accelerator is enabled on the disk. This can only be enabled on Premium\_LRS managed disks with no caching and M-Series VMs. | `bool` | `false` | no |
 | tags | Tags shared by all resources of this module. Will be merged with any other specific tags by resource | `map` | `{}` | no |
 | vm\_count | How many Virtual Machines to create. | `number` | `1` | no |
-| vm\_size | Specifies the size of the Virtual Machines. https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes?toc=%2Fazure%2Fvirtual-machines%2Fwindows%2Ftoc.json. | `string` | `"Standard_B1ls"` | no |
+| vm\_size | Specifies the size of the Virtual Machines. https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes?toc=%2Fazure%2Fvirtual-machines%2Fwindows%2Ftoc.json. | `string` | `"Standard_B2ms"` | no |
 | vm\_tags | Tags specific to the Virtual Machines. | `map` | `{}` | no |
 | vm\_type | The type of Virtual Machines to create. Can be either "Linux" or "Windows". | `string` | `"Linux"` | no |
 | winrm\_certificate\_url | The ID of the Key Vault Secret which contains the encrypted Certificate which should be installed on the Virtual Machine. This certificate must also be specified in the vault\_certificates block within the os\_profile\_secrets block. | `string` | `""` | no |

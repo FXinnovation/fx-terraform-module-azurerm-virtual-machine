@@ -161,7 +161,6 @@ module "example" {
 
   name     = "tftest${random_string.this.result}"
   vm_count = 2
-  vm_size  = "Standard_B2s"
   vm_type  = "Windows"
 
   storage_image_reference_offer     = "WindowsServer"
