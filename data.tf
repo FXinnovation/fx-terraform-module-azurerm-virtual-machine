@@ -13,6 +13,8 @@ data "azurerm_availability_set" "this" {
 }
 
 data "azurerm_platform_image" "this_os" {
+  count = var.enabled && var.storage_os_disk_create_option == "Attach" ? 1 : 0
+
   location  = var.resource_group_location
   publisher = var.storage_image_reference_publisher
   offer     = var.storage_image_reference_offer

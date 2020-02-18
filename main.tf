@@ -269,7 +269,7 @@ resource "azurerm_managed_disk" "this_os" {
 
   create_option = var.storage_os_disk_managed_disk_create_option
 
-  image_reference_id = var.storage_os_disk_managed_disk_create_option == "FromImage" ? data.azurerm_platform_image.this_os.id : null
+  image_reference_id = var.storage_os_disk_managed_disk_create_option == "FromImage" ? data.azurerm_platform_image.this_os.*.id[0] : null
   source_resource_id = var.storage_os_disk_managed_disk_create_option == "Copy" ? var.storage_os_disk_managed_disk_source_resource_id : null
   source_uri         = var.storage_os_disk_managed_disk_create_option == "Import" ? var.storage_os_disk_managed_disk_source_uri : null
 
