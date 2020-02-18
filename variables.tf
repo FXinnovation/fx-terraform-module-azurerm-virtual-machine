@@ -509,18 +509,6 @@ variable "managed_disk_cachings" {
   default     = ["ReadWrite"]
 }
 
-variable "managed_disk_encryption_settings_enabled" {
-  description = "The URLs to the Key Vault Secrets used as the Disk Encryption Keys. This can be found as id on the azurerm_key_vault_secret resource."
-  type        = bool
-  default     = true
-}
-
-variable "managed_disk_key_encryption_key_urls" {
-  description = "The URLs to the Key Vault Keys used as the Key Encryption Keys. This can be found as id on the azurerm_key_vault_key resource."
-  type        = list(string)
-  default     = []
-}
-
 variable "managed_disk_write_accelerator_enableds" {
   description = "Specifies if Write Accelerator is enabled on Managed Disks. This can only be enabled on Premium_LRS managed disks with no caching and M-Series VMs."
   type        = list(bool)
@@ -554,14 +542,4 @@ variable "managed_disk_os_types" {
 variable "managed_disk_tags" {
   description = "Tags specific to the Managed Disks."
   default     = {}
-}
-
-variable "managed_disk_source_vault_id" {
-  description = "The ID of the Key Vault. This can be found as id on the azurerm_key_vault resource."
-  default     = ""
-}
-
-variable "managed_disk_source_vault_uri" {
-  description = "The URL of the Key Vault. This can be found as vault_uri on the azurerm_key_vault resource."
-  default     = ""
 }

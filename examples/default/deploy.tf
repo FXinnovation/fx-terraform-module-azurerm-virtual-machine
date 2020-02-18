@@ -31,53 +31,6 @@ resource "azurerm_application_security_group" "example" {
   resource_group_name = azurerm_resource_group.example.name
 }
 
-resource "azurerm_key_vault" "example" {
-  name                = "tftest${random_string.this.result}"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
-  tenant_id           = data.azurerm_client_config.current.tenant_id
-  sku_name            = "standard"
-
-  enabled_for_disk_encryption = true
-
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.service_principal_object_id
-
-    key_permissions = [
-      "create",
-      "get",
-      "delete",
-      "list",
-      "wrapkey",
-      "unwrapkey",
-      "get",
-    ]
-
-    secret_permissions = [
-      "get",
-      "delete",
-      "set",
-    ]
-  }
-}
-
-resource "azurerm_key_vault_key" "example" {
-  name         = "tftest${random_string.this.result}"
-  key_vault_id = azurerm_key_vault.example.id
-  key_type     = "RSA"
-  key_size     = 2048
-
-  key_opts = [
-    "decrypt",
-    "encrypt",
-    "sign",
-    "unwrapKey",
-    "verify",
-    "wrapKey",
-  ]
-}
-
 module "example" {
   source = "../.."
 
@@ -86,13 +39,6 @@ module "example" {
   tags = {
     env = "test"
   }
-
-  vm_type = "Windows"
-
-  storage_image_reference_offer     = "WindowsServer"
-  storage_image_reference_sku       = "2019-Datacenter"
-  storage_image_reference_publisher = "MicrosoftWindowsServer"
-  storage_os_disk_size_gb           = 127
 
   winrm_protocol = "HTTP"
 
@@ -120,11 +66,8 @@ module "example" {
     },
   ]
 
-  managed_disk_count                   = 1
-  managed_disk_names                   = ["tftest${random_string.this.result}ext"]
-  managed_disk_source_vault_id         = azurerm_key_vault.example.id
-  managed_disk_source_vault_uri        = azurerm_key_vault.example.vault_uri
-  managed_disk_key_encryption_key_urls = [azurerm_key_vault_key.example.id]
+  managed_disk_count = 1
+  managed_disk_names = ["tftest${random_string.this.result}ext"]
 
   name = "tftest${random_string.this.result}"
 

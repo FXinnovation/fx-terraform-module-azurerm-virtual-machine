@@ -61,53 +61,6 @@ resource "azurerm_lb_backend_address_pool" "example" {
   name                = "tftest${random_string.this.result}"
 }
 
-resource "azurerm_key_vault" "example" {
-  name                = "tftest${random_string.this.result}"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
-  tenant_id           = data.azurerm_client_config.current.tenant_id
-  sku_name            = "standard"
-
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.service_principal_object_id
-
-    enabled_for_disk_encryption = true
-
-    key_permissions = [
-      "create",
-      "get",
-      "delete",
-      "list",
-      "wrapkey",
-      "unwrapkey",
-      "get",
-    ]
-
-    secret_permissions = [
-      "get",
-      "delete",
-      "set",
-    ]
-  }
-}
-
-resource "azurerm_key_vault_key" "example" {
-  name         = "tftest${random_string.this.result}"
-  key_vault_id = azurerm_key_vault.example.id
-  key_type     = "RSA"
-  key_size     = 2048
-
-  key_opts = [
-    "decrypt",
-    "encrypt",
-    "sign",
-    "unwrapKey",
-    "verify",
-    "wrapKey",
-  ]
-}
-
 module "example" {
   source = "../.."
 
@@ -178,8 +131,6 @@ module "example" {
   managed_disk_cachings                   = ["ReadWrite"]
   managed_disk_write_accelerator_enableds = [false]
   managed_disk_os_types                   = ["Windows"]
-  managed_disk_source_vault_id            = azurerm_key_vault.example.id
-  managed_disk_key_encryption_key_urls    = [azurerm_key_vault_key.example.id]
 
   managed_disk_tags = {
     test = "tftest${random_string.this.result}"

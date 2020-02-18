@@ -253,38 +253,6 @@ resource "azurerm_virtual_machine" "this" {
   )
 }
 
-resource "azurerm_virtual_machine_extension" "this" {
-  count = var.enabled && var.managed_disk_encryption_settings_enabled ? var.vm_count : 0
-
-  name = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.machine_extension_name, count.index + 1) : var.machine_extension_name
-
-  virtual_machine_id         = element(azurerm_virtual_machine.this.*.id, count.index)
-  publisher                  = "Microsoft.Azure.Security"
-  type                       = var.vm_type == "Windows" ? "AzureDiskEncryption" : "AzureDiskEncryptionForLinux"
-  type_handler_version       = var.vm_type == "Windows" ? "2.2" : "1.1"
-  auto_upgrade_minor_version = true
-
-  settings = <<SETTINGS
-{
-  "EncryptionOperation": "EnableEncryption",
-  "KeyVaultURL": "${var.managed_disk_source_vault_uri}",
-  "KeyVaultResourceId": "${var.managed_disk_source_vault_id}",
-  "KeyEncryptionKeyURL": "https://${element(var.managed_disk_key_encryption_key_urls, floor(count.index / var.vm_count) % var.managed_disk_count)}",
-  "KekVaultResourceId": "${var.managed_disk_source_vault_id}",
-  "KeyEncryptionAlgorithm": "RSA-OAEP",
-  "VolumeType": "All"
-}
-SETTINGS
-
-  tags = merge(
-    var.tags,
-    var.vm_tags,
-    {
-      Terraform = "true"
-    },
-  )
-}
-
 ###
 # Managed Disks
 ###
