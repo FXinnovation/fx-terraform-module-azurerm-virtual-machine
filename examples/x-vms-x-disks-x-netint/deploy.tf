@@ -124,7 +124,7 @@ module "example" {
   winrm_protocol = "HTTP"
 
   managed_disk_count                      = 3
-  managed_disk_names                      = ["tftest1${random_string.this.result}ext", "tftest2${random_string.this.result}ext", "tftest3${random_string.this.result}ext"]
+  managed_disk_names                      = ["tftest1${random_string.this.result}ext", "tftest2${random_string.this.result}ext2", "tftest3${random_string.this.result}ext3"]
   managed_disk_storage_account_types      = ["Standard_LRS"]
   managed_disk_size_gbs                   = [5, 6, 10]
   managed_disk_create_options             = ["Empty", "Empty", "Empty"]
