@@ -8,7 +8,7 @@ See `examples` folders for usage of this module.
 - Any call of this module will create resources in a single resource group.
 - Any network interfaces created in this module will have a single ip_configuration.
 - Tags for VMs are shared among all VMs. Same thing for managed disks.
-- OS storage disk cannot be encrypted for now (see: https://stackoverflow.com/questions/58920271/azure-terraform-encrypt-vm-os-disk).
+- No disks can be encrypted automatically.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Providers

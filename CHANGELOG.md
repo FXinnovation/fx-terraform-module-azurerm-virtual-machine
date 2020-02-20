@@ -2,7 +2,6 @@
 ==================
 
  * feat: adds marketplace agreement resource
- * feat: adds managed disks encryption and make it mandatory
  * feat: allows to set platform update/fault domain count for availability sets
 
 0.4.0 / 2020-02-10
