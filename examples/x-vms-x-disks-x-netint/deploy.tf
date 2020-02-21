@@ -8,7 +8,7 @@ resource "random_string" "this" {
 
 resource "azurerm_resource_group" "example" {
   name     = "tftest${random_string.this.result}"
-  location = "West US"
+  location = "northcentralus"
 }
 
 resource "azurerm_virtual_network" "example" {
@@ -78,8 +78,8 @@ module "example" {
   network_interface_enabled                     = true
   network_interface_count                       = 2
   network_interface_names                       = ["tftest${random_string.this.result}"]
-  network_interface_internal_dns_name_labels    = ["tftest${random_string.this.result}-first", "tftest${random_string.this.result}-second"]
-  network_interface_ip_configuration_names      = ["tftest${random_string.this.result}", "tftest${random_string.this.result}2", "tftest${random_string.this.result}3", "tftest${random_string.this.result}4"]
+  network_interface_internal_dns_name_labels    = ["tftest${random_string.this.result}-first", "tftest${random_string.this.result}-second", "tftest${random_string.this.result}-third", "tftest${random_string.this.result}-1first", "tftest${random_string.this.result}-2second", "tftest${random_string.this.result}-3third"]
+  network_interface_ip_configuration_names      = ["tftest${random_string.this.result}", "tftest${random_string.this.result}2", "tftest${random_string.this.result}3", "tftest${random_string.this.result}4", "tftest${random_string.this.result}5", "tftest${random_string.this.result}6"]
   network_interface_ip_configuration_subnet_ids = [azurerm_subnet.example.id]
   network_interface_tags = {
     test = "tftest${random_string.this.result}"
@@ -92,7 +92,7 @@ module "example" {
       backend_address_pool_id = azurerm_lb_backend_address_pool.example.id
     },
   ]
-  network_interface_application_security_group_count = 4
+  network_interface_application_security_group_count = 6
   network_interface_application_security_group_ids = [
     {
       network_interface_index       = 0
@@ -110,12 +110,21 @@ module "example" {
       network_interface_index       = 1
       application_security_group_id = azurerm_application_security_group.example2.id
     },
+    {
+      network_interface_index       = 2
+      application_security_group_id = azurerm_application_security_group.example1.id
+    },
+    {
+      network_interface_index       = 2
+      application_security_group_id = azurerm_application_security_group.example2.id
+    },
   ]
 
-  name     = "tftest${random_string.this.result}"
-  vm_count = 2
-  vm_type  = "Windows"
-
+  name                              = "tftest${random_string.this.result}"
+  vm_count                          = 3
+  vm_type                           = "Windows"
+  vm_size                           = "Standard_D1_v2"
+  num_suffix_digits                 = 3
   storage_image_reference_offer     = "WindowsServer"
   storage_image_reference_sku       = "2019-Datacenter"
   storage_image_reference_publisher = "MicrosoftWindowsServer"
@@ -124,7 +133,7 @@ module "example" {
   winrm_protocol = "HTTP"
 
   managed_disk_count                      = 3
-  managed_disk_names                      = ["tftest1${random_string.this.result}ext", "tftest2${random_string.this.result}ext2", "tftest3${random_string.this.result}ext3"]
+  managed_disk_names                      = ["tftest1${random_string.this.result}ext", "tftest2${random_string.this.result}ext", "tftest3${random_string.this.result}ext"]
   managed_disk_storage_account_types      = ["Standard_LRS"]
   managed_disk_size_gbs                   = [5, 6, 10]
   managed_disk_create_options             = ["Empty", "Empty", "Empty"]
