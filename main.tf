@@ -117,7 +117,7 @@ resource "azurerm_virtual_machine" "this" {
 
   license_type = var.vm_type == "Windows" ? var.license_type : null
 
-  name                         = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
+  name                         = var.vm_count > 1 ? format("%s%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
   location                     = var.resource_group_location
   resource_group_name          = var.resource_group_name
   network_interface_ids        = element(chunklist((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), var.network_interface_count), count.index)
@@ -158,7 +158,7 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   storage_os_disk {
-    name                      = var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", local.storage_os_disk_name, count.index + 1) : local.storage_os_disk_name
+    name                      = var.vm_count > 1 ? format("%s%0${var.num_suffix_digits}d", local.storage_os_disk_name, count.index + 1) : local.storage_os_disk_name
     caching                   = var.storage_os_disk_caching
     create_option             = var.storage_os_disk_create_option
     disk_size_gb              = var.storage_os_disk_size_gb
@@ -169,7 +169,7 @@ resource "azurerm_virtual_machine" "this" {
   }
 
   os_profile {
-    computer_name  = var.vm_type == "Windows" ? substr((var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name), -15, 15) : var.vm_count > 0 ? format("%s%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
+    computer_name  = var.vm_type == "Windows" ? substr((var.vm_count > 1 ? format("%s%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name), -15, 15) : var.vm_count > 1 ? format("%s%0${var.num_suffix_digits}d", var.name, count.index + 1) : var.name
     admin_username = var.os_profile_admin_username
     admin_password = var.os_profile_admin_password
     custom_data    = var.os_profile_custom_data
