@@ -1,3 +1,7 @@
+0.5.1 / 2020-03-09
+==================
+ * fix: changed condition on vm_count to allow custom names of singular VM
+
 0.5.0 / 2020-02-11
 ==================
 
