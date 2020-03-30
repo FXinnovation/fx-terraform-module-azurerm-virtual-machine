@@ -15,7 +15,7 @@ See `examples` folders for usage of this module.
 
 | Name | Version |
 |------|---------|
-| azurerm | ~>1.42.0 |
+| azurerm | >= 1.42.0, < 2.0.0 |
 
 ## Inputs
 
