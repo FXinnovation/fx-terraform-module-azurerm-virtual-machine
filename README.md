@@ -11,16 +11,23 @@ See `examples` folders for usage of this module.
 - No disks can be encrypted automatically.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12.20 |
+| azurerm | >= 2.0.0 |
+
 ## Providers
 
 | Name | Version |
 |------|---------|
-| azurerm | >= 1.42.0, < 2.0.0 |
+| azurerm | >= 2.0.0 |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | additional\_capabilities\_ultra\_ssd\_enabled | Should Ultra SSD disk be enabled for this Virtual Machine? | `bool` | `false` | no |
 | additional\_unattend\_config\_content | Specifies the base-64 encoded XML formatted content that is added to the unattend.xml file for the specified path and component. | `string` | `""` | no |
 | additional\_unattend\_config\_setting\_name | Specifies the name of the setting to which the content applies. Possible values are: FirstLogonCommands and AutoLogon. | `string` | `"FirstLogonCommands"` | no |
