@@ -73,6 +73,7 @@ module "example" {
 
   vm_names                         = ["tftest${random_string.this.result}"]
   vm_size                          = "Standard_F2"
+  windows_vm_enabled               = true
   windows_admin_username           = "testadmin"
   windows_admin_password           = "Passw0rd_TO_BE_CHANGED!"
   os_disk_caching                  = "ReadWrite"
