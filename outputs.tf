@@ -11,11 +11,11 @@ output "availability_set_id" {
 ###
 
 output "network_interface_ids" {
-  value = var.network_interface_count > 0 && compact(concat(var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id, [""])) != [] ? zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id, [""])), var.network_interface_count)) : {}
+  value = var.linux_vm_enabled != true && var.network_interface_count > 0 && compact(concat(var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id, [""])) != [] ? zipmap(azurerm_windows_virtual_machine.this.*.id, chunklist(compact(concat(var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id, [""])), var.network_interface_count)) : zipmap(azurerm_linux_virtual_machine.this.*.id, chunklist(compact(concat(var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id, [""])), var.network_interface_count))
 }
 
 output "network_interface_private_ip_addresses" {
-  value = var.network_interface_count > 0 && compact(concat(var.network_interface_exists ? data.azurerm_network_interface.this.*.private_ip_address : azurerm_network_interface.this.*.private_ip_address, [""])) != [] ? zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(var.network_interface_exists ? data.azurerm_network_interface.this.*.private_ip_address : azurerm_network_interface.this.*.private_ip_address, [""])), var.network_interface_count)) : {}
+  value = var.linux_vm_enabled != true && var.network_interface_count > 0 && compact(concat(var.network_interface_exists ? data.azurerm_network_interface.this.*.private_ip_address : azurerm_network_interface.this.*.private_ip_address, [""])) != [] ? zipmap(azurerm_windows_virtual_machine.this.*.id, chunklist(compact(concat(var.network_interface_exists ? data.azurerm_network_interface.this.*.private_ip_address : azurerm_network_interface.this.*.private_ip_address, [""])), var.network_interface_count)) : zipmap(azurerm_linux_virtual_machine.this.*.id, chunklist(compact(concat(var.network_interface_exists ? data.azurerm_network_interface.this.*.private_ip_address : azurerm_network_interface.this.*.private_ip_address, [""])), var.network_interface_count))
 }
 
 ###
@@ -43,5 +43,5 @@ output "marketplace_agreement_ids" {
 ###
 
 output "managed_disk_ids" {
-  value = var.managed_disk_count > 0 && compact(concat(azurerm_managed_disk.this.*.id, [""])) != [] ? zipmap(azurerm_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_managed_disk.this.*.id, [""])), var.managed_disk_count)) : {}
+  value = var.linux_vm_enabled != true && var.managed_disk_count > 0 && compact(concat(azurerm_managed_disk.this.*.id, [""])) != [] ? zipmap(azurerm_windows_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_managed_disk.this.*.id, [""])), var.managed_disk_count)) : zipmap(azurerm_linux_virtual_machine.this.*.id, chunklist(compact(concat(azurerm_managed_disk.this.*.id, [""])), var.managed_disk_count))
 }
