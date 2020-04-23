@@ -1,6 +1,6 @@
-# External resources example
+# Default example
 
-This will use externally created resources.
+This will create basic resources related to Linux virtual machine.
 
 ## Usage
 ```

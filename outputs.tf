@@ -22,12 +22,12 @@ output "network_interface_private_ip_addresses" {
 # Virtual Machines
 ###
 
-output "ids" {
-  value = azurerm_virtual_machine.this.*.id
+output "vm_ids" {
+  value = var.linux_vm_enabled != true ? azurerm_windows_virtual_machine.this.*.id : azurerm_linux_virtual_machine.this.*.id
 }
 
 output "identities" {
-  value = azurerm_virtual_machine.this.*.identity
+  value = var.linux_vm_enabled != true ? azurerm_windows_virtual_machine.this.*.identity : azurerm_linux_virtual_machine.this.*.identity
 }
 
 ###

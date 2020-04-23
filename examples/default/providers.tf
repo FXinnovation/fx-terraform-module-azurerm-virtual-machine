@@ -1,5 +1,9 @@
 provider "azurerm" {
-  features {}
+  features {
+    virtual_machine {
+      delete_os_disk_on_deletion = true
+    }
+  }
   version         = ">= 2.0.0"
   client_id       = var.client_id
   client_secret   = var.client_secret
