@@ -37,7 +37,6 @@ resource "azurerm_application_security_group" "example" {
 module "example" {
   source = "../.."
 
-  enabled                 = true
   resource_group_location = azurerm_resource_group.example.location
   resource_group_name     = azurerm_resource_group.example.name
   tags = {
@@ -74,7 +73,7 @@ module "example" {
   vm_size                          = "Standard_B2ms"
   vm_type                          = "Linux"
   linux_vm_enabled                 = true
-  linux_admin_username             = "testadmin"
+  admin_username                   = "testadmin"
   os_disk_caching                  = "ReadWrite"
   os_disk_size_gb                  = 30
   os_disk_storage_account_type     = "Standard_LRS"

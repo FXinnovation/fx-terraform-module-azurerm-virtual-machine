@@ -15,7 +15,7 @@ output "marketplace_agreement_ids" {
 }
 
 output "vm_ids" {
-  value = module.example.vm_ids
+  value = module.example.ids
 }
 
 output "identities" {

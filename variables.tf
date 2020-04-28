@@ -290,6 +290,16 @@ variable "zone" {
   default     = null
 }
 
+variable "admin_username" {
+  description = "Specifies the name of the virtual machine local administrator account."
+  default     = "testadmin"
+}
+
+variable "admin_password" {
+  description = "The virtual machine password associated with the local administrator account."
+  default     = "Passw0rd_TO_BE_CHANGED!"
+}
+
 variable "allow_extension_operations" {
   description = "Boolean flag whcih provides the information about should the extension operations be allowed on the virtual machine? Chaning this forces a new resource to be created."
   default     = true
@@ -457,16 +467,6 @@ variable "windows_vm_enabled" {
   default     = false
 }
 
-variable "windows_admin_username" {
-  description = "Specifies the name of the windows virtual machine local administrator account."
-  default     = "testadmin"
-}
-
-variable "windows_admin_password" {
-  description = "The windows virtual machine password associated with the local administrator account."
-  default     = "Passw0rd_TO_BE_CHANGED!"
-}
-
 variable "windows_timezone" {
   description = "Specifies the timezone which should be used by the virtual machine. The possible values are defined over here: https://jackstromberg.com/2017/01/list-of-time-zones-consumed-by-azure/ "
   default     = "UTC"
@@ -514,16 +514,6 @@ variable "winrm_listener_certificate_url" {
 variable "linux_vm_enabled" {
   description = "Boolean flag which describes whether or not enable the linux virtual machine resource."
   default     = false
-}
-
-variable "linux_admin_username" {
-  description = "Specifies the name of the linux virtual machine local administrator account."
-  default     = "testadmin"
-}
-
-variable "linux_admin_password" {
-  description = "The linux virtual machine password associated with the local administrator account. `NOTE`: When an admin_password is specified disable_password_authentication must be set to `false`."
-  default     = ""
 }
 
 variable "linux_admin_ssh_keys" {

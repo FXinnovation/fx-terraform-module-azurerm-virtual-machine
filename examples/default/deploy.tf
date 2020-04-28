@@ -38,7 +38,6 @@ resource "azurerm_application_security_group" "example" {
 module "example" {
   source = "../.."
 
-  enabled                 = true
   resource_group_location = azurerm_resource_group.example.location
   resource_group_name     = azurerm_resource_group.example.name
   tags = {
@@ -74,8 +73,8 @@ module "example" {
   vm_names                         = ["tftest${random_string.this.result}"]
   vm_size                          = "Standard_F2"
   windows_vm_enabled               = true
-  windows_admin_username           = "testadmin"
-  windows_admin_password           = "Passw0rd_TO_BE_CHANGED!"
+  admin_username                   = "testadmin"
+  admin_password                   = "Passw0rd_TO_BE_CHANGED!"
   os_disk_caching                  = "ReadWrite"
   os_disk_size_gb                  = 127
   os_disk_storage_account_type     = "Standard_LRS"

@@ -55,7 +55,6 @@ resource "azurerm_network_interface" "this" {
     private_ip_address_version    = element(var.network_interface_ip_configuration_private_ip_address_versions, count.index)
   }
 
-
   tags = merge(
     var.tags,
     var.network_interface_tags,
@@ -76,7 +75,7 @@ resource "azurerm_network_interface_application_gateway_backend_address_pool_ass
   count = var.enabled ? var.network_interface_application_gateway_backend_address_pool_count * var.network_interface_count : 0
 
   network_interface_id    = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), element(var.network_interface_application_gateway_backend_address_pool_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
-  ip_configuration_name   = element(var.network_interface_ip_configuration_names, count.index)
+  ip_configuration_name   = element(var.network_interface_ip_configuration_names, element(var.network_interface_application_security_group_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
   backend_address_pool_id = element(var.network_interface_application_gateway_backend_address_pool_ids, count.index).application_gateway_backend_address_pool_id
 }
 
@@ -84,7 +83,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "this" {
   count = var.enabled ? var.network_interface_backend_address_pool_count * var.network_interface_count : 0
 
   network_interface_id    = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), element(var.network_interface_backend_address_pool_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
-  ip_configuration_name   = element(var.network_interface_ip_configuration_names, count.index)
+  ip_configuration_name   = element(var.network_interface_ip_configuration_names, element(var.network_interface_backend_address_pool_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
   backend_address_pool_id = element(var.network_interface_backend_address_pool_ids, count.index).backend_address_pool_id
 }
 
@@ -92,7 +91,7 @@ resource "azurerm_network_interface_nat_rule_association" "this" {
   count = var.enabled ? var.network_interface_nat_rule_association_count * var.network_interface_count : 0
 
   network_interface_id  = element((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), element(var.network_interface_nat_rule_association_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
-  ip_configuration_name = element(var.network_interface_ip_configuration_names, count.index)
+  ip_configuration_name = element(var.network_interface_ip_configuration_names, element(var.network_interface_nat_rule_association_ids, count.index).network_interface_index + floor(count.index / var.network_interface_count))
   nat_rule_id           = element(var.network_interface_nat_rule_association_ids, count.index).nat_rule_id
 }
 
@@ -120,8 +119,8 @@ resource "azurerm_windows_virtual_machine" "this" {
   size                         = var.vm_size
   location                     = var.resource_group_location
   resource_group_name          = var.resource_group_name
-  admin_username               = var.windows_admin_username
-  admin_password               = var.windows_admin_password
+  admin_username               = var.admin_username
+  admin_password               = var.admin_password
   network_interface_ids        = element(chunklist((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), var.network_interface_count), count.index)
   allow_extension_operations   = var.allow_extension_operations
   timezone                     = var.windows_timezone
@@ -253,8 +252,8 @@ resource "azurerm_linux_virtual_machine" "this" {
   size                            = var.vm_size
   location                        = var.resource_group_location
   resource_group_name             = var.resource_group_name
-  admin_username                  = var.linux_admin_username
-  admin_password                  = var.linux_admin_password
+  admin_username                  = var.admin_username
+  admin_password                  = var.admin_password
   network_interface_ids           = element(chunklist((var.network_interface_exists ? data.azurerm_network_interface.this.*.id : azurerm_network_interface.this.*.id), var.network_interface_count), count.index)
   allow_extension_operations      = var.allow_extension_operations
   priority                        = var.priority
@@ -267,7 +266,7 @@ resource "azurerm_linux_virtual_machine" "this" {
   provision_vm_agent              = var.provision_vm_agent
   availability_set_id             = var.availability_set_enabled ? (var.availability_set_exists ? data.azurerm_availability_set.this.*.id[0] : azurerm_availability_set.this.*.id[0]) : null
   proximity_placement_group_id    = var.proximity_placement_group_id
-  disable_password_authentication = var.linux_admin_password == "" ? true : false
+  disable_password_authentication = var.admin_password == "" ? true : false
 
   additional_capabilities {
     ultra_ssd_enabled = var.additional_capabilities_ultra_ssd_enabled
@@ -293,7 +292,7 @@ resource "azurerm_linux_virtual_machine" "this" {
   }
 
   dynamic "admin_ssh_key" {
-    for_each = var.linux_admin_password == "" ? var.linux_admin_ssh_keys : []
+    for_each = var.admin_password == "" ? var.linux_admin_ssh_keys : []
 
     content {
       public_key = admin_ssh_key.value.public_key

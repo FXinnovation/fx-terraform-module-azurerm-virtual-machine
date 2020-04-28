@@ -31,6 +31,8 @@ See `examples` folders for usage of this module.
 | additional\_capabilities\_ultra\_ssd\_enabled | Should Ultra SSD disk be enabled for this Virtual Machine? | `bool` | `false` | no |
 | additional\_unattend\_content\_windows\_content | Specifies the base-64 encoded XML formatted content that is added to the unattend.xml file for the specified path and component. | `string` | `""` | no |
 | additional\_unattend\_content\_windows\_setting | Specifies the name of the setting to which the content applies. Possible values are: `FirstLogonCommands` and `AutoLogon`. | `string` | `"FirstLogonCommands"` | no |
+| admin\_password | The virtual machine password associated with the local administrator account. | `string` | `"Passw0rd_TO_BE_CHANGED!"` | no |
+| admin\_username | Specifies the name of the virtual machine local administrator account. | `string` | `"testadmin"` | no |
 | allow\_extension\_operations | Boolean flag whcih provides the information about should the extension operations be allowed on the virtual machine? Chaning this forces a new resource to be created. | `bool` | `true` | no |
 | availability\_set\_enabled | Whether or not to create an availability set. | `bool` | `true` | no |
 | availability\_set\_exists | If defined, the existing availability set will be used by virtual machines instead of creating a new availability set inside this module. | `bool` | `false` | no |
@@ -52,9 +54,7 @@ See `examples` folders for usage of this module.
 | eviction\_policy | Specifies what should happen when the virtual machine is evicted for the price reason when using the spot instance. At this time only supported value is `Deallocate`. Changing this forces a new resource to be created. | `string` | `"Deallocate"` | no |
 | identity\_identity\_ids | A list of list of User managed identity ID's which should be assigned to the virtual machine. | `list(list(string))` | <pre>[<br>  null<br>]</pre> | no |
 | identity\_types | The list of types of Managed identity which should be assigned to the virtual machine. Possible values are `systemassigned`, `UserAssigned` and `SustemAssigned,UserAssigned`. | `list` | <pre>[<br>  ""<br>]</pre> | no |
-| linux\_admin\_password | The linux virtual machine password associated with the local administrator account. `NOTE`: When an admin\_password is specified disable\_password\_authentication must be set to `false`. | `string` | `""` | no |
 | linux\_admin\_ssh\_keys | One or more admin ssh\_key blocks. `NOTE`: One of either `admin_password` or `admin_ssh_key must be specified`. | `list(object({ public_key = string, username = string }))` | <pre>[<br>  null<br>]</pre> | no |
-| linux\_admin\_username | Specifies the name of the linux virtual machine local administrator account. | `string` | `"testadmin"` | no |
 | linux\_vm\_enabled | Boolean flag which describes whether or not enable the linux virtual machine resource. | `bool` | `false` | no |
 | managed\_data\_disk\_cachings | Specifies the caching requirements for the Managed Disks. Possible values include None, ReadOnly and ReadWrite. | `list(string)` | <pre>[<br>  "ReadWrite"<br>]</pre> | no |
 | managed\_data\_disk\_create\_options | Specifies the list of create option of the data disk such as `Empty` or `Attach`. Defaults to `Attach`. Changing this forces a new resource to be created. | `list(string)` | <pre>[<br>  "Attach"<br>]</pre> | no |
@@ -139,8 +139,6 @@ See `examples` folders for usage of this module.
 | vm\_size | Specifies the size of the Virtual Machines. https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes?toc=%2Fazure%2Fvirtual-machines%2Fwindows%2Ftoc.json. | `string` | `"Standard_B2ms"` | no |
 | vm\_tags | Tags specific to the Virtual Machines. | `map` | `{}` | no |
 | vm\_type | The type of Virtual Machine. Can be either "Linux" or "Windows". | `string` | `"Windows"` | no |
-| windows\_admin\_password | The windows virtual machine password associated with the local administrator account. | `string` | `"Passw0rd_TO_BE_CHANGED!"` | no |
-| windows\_admin\_username | Specifies the name of the windows virtual machine local administrator account. | `string` | `"testadmin"` | no |
 | windows\_certificate\_store | The certificate store on the windows virtual machine where the certificate should be added. | `string` | `""` | no |
 | windows\_enable\_automatic\_updates | Specifies if the automatic updates are enabled for the windows virtual machine. Changing this forces a new resource to be created. | `bool` | `false` | no |
 | windows\_license\_type | Specifies the type of on-premise license (also know as `Azure Hybrid Use Benefits`) which should be used for the virtual machine. Possible values are `None`, `Windows_client` and `Windows_Server`. Changing this forces a new resource to be created. | `string` | `""` | no |
@@ -157,10 +155,10 @@ See `examples` folders for usage of this module.
 |------|-------------|
 | availability\_set\_id | n/a |
 | identities | n/a |
+| ids | n/a |
 | managed\_disk\_ids | n/a |
 | marketplace\_agreement\_ids | n/a |
 | network\_interface\_ids | n/a |
 | network\_interface\_private\_ip\_addresses | n/a |
-| vm\_ids | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
