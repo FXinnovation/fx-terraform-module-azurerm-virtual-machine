@@ -459,3 +459,30 @@ resource "azurerm_virtual_machine_extension" "this_extension" {
     },
   )
 }
+
+##
+# Vm extensions for OSDisk encryption
+##
+
+resource "azurerm_virtual_machine_extension" "osdiskencryption" {
+  count = var.enabled && var.osdisk_encryption_enabled ? var.vm_count : 0
+
+  name                       = "OSDiskEncryption"
+  virtual_machine_id         = var.vm_type == "Windows" ? element(concat(azurerm_windows_virtual_machine.this.*.id, [""]), count.index % var.vm_count) : element(concat(azurerm_linux_virtual_machine.this.*.id, [""]), count.index % var.vm_count)
+  publisher                  = "Microsoft.Azure.Security"
+  type                       = var.vm_type == "Windows" ? "AzureDiskEncryption" : "AzureDiskEncryptionForLinux"
+  type_handler_version       = var.vm_type == "Windows" ? "2.2" : "1.1"
+  auto_upgrade_minor_version = true
+
+  settings = <<SETTINGS
+    {
+      "EncryptionOperation": "EnableEncryption",
+      "KeyVaultURL": "${var.osdisk_encryption_keyvault_url}" ,
+      "KeyVaultResourceId": "${var.osdisk_encryption_keyvault_resource_id}" ,
+      "KeyEncryptionKeyURL": "${element(var.osdisk_encryption_key_encryption_key_urls, count.index)}",
+      "KekVaultResourceId": "${var.osdisk_encryption_keyvault_resource_id}",
+      "KeyEncryptionAlgorithm": "RSA-OAEP",
+      "VolumeType": "All"
+    }
+  SETTINGS
+}

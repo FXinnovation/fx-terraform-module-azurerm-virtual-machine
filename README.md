@@ -109,6 +109,10 @@ See `examples` folders for usage of this module.
 | os\_disk\_encryption\_set\_id | The ID of the Disk encryption set which should be used to encrypt the OS disk. `NOTE: The Disk encryption set must have the `READER` role assignmnet scoped on the key vault- in addition to an access policy to the key vault`. | `any` | `null` | no |
 | os\_disk\_size\_gb | Specifies the size of the OS Disk in gigabytes. | `number` | `30` | no |
 | os\_disk\_storage\_account\_type | The type of storage account which should back the internal OS disk. Possible values are `Standard_LRS`, `StandardSSD_LRS` and `Premium_LRS`. Changing this forces a new resource to be created. | `string` | `"Standard_LRS"` | no |
+| osdisk\_encryption\_enabled | Boolean flag which describes whether or not enable the os disk encryption. | `bool` | `false` | no |
+| osdisk\_encryption\_key\_encryption\_key\_urls | The list of ID of the key valut key resource. This can be obtained from `id` attribute of `key_vault_key resource` | `element(string)` | <pre>[<br>  ""<br>]</pre> | no |
+| osdisk\_encryption\_keyvault\_resource\_id | The ID of the Key vault. The can be obatined from `id` attribute of the key vault resource. | `string` | `""` | no |
+| osdisk\_encryption\_keyvault\_urls | The url of the key vault. And it has to be in specific format when deploying example: `https://key_vault_name.vault.azure.net` | `string` | `""` | no |
 | plan\_name | Specifies the name of the image from the marketplace. | `string` | `""` | no |
 | plan\_product | Specifies the product of the image from the marketplace. | `string` | `""` | no |
 | plan\_publisher | Specifies the publisher of the image. | `string` | `""` | no |
