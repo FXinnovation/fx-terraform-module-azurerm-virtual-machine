@@ -707,20 +707,20 @@ variable "osdisk_encryption_enabled" {
   default     = false
 }
 
-variable "osdisk_encryption_keyvault_urls" {
+variable "osdisk_encryption_keyvault_url" {
   description = "The url of the key vault. And it has to be in specific format when deploying example: `https://key_vault_name.vault.azure.net`"
   type        = string
   default     = ""
 }
 
 variable "osdisk_encryption_keyvault_resource_id" {
-  description = "The ID of the Key vault. The can be obatined from `id` attribute of the key vault resource."
+  description = "The ID of the key vault. The can be obatined from `id` attribute of the key vault resource."
   type        = string
   default     = ""
 }
 
 variable "osdisk_encryption_key_encryption_key_urls" {
-  description = "The list of ID of the key valut key resource. This can be obtained from `id` attribute of `key_vault_key resource`"
+  description = "The list of IDs of the key valut key resource. This can be obtained from `id` attribute of `key_vault_key resource`"
   type        = list(string)
   default     = [""]
 }
