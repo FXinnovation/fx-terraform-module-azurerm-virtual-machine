@@ -721,6 +721,6 @@ variable "osdisk_encryption_keyvault_resource_id" {
 
 variable "osdisk_encryption_key_encryption_key_urls" {
   description = "The list of ID of the key valut key resource. This can be obtained from `id` attribute of `key_vault_key resource`"
-  type        = element(string)
+  type        = list(string)
   default     = [""]
 }
