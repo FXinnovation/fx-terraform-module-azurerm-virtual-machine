@@ -1,5 +1,21 @@
+1.0.1 /2020-04-29
+=================
+* feat: Add `azurerm_virtual_machine_extension` resource for OSDisk encryption specifically.
+
+1.0.0 /2020-04-29
+=================
+
+* feat: Refactor the module to include the new `aurerm_windows_virtual_machine` and azurerm_linux_virtual_machine` resource
+* feat: Update the `azurerm` provider version to latest
+
+0.5.2 /2020-03-28
+=================
+
+* feat: Update provider version to `1.44.0`
+
 0.5.1 / 2020-03-09
 ==================
+
  * fix: changed condition on vm_count to allow custom names of singular VM
 
 0.5.0 / 2020-02-11
