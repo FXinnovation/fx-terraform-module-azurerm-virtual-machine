@@ -44,7 +44,7 @@ See `examples` folders for usage of this module.
 | availability\_set\_tags | Tags specific to the availability set. | `map` | `{}` | no |
 | boot\_diagnostics\_enabled | Boolean flag which describes whether or not enable the boot diagnostics setting for the virtual machine. | `bool` | `false` | no |
 | boot\_diagnostics\_storage\_account\_uri | The Storage Account's Blob Endpoint which should hold the virtual machine's diagnostic files. | `string` | `""` | no |
-| certificate\_url | The Secret URL of the Key vault certificate. | `string` | `""` | no |
+| certificate\_url | The Secret URL of the Key vault certificate.This can be sourced from the `secret_url` field within the `azurerm_key_vault_certificate` resource. | `string` | `""` | no |
 | computer\_names | Specifies the hostname which should be used for the virtual machine.If unspecified this defaults to the value of `vm_names` filed. Changing this forces a new resource to be created. | `list(string)` | <pre>[<br>  null<br>]</pre> | no |
 | custom\_data | The Base64-Encoded custom data which should be used for the virtual machine. Changing this forces a new resource to be created. | `any` | `null` | no |
 | dedicated\_host\_enabled | Boolean flag which describes whether the Decicated host id enabled or not. | `bool` | `false` | no |
@@ -117,7 +117,7 @@ See `examples` folders for usage of this module.
 | proximity\_placement\_group\_id | The ID of the proximity placement group which the virtual machine should be assigned to. Changing this forces a new resource to be created. | `any` | `null` | no |
 | resource\_group\_location | Specifies the supported Azure location where the resources exist. Changing this forces a new resource to be created. | `string` | `"eastus"` | no |
 | resource\_group\_name | The name of the resource group in which to create the resources in this module. Changing this forces a new resource to be created. | `string` | `""` | no |
-| secret\_key\_vault\_id | The ID of the key vault from which all secrets should be sourced. | `string` | `""` | no |
+| secret\_key\_vault\_id | The ID of the key vault from where all the certificates or secrets are stored. This can be source from `id` filed from the `azurerm_key_vault` resource. | `string` | `""` | no |
 | source\_image\_id | The ID of the image which the virtual machine should be created from. Changing this forces a new resource to be created. | `any` | `null` | no |
 | source\_image\_reference\_offer | Specifies the offer of the image used to create the virtual machine. Changing this forces a new resource to be created. | `string` | `"WindowsServer"` | no |
 | source\_image\_reference\_publisher | Specifies the publisher of the image used to create the virtual machine. Changing this forces a new resource to be created. | `string` | `"MicrosoftWindowsServer"` | no |

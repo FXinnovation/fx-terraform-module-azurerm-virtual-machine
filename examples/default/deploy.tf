@@ -10,8 +10,8 @@ resource "azurerm_resource_group" "example" {
   name     = "tftest${random_string.this.result}"
   location = "West Europe"
   tags = {
-    Owner   = "Terraform"
-    EndDate = "2020-04-22"
+    managed_by = "Terraform"
+    EndDate    = "2020-04-22"
   }
 }
 

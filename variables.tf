@@ -444,12 +444,12 @@ variable "plan_product" {
 }
 
 variable "secret_key_vault_id" {
-  description = "The ID of the key vault from which all secrets should be sourced."
+  description = "The ID of the key vault from where all the certificates or secrets are stored. This can be source from `id` filed from the `azurerm_key_vault` resource."
   default     = ""
 }
 
 variable "certificate_url" {
-  description = "The Secret URL of the Key vault certificate."
+  description = "The Secret URL of the Key vault certificate.This can be sourced from the `secret_url` field within the `azurerm_key_vault_certificate` resource."
   default     = ""
 }
 
