@@ -139,7 +139,7 @@ module "example" {
   provision_vm_agent               = true
   windows_enable_automatic_updates = true
 
-  osdisk_encryption_keyvault_url         = "https://${azurerm_key_vault.example.name}.vault.azure.net"
-  osdisk_encryption_keyvault_resource_id  = "${azurerm_key_vault.example.id}"
+  osdisk_encryption_keyvault_url            = "https://${azurerm_key_vault.example.name}.vault.azure.net"
+  osdisk_encryption_keyvault_resource_id    = "${azurerm_key_vault.example.id}"
   osdisk_encryption_key_encryption_key_urls = ["${azurerm_key_vault_key.example.id}"]
 }
