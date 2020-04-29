@@ -99,7 +99,7 @@ module "example" {
     },
   ]
 
-    network_interface_application_security_group_count = 6
+  network_interface_application_security_group_count = 6
   network_interface_application_security_group_ids = [
     {
       network_interface_index       = 0
@@ -147,11 +147,11 @@ module "example" {
   provision_vm_agent               = true
   windows_enable_automatic_updates = true
 
-  managed_disk_count = 1
-  managed_disk_names                      = ["tftest1${random_string.this.result}ext", "tftest2${random_string.this.result}ext", "tftest3${random_string.this.result}ext"]
-  managed_disk_storage_account_type       = ["Standard_LRS"]
-  managed_disk_size_gbs                   = [5,10,15]
-  managed_disk_create_options             = ["Empty", "Empty", "Empty"]
-  managed_data_disk_cachings              = ["ReadWrite"]
+  managed_disk_count                           = 1
+  managed_disk_names                           = ["tftest1${random_string.this.result}ext", "tftest2${random_string.this.result}ext", "tftest3${random_string.this.result}ext"]
+  managed_disk_storage_account_type            = ["Standard_LRS"]
+  managed_disk_size_gbs                        = [5, 10, 15]
+  managed_disk_create_options                  = ["Empty", "Empty", "Empty"]
+  managed_data_disk_cachings                   = ["ReadWrite"]
   managed_data_disk_write_accelerator_enableds = [false]
 }
