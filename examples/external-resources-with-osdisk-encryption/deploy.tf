@@ -10,8 +10,8 @@ resource "azurerm_resource_group" "example" {
   name     = "tftest${random_string.this.result}"
   location = "West Europe"
   tags = {
-    managed_by   = "Terraform"
-    EndDate = "2020-04-22"
+    managed_by = "Terraform"
+    EndDate    = "2020-04-22"
   }
 }
 
@@ -30,7 +30,7 @@ resource "azurerm_subnet" "example" {
 }
 
 resource "azurerm_availability_set" "example" {
-  name = "tftest${random_string.this.result}"
+  name                = "tftest${random_string.this.result}"
   managed             = true
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
@@ -79,16 +79,16 @@ resource "azurerm_key_vault" "example" {
 }
 
 resource "azurerm_key_vault_secret" "example" {
-  name      = "tftest${random_string.this.result}"
-  value     = "szechuan"
+  name         = "tftest${random_string.this.result}"
+  value        = "szechuan"
   key_vault_id = azurerm_key_vault.example.id
 }
 
 resource "azurerm_key_vault_key" "example" {
-  name      = "tftest${random_string.this.result}"
+  name         = "tftest${random_string.this.result}"
   key_vault_id = azurerm_key_vault.example.id
-  key_type  = "RSA"
-  key_size  = 2048
+  key_type     = "RSA"
+  key_size     = 2048
 
   key_opts = [
     "decrypt",
@@ -117,9 +117,9 @@ module "example" {
   network_interface_external_names = [azurerm_network_interface.example.name]
   network_interface_exists         = true
 
-  managed_disk_count                              = 1
-  managed_disk_names                              = ["tftest${random_string.this.result}ext"]
-  
+  managed_disk_count = 1
+  managed_disk_names = ["tftest${random_string.this.result}ext"]
+
   vm_names                         = ["tftest${random_string.this.result}"]
   vm_size                          = "Standard_F2"
   windows_vm_enabled               = true
@@ -138,9 +138,9 @@ module "example" {
   windows_license_type             = "None"
   provision_vm_agent               = true
   windows_enable_automatic_updates = true
-  
-  KeyVaultURL = "https://${azurerm_key_vault.example.name}.vault.azure.net" 
-  KeyVaultResourceId  ="${azurerm_key_vault.example.id}" 
-  KeyEncryptionKeyURL  ="${azurerm_key_vault_key.example.id}"
+
+  KeyVaultURL         = "https://${azurerm_key_vault.example.name}.vault.azure.net"
+  KeyVaultResourceId  = "${azurerm_key_vault.example.id}"
+  KeyEncryptionKeyURL = "${azurerm_key_vault_key.example.id}"
   KekVaultResourceId  = "${azurerm_key_vault.example.id}"
 }
