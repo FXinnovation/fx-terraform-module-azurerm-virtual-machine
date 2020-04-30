@@ -75,17 +75,16 @@ module "example" {
     env = "test"
   }
 
-  availability_set_enabled = true
-  availability_set_name    = "tftest${random_string.this.result}"
+  availability_set_name = "tftest${random_string.this.result}"
   availability_set_tags = {
     test = "tftest${random_string.this.result}"
   }
 
   network_interface_enabled                     = true
-  network_interface_count                       = 2
-  network_interface_names                       = ["tftest${random_string.this.result}"]
-  network_interface_internal_dns_name_labels    = ["tftest${random_string.this.result}-first", "tftest${random_string.this.result}-second", "tftest${random_string.this.result}-third", "tftest${random_string.this.result}-1first", "tftest${random_string.this.result}-2second", "tftest${random_string.this.result}-3third"]
-  network_interface_ip_configuration_names      = ["tftest${random_string.this.result}", "tftest${random_string.this.result}2", "tftest${random_string.this.result}3", "tftest${random_string.this.result}4", "tftest${random_string.this.result}5", "tftest${random_string.this.result}6"]
+  network_interface_count                       = 1
+  network_interface_names                       = ["tftest${random_string.this.result}", "tftest${random_string.this.result}1"]
+  network_interface_internal_dns_name_labels    = ["tftest${random_string.this.result}-first", "tftest${random_string.this.result}-second"]
+  network_interface_ip_configuration_names      = ["tftest${random_string.this.result}", "tftest${random_string.this.result}2"]
   network_interface_ip_configuration_subnet_ids = [azurerm_subnet.example.id]
   network_interface_tags = {
     test = "tftest${random_string.this.result}"
@@ -99,7 +98,7 @@ module "example" {
     },
   ]
 
-  network_interface_application_security_group_count = 6
+  network_interface_application_security_group_count = 2
   network_interface_application_security_group_ids = [
     {
       network_interface_index       = 0
@@ -116,19 +115,11 @@ module "example" {
     {
       network_interface_index       = 1
       application_security_group_id = azurerm_application_security_group.example2.id
-    },
-    {
-      network_interface_index       = 2
-      application_security_group_id = azurerm_application_security_group.example1.id
-    },
-    {
-      network_interface_index       = 2
-      application_security_group_id = azurerm_application_security_group.example2.id
-    },
+    }
   ]
 
-  vm_count                         = 3
-  vm_names                         = ["tftest${random_string.this.result}", "tftest${random_string.this.result}1", "tftest${random_string.this.result}2"]
+  vm_count                         = 2
+  vm_names                         = ["tftest${random_string.this.result}", "tftest${random_string.this.result}1"]
   vm_size                          = "Standard_F2"
   windows_vm_enabled               = true
   admin_username                   = "testadmin"
@@ -148,10 +139,10 @@ module "example" {
   windows_enable_automatic_updates = true
 
   managed_disk_count                           = 1
-  managed_disk_names                           = ["tftest1${random_string.this.result}ext", "tftest2${random_string.this.result}ext", "tftest3${random_string.this.result}ext"]
+  managed_disk_names                           = ["tftest1${random_string.this.result}ext", "tftest2${random_string.this.result}ext"]
   managed_disk_storage_account_types           = ["Standard_LRS"]
-  managed_disk_size_gbs                        = [5, 10, 15]
-  managed_disk_create_options                  = ["Empty", "Empty", "Empty"]
+  managed_disk_size_gbs                        = [5]
+  managed_disk_create_options                  = ["Empty"]
   managed_data_disk_cachings                   = ["ReadWrite"]
   managed_data_disk_write_accelerator_enableds = [false]
 }

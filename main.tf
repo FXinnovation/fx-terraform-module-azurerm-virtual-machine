@@ -426,8 +426,8 @@ resource "azurerm_managed_disk" "this" {
 resource "azurerm_virtual_machine_data_disk_attachment" "this" {
   count = var.enabled && var.vm_count > 0 ? var.managed_disk_count * var.vm_count : 0
 
-  managed_disk_id    = element(azurerm_managed_disk.this.*.id, count.index)
-  virtual_machine_id = var.vm_type == "Windows" ? element(concat(azurerm_windows_virtual_machine.this.*.id, [""]), count.index % var.vm_count) : element(concat(azurerm_linux_virtual_machine.this.*.id, [""]), count.index % var.vm_count)
+  managed_disk_id    = azurerm_managed_disk.this.*.id[count.index]
+  virtual_machine_id = var.vm_type == "Windows" ? azurerm_windows_virtual_machine.this.*.id[count.index % var.vm_count] : azurerm_linux_virtual_machine.this.*.id[count.index % var.vm_count]
 
   lun                       = count.index
   caching                   = element(var.managed_data_disk_cachings, floor(count.index / var.vm_count) % var.managed_disk_count)
@@ -447,7 +447,7 @@ resource "azurerm_virtual_machine_extension" "this_extension" {
   settings                   = element(var.vm_extension_settings, floor(count.index / var.vm_count) % var.vm_extension_count)
   publisher                  = element(var.vm_extension_publishers, floor(count.index / var.vm_count) % var.vm_extension_count)
   protected_settings         = element(var.vm_extension_protected_settings, floor(count.index / var.vm_count) % var.vm_extension_count)
-  virtual_machine_id         = var.vm_type == "Windows" ? element(concat(azurerm_windows_virtual_machine.this.*.id, [""]), count.index % var.vm_count) : element(concat(azurerm_linux_virtual_machine.this.*.id, [""]), count.index % var.vm_count)
+  virtual_machine_id         = var.vm_type == "Windows" ? azurerm_windows_virtual_machine.this.*.id[count.index % var.vm_count] : azurerm_linux_virtual_machine.this.*.id[count.index % var.vm_count]
   type_handler_version       = element(var.vm_extension_type_handler_versions, floor(count.index / var.vm_count) % var.vm_extension_count)
   auto_upgrade_minor_version = element(var.vm_extension_auto_upgarde_minor_version, floor(count.index / var.vm_count) % var.vm_extension_count)
 
