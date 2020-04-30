@@ -8,7 +8,7 @@ See `examples` folders for usage of this module.
 - Any call of this module will create resources in a single resource group.
 - Any network interfaces created in this module will have a single ip_configuration.
 - Tags for VMs are shared among all VMs. Same thing for managed disks.
-- No disks can be encrypted automatically.
+- Only OSDisk encryption is possible with this module. Inorder to encrypt the Data disk we need to mount the guest os Disk and encrypt is manually.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
