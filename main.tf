@@ -41,9 +41,9 @@ resource "azurerm_network_interface" "this" {
   resource_group_name = var.resource_group_name
 
   internal_dns_name_label       = var.num_suffix_digits == 0 ? format("%s%0${var.num_suffix_digits}d", element(var.network_interface_internal_dns_name_labels, count.index % var.network_interface_count), count.index + 1) : element(var.network_interface_internal_dns_name_labels, count.index % var.network_interface_count)
-  enable_ip_forwarding          = element(var.network_interface_enable_ip_forwardings, count.index)
-  enable_accelerated_networking = element(var.network_interface_enable_accelerated_networkings, count.index)
-  dns_servers                   = element(var.network_interface_dns_servers, count.index)
+  enable_ip_forwarding          = element(var.network_interface_enable_ip_forwardings, count.index % var.network_interface_count)
+  enable_accelerated_networking = element(var.network_interface_enable_accelerated_networkings, count.index % var.network_interface_count)
+  dns_servers                   = element(var.network_interface_dns_servers, count.index % var.network_interface_count)
 
   ip_configuration {
     name                          = element(var.network_interface_ip_configuration_names, count.index)
