@@ -703,7 +703,7 @@ variable "vm_extension_tags" {
 ##
 
 variable "osdisk_encryption_enabled" {
-  description = "Boolean flag which describes whether or not enable the os disk encryption."
+  description = "Boolean flag which describes whether or not enable the OS disk encryption."
   default     = false
 }
 
@@ -714,7 +714,7 @@ variable "osdisk_encryption_keyvault_url" {
 }
 
 variable "osdisk_encryption_keyvault_resource_id" {
-  description = "The ID of the key vault. The can be obatined from `id` attribute of the key vault resource."
+  description = "The ID of the key vault. The can be obtained from `id` attribute of the key vault resource."
   type        = string
   default     = ""
 }

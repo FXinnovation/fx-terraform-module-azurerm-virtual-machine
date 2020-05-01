@@ -1,4 +1,4 @@
-1.0.1 /2020-04-29
+1.1.0 /2020-04-29
 =================
 * feat: Add `azurerm_virtual_machine_extension` resource for OSDisk encryption specifically.
 
